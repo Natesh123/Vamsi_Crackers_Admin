@@ -48,19 +48,22 @@ export default function Banner({ priceListUrl = "" }: BannerProps) {
                 <div className="container mx-auto px-4 lg:px-12 flex flex-col justify-center items-center md:items-start text-center md:text-left h-full">
                     <div className="animate-slideDown max-w-4xl flex flex-col items-center md:items-start">
                          {/* Badge */}
-                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-festive-red text-white mb-6 animate-sparkle shadow-lg">
-                            <span className="text-sm font-black tracking-widest uppercase">Premium Sivakasi Crackers</span>
+                         <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-red-600 to-red-800 text-white mb-6 animate-sparkle shadow-[0_0_15px_rgba(220,38,38,0.6)] border border-red-500/50">
+                            <span className="text-xs sm:text-sm font-black tracking-widest uppercase text-shadow-sm">✨ தரமான சிவகாசி பட்டாசுகள் ✨</span>
                         </div>
 
-                        <h2 className="text-white text-xl md:text-2xl font-bold mb-2 tracking-wide font-['Outfit']">
+                        <h2 className="text-gray-200 text-lg md:text-xl font-bold mb-1 tracking-widest uppercase drop-shadow-md">
                             Welcome To
                         </h2>
-                        <h1 className="text-3xl sm:text-4xl md:text-6xl font-black mb-6 leading-none uppercase">
-                            <span className="text-white">Sri Dhakshina</span> <span className="text-festive-gold">Crackers</span>
+                        <h1 className="text-4xl sm:text-5xl md:text-[5rem] font-black mb-1 leading-tight uppercase drop-shadow-[0_8px_20px_rgba(0,0,0,0.8)]">
+                            <span className="text-white">Vamsi</span> <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-festive-gold to-yellow-500">Crackers</span>
                         </h1>
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-black mb-8 text-white drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)] tracking-wide">
+                            வம்சி கிராக்கர்ஸ்
+                        </h2>
                         
-                        <p className="text-gray-200 text-base md:text-lg mb-10 max-w-2xl leading-relaxed font-medium">
-                            Experience the magic of lights with the most trusted fireworks brand. Pure quality, unbeatable prices, and grand celebrations.
+                        <p className="text-gray-100 text-lg sm:text-xl md:text-2xl md:leading-[1.8] mb-10 max-w-3xl font-semibold drop-shadow-[0_5px_15px_rgba(0,0,0,0.9)] bg-black/20 p-4 sm:p-6 rounded-2xl border border-white/10 backdrop-blur-sm">
+                            மிகச் சிறந்த தரமான பட்டாசுகளுடன் உங்கள் கொண்டாட்டங்களை அழகாக்குங்கள்! குறைந்த விலையில் நிறைந்த தரம், பாதுகாப்பான வெடிகள். சிவகாசியின் முன்னணி நிறுவனம்.
                         </p>
 
                         <div className="flex flex-col sm:flex-row flex-wrap justify-center md:justify-start gap-4 sm:gap-5 w-full sm:w-auto">

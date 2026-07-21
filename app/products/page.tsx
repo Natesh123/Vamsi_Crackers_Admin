@@ -23,7 +23,7 @@ interface Product {
 }
 
 function ProductsPageInner() {
-  const { cartItems, addToCart, updateQuantity, setCartOpen } = useCart();
+  const { cartItems, addToCart, updateQuantity, removeFromCart, setCartOpen } = useCart();
   const [categories, setCategories] = useState<Category[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -31,7 +31,7 @@ function ProductsPageInner() {
   const [priceListUrl, setPriceListUrl] = useState("");
   const hasScrolledRef = useRef(false);
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
   useEffect(() => {
     async function loadData() {
@@ -221,120 +221,168 @@ function ProductsPageInner() {
               </button>
             </div>
           ) : (
-            <div className="space-y-20">
-              {groupedProducts.map((group) => (
+            <div className="space-y-10">
+              {groupedProducts.map((group) => {
+                const discountPct = group.products[0]?.discount || 
+                  (group.products[0] ? Math.round(((group.products[0].originalPrice - group.products[0].price) / group.products[0].originalPrice) * 100) : 0);
+                
+                return (
                 <div
                   key={group.id}
                   id={`category-sec-${group.id}`}
-                  className="scroll-mt-48 md:scroll-mt-40 space-y-6"
+                  className="scroll-mt-48 md:scroll-mt-40"
                 >
-                  {/* Category Section Header */}
-                  <div className="flex items-center gap-4 pb-3 border-b-2 border-festive-gold/20">
-                    <span className="text-2xl drop-shadow-sm">🎇</span>
-                    <h2 className="text-xl md:text-2xl font-black uppercase tracking-wider text-festive-purple">
-                      {group.name}
-                    </h2>
-                    <span className="text-[10px] font-black text-festive-purple bg-festive-gold/15 border border-festive-gold/30 px-3 py-1 rounded-full uppercase tracking-widest shadow-sm">
-                      {group.products.length} Products
+                  {/* ═══ Category Banner Header ═══ */}
+                  <div className="relative overflow-hidden rounded-t-2xl bg-gradient-to-r from-festive-purple via-[#3d1166] to-festive-purple px-5 md:px-8 py-4 md:py-5 flex items-center justify-between shadow-lg">
+                    {/* Decorative pattern */}
+                    <div className="absolute inset-0 opacity-10" style={{backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'20\' height=\'20\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Ccircle cx=\'10\' cy=\'10\' r=\'1.5\' fill=\'white\'/%3E%3C/svg%3E")', backgroundSize: '20px 20px'}} />
+                    <div className="relative z-10 flex items-center gap-3">
+                      <span className="text-2xl">🎇</span>
+                      <h2 className="text-lg md:text-2xl font-black uppercase tracking-wider text-white drop-shadow-sm">
+                        {group.name}
+                      </h2>
+                    </div>
+                    <span className="relative z-10 bg-festive-gold/20 backdrop-blur-sm text-festive-gold text-[10px] md:text-xs font-black px-3 md:px-4 py-1.5 rounded-full uppercase tracking-widest border border-festive-gold/40">
+                      {group.products.length} Items
                     </span>
                   </div>
 
-                  {/* Unified Responsive Card Grid View (Premium Light) */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-6">
-                    {group.products.map((prod) => {
+                  {/* ═══ Table Header ═══ */}
+                  <div className="grid grid-cols-[55px_1fr_45px_55px_85px] sm:grid-cols-[70px_1fr_80px_80px_110px] md:grid-cols-[80px_1fr_140px_120px_130px] lg:grid-cols-[90px_1fr_150px_130px_150px] items-center gap-1 sm:gap-2 md:gap-4 px-2 sm:px-4 md:px-6 lg:px-8 py-2 md:py-3 bg-gray-50 border-x border-gray-200 text-[8px] sm:text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-widest md:tracking-[0.2em]">
+                    <span className="text-center">Image</span>
+                    <span>Product Name</span>
+                    <span className="text-right">MRP</span>
+                    <span className="text-right">Offer Price</span>
+                    <span className="text-center">Action</span>
+                  </div>
+
+                  {/* ═══ Product Rows ═══ */}
+                  <div className="border border-gray-200 border-t-0 rounded-b-2xl overflow-hidden bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)]">
+                    {group.products.map((prod, idx) => {
                       const qty = getCartQty(prod.id);
+                      const prodDiscount = prod.discount || Math.round(((prod.originalPrice - prod.price) / prod.originalPrice) * 100);
+                      const isLast = idx === group.products.length - 1;
+
                       return (
                         <div
                           key={prod.id}
-                          className="flex flex-col p-4 md:p-5 rounded-2xl border border-gray-100 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] relative overflow-hidden group hover:border-festive-gold/40 hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] transition-all duration-300"
+                          className={`group relative grid grid-cols-[55px_1fr_45px_55px_85px] sm:grid-cols-[70px_1fr_80px_80px_110px] md:grid-cols-[80px_1fr_140px_120px_130px] lg:grid-cols-[90px_1fr_150px_130px_150px] items-center gap-1 sm:gap-2 md:gap-4 px-2 sm:px-4 md:px-6 lg:px-8 py-3 md:py-3.5 transition-all duration-300 hover:bg-amber-50/50 ${!isLast ? 'border-b border-gray-100' : ''}`}
                         >
-                           {/* Discount Badge */}
-                           {prod.originalPrice > prod.price && (
-                             <div className="absolute top-3 right-3 z-10">
-                               <span className="bg-gradient-to-r from-festive-red to-red-500 text-white font-black px-2.5 py-1 rounded-full text-[9px] tracking-widest shadow-md uppercase inline-flex items-center gap-1 border border-white/20">
-                                 🔥 {prod.discount || Math.round(((prod.originalPrice - prod.price) / prod.originalPrice) * 100)}% OFF
-                               </span>
-                             </div>
-                           )}
- 
-                           {/* Image Container */}
-                           <div className="w-full h-44 md:h-48 rounded-xl border border-gray-100 bg-gray-50/50 flex items-center justify-center p-4 overflow-hidden mb-5 group-hover:bg-amber-50/30 transition-colors">
-                             <img
-                               src={prod.image || "/assets/images/placeholder.png"}
-                               alt={prod.name}
-                               loading="lazy"
-                               decoding="async"
-                               className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500 drop-shadow-sm"
-                             />
-                           </div>
- 
-                           {/* Details */}
-                           <div className="flex-1 flex flex-col">
-                             <span className="text-[9px] font-bold text-slate-500 bg-gray-50 border border-gray-200 px-2 py-0.5 rounded uppercase tracking-widest self-start mb-2">
-                               {group.name}
-                             </span>
-                             <h4 className="font-black text-slate-800 text-base md:text-[1.05rem] line-clamp-2 leading-snug mb-3 group-hover:text-festive-purple transition-colors">
-                               {prod.name}
-                             </h4>
- 
-                             <div className="mt-auto">
-                               <div className="flex items-end gap-2.5 mb-5">
-                                 <span className="text-2xl md:text-[1.6rem] font-black text-festive-purple drop-shadow-sm">
-                                   ₹{prod.price}
-                                 </span>
-                                 {prod.originalPrice > prod.price && (
-                                   <span className="text-sm text-slate-400 line-through font-bold pb-0.5">
-                                     ₹{prod.originalPrice}
-                                   </span>
-                                 )}
-                               </div>
-
-                              {/* Cart Actions */}
-                              <div className="border-t border-gray-100 pt-5 mt-2">
-                                {qty > 0 ? (
-                                  <div className="flex items-center justify-between border border-gray-200 rounded-xl overflow-hidden bg-gray-50 shadow-sm group-hover:border-festive-gold/50 transition-all h-11 md:h-12">
-                                    <button
-                                      onClick={() => updateQuantity(prod.id, qty - 1)}
-                                      className="flex-1 h-full text-slate-600 hover:bg-gray-200 hover:text-festive-red active:scale-95 transition-all cursor-pointer font-black text-xl flex items-center justify-center"
-                                    >
-                                      −
-                                    </button>
-                                    <span className="px-5 h-full font-black text-slate-900 text-base md:text-lg bg-white flex items-center justify-center min-w-[3.5rem] border-x border-gray-200 shadow-inner">
-                                      {qty}
-                                    </span>
-                                    <button
-                                      onClick={() => updateQuantity(prod.id, qty + 1)}
-                                      className="flex-1 h-full text-slate-600 hover:bg-gray-200 hover:text-festive-purple active:scale-95 transition-all cursor-pointer font-black text-xl flex items-center justify-center"
-                                    >
-                                      +
-                                    </button>
-                                  </div>
-                                ) : (
-                                  <button
-                                    onClick={() =>
-                                      addToCart({
-                                        id: prod.id,
-                                        name: prod.name,
-                                        price: prod.price,
-                                        originalPrice: prod.originalPrice,
-                                        image: prod.image,
-                                        category: group.name,
-                                      })
-                                    }
-                                    className="w-full h-11 md:h-12 rounded-xl bg-festive-red hover:bg-festive-gold text-white hover:text-festive-purple font-black uppercase text-xs md:text-sm tracking-widest hover:scale-[1.02] active:scale-95 transition-all cursor-pointer shadow-[0_8px_20px_rgba(220,38,38,0.25)] hover:shadow-[0_10px_25px_rgba(255,215,0,0.4)] flex items-center justify-center gap-2 border border-transparent hover:border-festive-gold"
-                                  >
-                                    <span className="text-base">🛒</span> ADD TO CART
-                                  </button>
-                                )}
-                              </div>
+                          {/* Discount Badge - Mobile Only */}
+                          {prod.originalPrice > prod.price && (
+                            <div className="absolute top-1 left-1 md:hidden z-10 scale-[0.65] sm:scale-75 origin-top-left">
+                              <span className="bg-gradient-to-r from-festive-red to-red-500 text-white font-black px-2 py-0.5 rounded-md text-[9px] tracking-wider shadow-sm">
+                                {prodDiscount}% OFF
+                              </span>
                             </div>
+                          )}
+
+                          {/* Product Image */}
+                          <div className="w-[45px] h-[45px] sm:w-[60px] sm:h-[60px] md:w-[80px] lg:w-[90px] md:h-[70px] lg:h-[75px] rounded-md md:rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center p-1 md:p-1.5 overflow-hidden flex-shrink-0 group-hover:border-festive-gold/30 transition-all mx-auto">
+                            <img
+                              src={prod.image || "/assets/images/placeholder.png"}
+                              alt={prod.name}
+                              loading="lazy"
+                              decoding="async"
+                              className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
+                            />
+                          </div>
+
+                          {/* Product Info */}
+                          <div className="flex flex-col items-start justify-center gap-0.5">
+                            <h4 className="font-black text-slate-800 text-[10px] sm:text-[12px] md:text-[15px] leading-tight group-hover:text-festive-purple transition-colors line-clamp-2">
+                              {prod.name}
+                            </h4>
+                            {/* Mobile category tag */}
+                            <span className="md:hidden text-[8px] font-bold text-slate-400 uppercase tracking-widest mt-0.5 block truncate max-w-full">
+                              {group.name}
+                            </span>
+                            {/* Discount badge - Desktop */}
+                            {prod.originalPrice > prod.price && (
+                              <span className="hidden md:inline-flex items-center gap-1 bg-festive-red/10 text-festive-red text-[9px] font-black px-2 py-0.5 rounded-md uppercase tracking-wider mt-0.5">
+                                🔥 {prodDiscount}% OFF
+                              </span>
+                            )}
+                          </div>
+
+                          {/* Original Price (MRP) */}
+                          <div className="flex flex-col items-end justify-center">
+                            {prod.originalPrice > prod.price ? (
+                              <span className="text-[9px] sm:text-[11px] md:text-base text-slate-400 line-through font-bold text-right">
+                                ₹{prod.originalPrice.toLocaleString('en-IN')}
+                              </span>
+                            ) : (
+                              <span className="text-[9px] sm:text-[11px] md:text-base text-slate-400 font-bold text-right">—</span>
+                            )}
+                          </div>
+
+                          {/* Sale Price */}
+                          <div className="flex flex-col items-end justify-center">
+                            <span className="text-[11px] sm:text-[13px] md:text-xl font-black text-festive-purple text-right">
+                              ₹{prod.price.toLocaleString('en-IN')}
+                            </span>
+                          </div>
+
+                          {/* Cart Actions */}
+                          <div className="flex justify-end md:justify-center items-center gap-1 md:gap-2">
+                            {qty > 0 ? (
+                              <>
+                                <div className="flex items-center border-2 border-festive-purple/20 rounded-md md:rounded-xl overflow-hidden bg-white shadow-sm flex-1 w-[55px] sm:w-[70px] md:w-[110px] lg:w-[120px] h-6 sm:h-7 md:h-9">
+                                  <button
+                                    onClick={() => updateQuantity(prod.id, qty - 1)}
+                                    className="flex-1 w-5 sm:w-6 md:w-8 h-full text-slate-600 hover:bg-red-50 hover:text-festive-red active:scale-95 transition-all cursor-pointer font-black text-xs sm:text-sm md:text-lg flex items-center justify-center"
+                                  >
+                                    −
+                                  </button>
+                                  <span className="w-5 sm:w-6 md:w-9 h-full font-black text-slate-900 text-[10px] sm:text-xs md:text-base bg-gray-50 flex items-center justify-center border-x border-gray-200">
+                                    {qty}
+                                  </span>
+                                  <button
+                                    onClick={() => updateQuantity(prod.id, qty + 1)}
+                                    className="flex-1 w-5 sm:w-6 md:w-8 h-full text-slate-600 hover:bg-purple-50 hover:text-festive-purple active:scale-95 transition-all cursor-pointer font-black text-xs sm:text-sm md:text-lg flex items-center justify-center"
+                                  >
+                                    +
+                                  </button>
+                                </div>
+                                <button
+                                  onClick={() => removeFromCart(prod.id)}
+                                  title="Remove from cart"
+                                  className="w-6 h-6 sm:w-7 sm:h-7 md:w-9 md:h-9 rounded-md md:rounded-xl bg-red-50 border border-red-200 hover:bg-festive-red hover:border-festive-red text-festive-red hover:text-white flex items-center justify-center transition-all duration-300 cursor-pointer hover:scale-105 active:scale-95 flex-shrink-0 shadow-sm"
+                                >
+                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-3 h-3 md:w-4 md:h-4">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                  </svg>
+                                </button>
+                              </>
+                            ) : (
+                              <button
+                                onClick={() =>
+                                  addToCart({
+                                    id: prod.id,
+                                    name: prod.name,
+                                    price: prod.price,
+                                    originalPrice: prod.originalPrice,
+                                    image: prod.image,
+                                    category: group.name,
+                                  })
+                                }
+                                className="w-full md:w-[130px] lg:w-[140px] h-6 sm:h-7 md:h-9 rounded-md md:rounded-xl bg-gradient-to-r from-festive-purple to-[#3d1166] hover:from-festive-gold hover:to-yellow-500 text-white hover:text-festive-purple font-black uppercase text-[8px] sm:text-[9px] md:text-[11px] tracking-wider hover:scale-[1.03] active:scale-95 transition-all cursor-pointer shadow-[0_4px_15px_rgba(48,13,79,0.3)] hover:shadow-[0_4px_15px_rgba(255,215,0,0.4)] flex items-center justify-center gap-1 border border-transparent"
+                              >
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-3.5 md:h-3.5">
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                </svg>
+                                <span className="hidden sm:inline">Add</span>
+                                <span className="sm:hidden">Add</span>
+                              </button>
+                            )}
                           </div>
                         </div>
                       );
                     })}
                   </div>
                 </div>
-              ))}
+              );
+              })}
             </div>
           )}
         </section>

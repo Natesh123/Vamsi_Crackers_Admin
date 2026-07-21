@@ -16,10 +16,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Sri Dhakshina Crackers",
+  title: "Vamsi Crackers",
   description: "Crackers shop website",
   icons: {
-    icon: "/assets/images/sri_dhakshina_logo.jpg", // favicon
+    icon: "/assets/images/vamsi_crackers_logo.png", // favicon
   },
 };
 

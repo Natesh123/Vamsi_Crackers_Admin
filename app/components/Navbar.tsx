@@ -33,7 +33,7 @@ export default function Navbar({ priceListUrl = "" }: NavbarProps) {
             {/* Top Bar (Reference from user image) */}
             <div className={`w-full bg-gradient-to-r from-festive-red via-red-600 to-festive-red text-white text-[10px] sm:text-xs font-bold tracking-widest uppercase relative overflow-hidden transition-all duration-500 ${scrolled ? 'h-0 py-0 opacity-0' : 'py-2 opacity-100'}`}>
                 <div className="animate-marquee whitespace-nowrap drop-shadow-md">
-                    Diwali sale is open now. Please buy early to get best discounts. {daysLeft > 0 ? <span className="text-festive-gold drop-shadow-[0_0_5px_rgba(255,215,0,0.5)]">★ ONLY {daysLeft} DAYS LEFT FOR DIWALI! ★</span> : "HAPPY DIWALI! "} +91 98941 16131, +91 98947 36131 &nbsp;&nbsp;&nbsp;&nbsp; Diwali sale is open now. Please buy early to get best discounts. {daysLeft > 0 ? <span className="text-festive-gold drop-shadow-[0_0_5px_rgba(255,215,0,0.5)]">★ ONLY {daysLeft} DAYS LEFT FOR DIWALI! ★</span> : "HAPPY DIWALI! "} +91 98941 16131, +91 98947 36131
+                    Diwali sale is open now. Please buy early to get best discounts. {daysLeft > 0 ? <span className="text-festive-gold drop-shadow-[0_0_5px_rgba(255,215,0,0.5)]">★ ONLY {daysLeft} DAYS LEFT FOR DIWALI! ★</span> : "HAPPY DIWALI! "} +91 90800 19031 &nbsp;&nbsp;&nbsp;&nbsp; Diwali sale is open now. Please buy early to get best discounts. {daysLeft > 0 ? <span className="text-festive-gold drop-shadow-[0_0_5px_rgba(255,215,0,0.5)]">★ ONLY {daysLeft} DAYS LEFT FOR DIWALI! ★</span> : "HAPPY DIWALI! "} +91 90800 19031
                 </div>
             </div>
 
@@ -49,7 +49,7 @@ export default function Navbar({ priceListUrl = "" }: NavbarProps) {
                         <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full overflow-visible border-2 border-festive-gold bg-gradient-to-br from-white/20 to-white/5 shadow-[0_0_30px_rgba(255,215,0,0.4)] backdrop-blur-md transition-all duration-500 group-hover:scale-110 group-hover:shadow-[0_0_50px_rgba(255,215,0,0.8)] p-[2.5px] ring-2 ring-festive-gold/20 group-hover:ring-festive-gold/40">
                             <div className="relative w-full h-full rounded-full overflow-hidden bg-white shadow-inner">
                                 <Image 
-                                    src="/assets/images/sri_dhakshina_logo.jpg" 
+                                    src="/assets/images/vamsi_crackers_logo.png" 
                                     alt="Logo" 
                                     fill 
                                     className="object-contain object-center scale-110 p-1"
@@ -58,7 +58,7 @@ export default function Navbar({ priceListUrl = "" }: NavbarProps) {
                         </div>
                         <div className="absolute left-1/2 -translate-x-1/2 xl:static xl:translate-x-0 flex flex-col text-center xl:text-left">
                             <h1 className="whitespace-nowrap text-sm sm:text-base lg:text-[1.3rem] 2xl:text-[1.4rem] font-black tracking-tight uppercase leading-tight text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-                                Sri Dhakshina <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-[#fff2aa] to-festive-gold drop-shadow-[0_0_10px_rgba(255,215,0,0.3)]">Crackers</span>
+                                Vamsi <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-[#fff2aa] to-festive-gold drop-shadow-[0_0_10px_rgba(255,215,0,0.3)]">Crackers</span>
                             </h1>
                             <span className="whitespace-nowrap text-[9px] sm:text-[10px] tracking-[0.3em] uppercase font-black text-yellow-500 mt-0.5 block drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
                                 Sivakasi's Pride
@@ -113,8 +113,8 @@ export default function Navbar({ priceListUrl = "" }: NavbarProps) {
                             </div>
                             <div className="flex flex-col">
                                 <span className="whitespace-nowrap text-[9px] font-bold uppercase text-yellow-500/90 tracking-widest mb-0.5 drop-shadow-sm">Enquiry & Bulk</span>
-                                <span className="whitespace-nowrap text-[11px] font-black leading-tight text-white tracking-wider drop-shadow-md">+91 98941 16131</span>
-                                <span className="whitespace-nowrap text-[11px] font-black leading-tight text-white tracking-wider drop-shadow-md">+91 98947 36131</span>
+                                <span className="whitespace-nowrap text-[11px] font-black leading-tight text-white tracking-wider drop-shadow-md">+91 90800 19031</span>
+
                             </div>
                         </div>
 
@@ -186,8 +186,8 @@ export default function Navbar({ priceListUrl = "" }: NavbarProps) {
                     <div className="mt-12 flex flex-col items-center gap-6 text-center w-full max-w-xs">
                          <div className="flex flex-col items-center gap-1 bg-white/5 border border-white/10 p-5 rounded-3xl w-full">
                              <span className="text-gray-400 font-bold uppercase tracking-widest text-xs mb-2">Direct Support</span>
-                             <span className="text-white font-black text-xl tracking-wide">+91 98941 16131</span>
-                             <span className="text-white font-black text-xl tracking-wide">+91 98947 36131</span>
+                             <span className="text-white font-black text-xl tracking-wide">+91 90800 19031</span>
+
                          </div>
                          <a 
                             href={priceListUrl || "#"}

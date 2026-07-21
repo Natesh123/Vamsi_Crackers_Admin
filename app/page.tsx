@@ -17,7 +17,7 @@ export default function Home() {
   useEffect(() => {
     const fetchPriceList = async () => {
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
         const res = await fetch(`${apiUrl}/api/settings/price-list`);
         if (res.ok) {
           const data = await res.json();
@@ -89,8 +89,8 @@ export default function Home() {
                 <div className="md:w-1/2 flex justify-center">
                     <div className="relative w-72 h-72 md:w-[28rem] md:h-[28rem] rounded-[2.5rem] overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.12)] bg-white p-10 border border-gray-100 group">
                         <img 
-                            src="/assets/images/sri_dhakshina_logo.jpg" 
-                            alt="Sri Dhakshina Crackers Logo" 
+                            src="/assets/images/vamsi_crackers_logo.png" 
+                            alt="Vamsi Crackers Logo" 
                             className="w-full h-full object-contain transition-transform duration-1000 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 border-2 border-festive-gold/10 rounded-[2.5rem] pointer-events-none"></div>
@@ -102,14 +102,14 @@ export default function Home() {
                 </div>
                 <div className="md:w-1/2 text-center md:text-left">
                     <div className="inline-block px-4 py-1.5 rounded-full bg-festive-red/10 text-festive-red font-black uppercase tracking-[0.2em] text-sm mb-6">
-                        About Sri Dhakshina Crackers
+                        About Vamsi Crackers
                     </div>
                     <h2 className="text-4xl md:text-6xl font-black text-festive-purple mb-8 leading-[1.1] uppercase tracking-tighter">
                         Bringing The <span className="text-festive-red">Spark</span> <br />
                         To Your Celebrations
                     </h2>
                     <p className="text-gray-600 text-lg md:text-xl mb-8 leading-relaxed font-medium">
-                        Welcome to **Sri Dhakshina Crackers**, your premier destination for high-quality fireworks direct from the manufacturing capital of India—**Sivakasi**. We are deeply committed to delivering joy, excitement, and the highest standards of safety in every box.
+                        Welcome to **Vamsi Crackers**, your premier destination for high-quality fireworks direct from the manufacturing capital of India—**Sivakasi**. We are deeply committed to delivering joy, excitement, and the highest standards of safety in every box.
                     </p>
                     <p className="text-gray-500 text-base md:text-lg mb-10 leading-relaxed">
                         Our curated collections range from traditional sparklers to grand sky shows, all tested for maximum safety and spectacular performance. We pride ourselves on offering wholesale prices directly to our customers, ensuring your festivals are both grand and affordable.

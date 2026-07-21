@@ -6,6 +6,7 @@ import Image from "next/image";
 import { io } from "socket.io-client";
 import FireworksCanvas from "../components/FireworksCanvas";
 import LoginTransition from "../components/LoginTransition";
+import * as xlsx from "xlsx";
 
 interface Category {
   id: number;
@@ -18,6 +19,7 @@ interface Product {
   price: number;
   originalPrice: number;
   discount?: number;
+  apply_discount?: number;
   image: string;
   categoryId: number;
   category?: string;
@@ -29,7 +31,7 @@ interface Toast {
 }
 
 export default function AdminDashboard() {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
   const [categories, setCategories] = useState<Category[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [orders, setOrders] = useState<any[]>([]);
@@ -45,10 +47,43 @@ export default function AdminDashboard() {
   const [reportFromDate, setReportFromDate] = useState("");
   const [reportToDate, setReportToDate] = useState("");
   const [orderFilterSource, setOrderFilterSource] = useState<"All" | "Website" | "POS">("All");
+  const [orderSearchQuery, setOrderSearchQuery] = useState("");
+  const [orderPaymentFilter, setOrderPaymentFilter] = useState("All");
+  const [orderStatusFilter, setOrderStatusFilter] = useState("All");
 
   const filteredOrders = useMemo(() => {
-    return orders.filter(o => orderFilterSource === "All" || (o.source || 'Website') === orderFilterSource);
-  }, [orders, orderFilterSource]);
+    return orders.filter(o => {
+      // Source filter
+      if (orderFilterSource !== "All" && (o.source || 'Website') !== orderFilterSource) return false;
+      
+      // Payment filter
+      if (orderPaymentFilter !== "All") {
+        const paymentStat = o.payment_status || 'Unpaid';
+        if (paymentStat !== orderPaymentFilter) return false;
+      }
+      
+      // Status filter
+      if (orderStatusFilter !== "All") {
+        const stat = o.status || 'Pending';
+        if (stat !== orderStatusFilter) return false;
+      }
+      
+      // Search Query
+      if (orderSearchQuery.trim() !== "") {
+        const q = orderSearchQuery.toLowerCase();
+        const customerName = (o.customerName || o.customer_name || "Walk-in Customer").toLowerCase();
+        const phone = (o.customerPhone || o.customer_phone || "").toLowerCase();
+        const orderIdStr = o.id.toString();
+        const amountStr = (o.totalAmount || o.total_amount || "").toString();
+        
+        if (!customerName.includes(q) && !phone.includes(q) && !orderIdStr.includes(q) && !amountStr.includes(q)) {
+          return false;
+        }
+      }
+      
+      return true;
+    });
+  }, [orders, orderFilterSource, orderPaymentFilter, orderStatusFilter, orderSearchQuery]);
 
   // Notification States
   const [unreadOrders, setUnreadOrders] = useState<any[]>([]);
@@ -252,7 +287,15 @@ export default function AdminDashboard() {
   }, [orders, reportFromDate, reportToDate]);
   const [diagnostics, setDiagnostics] = useState<any>(null);
   const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
+  const [updatingStatusForId, setUpdatingStatusForId] = useState<number | null>(null);
   const [viewingOrder, setViewingOrder] = useState<any | null>(null);
+  const [additionalDiscountType, setAdditionalDiscountType] = useState<"amount" | "percentage">("amount");
+  const [additionalDiscountValue, setAdditionalDiscountValue] = useState<string>("");
+  const [packingCharge, setPackingCharge] = useState<string>("");
+  const [selectedProductId, setSelectedProductId] = useState<number | "">("");
+  const [addQty, setAddQty] = useState<string>("1");
+  const [stagedProducts, setStagedProducts] = useState<{productId: string, qty: string}[]>([{productId: "", qty: "1"}]);
+  const [isAddProductModalOpen, setIsAddProductModalOpen] = useState(false);
   const [orderToDelete, setOrderToDelete] = useState<number | null>(null);
   const [categoryToDelete, setCategoryToDelete] = useState<{id: number, name: string} | null>(null);
   const [productToDelete, setProductToDelete] = useState<{id: number, name: string} | null>(null);
@@ -316,6 +359,10 @@ export default function AdminDashboard() {
   const [productImage, setProductImage] = useState("");
   const [uploadingImage, setUploadingImage] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Bulk Upload states
+  const [isBulkUploading, setIsBulkUploading] = useState(false);
+  const bulkUploadInputRef = useRef<HTMLInputElement>(null);
 
   // Price List PDF Manager states
   const [priceListUrl, setPriceListUrl] = useState("");
@@ -422,6 +469,23 @@ export default function AdminDashboard() {
   ];
 
   // Fetch Data
+  const toggleApplyDiscount = async (product: Product) => {
+    try {
+      const newStatus = product.apply_discount === 1 ? false : true;
+      const res = await fetch(`${apiUrl}/api/products/${product.id}/toggle-discount`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ applyDiscount: newStatus }),
+      });
+      if (!res.ok) throw new Error("Failed to toggle discount status");
+      
+      showToast(newStatus ? "Global discount enabled for product" : "Global discount disabled. Price reverted to original.", "success");
+      fetchData();
+    } catch (err: any) {
+      showToast(err.message, "error");
+    }
+  };
+
   const fetchData = async () => {
     try {
       setLoading(true);
@@ -572,6 +636,23 @@ export default function AdminDashboard() {
 
   const handleUpdateOrderStatus = async (orderId: number, newStatus: string) => {
     try {
+      setUpdatingStatusForId(orderId);
+      
+      // Optimistic update
+      setOrders(orders.map(o => o.id === orderId ? { 
+        ...o, 
+        status: newStatus, 
+        ...(newStatus === 'Processing' ? { payment_status: 'Paid' } : {}) 
+      } : o));
+      
+      if (viewingOrder && viewingOrder.id === orderId) {
+        setViewingOrder({ 
+          ...viewingOrder, 
+          status: newStatus, 
+          ...(newStatus === 'Processing' ? { payment_status: 'Paid' } : {}) 
+        });
+      }
+
       const res = await fetch(`${apiUrl}/api/orders/${orderId}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -579,13 +660,46 @@ export default function AdminDashboard() {
       });
       if (res.ok) {
         showToast("Order status updated", "success");
-        fetchData();
       } else {
         const data = await res.json();
         showToast(data.error || "Failed to update status", "error");
+        fetchData();
       }
     } catch (err: any) {
       showToast(err.message || "Failed to update status", "error");
+      fetchData();
+    } finally {
+      setUpdatingStatusForId(null);
+    }
+  };
+
+  const handleUpdatePaymentStatus = async (orderId: number, newStatus: string) => {
+    try {
+      setUpdatingStatusForId(orderId);
+      
+      // Optimistic update
+      setOrders(orders.map(o => o.id === orderId ? { ...o, payment_status: newStatus } : o));
+      if (viewingOrder && viewingOrder.id === orderId) {
+        setViewingOrder({ ...viewingOrder, payment_status: newStatus });
+      }
+
+      const res = await fetch(`${apiUrl}/api/orders/${orderId}/payment-status`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ payment_status: newStatus })
+      });
+      if (res.ok) {
+        showToast("Payment status updated", "success");
+      } else {
+        const data = await res.json();
+        showToast(data.error || "Failed to update payment status", "error");
+        fetchData();
+      }
+    } catch (err: any) {
+      showToast(err.message || "Failed to update payment status", "error");
+      fetchData();
+    } finally {
+      setUpdatingStatusForId(null);
     }
   };
 
@@ -820,7 +934,7 @@ export default function AdminDashboard() {
     setProductPrice(product.price.toString());
     setProductOriginalPrice(product.originalPrice.toString());
     setProductDiscount(product.discount !== undefined ? product.discount.toString() : "");
-    setProductApplyDiscount(product.apply_discount !== undefined ? product.apply_discount : true);
+    setProductApplyDiscount(product.apply_discount !== undefined ? Boolean(product.apply_discount) : true);
     setProductCategoryId(product.categoryId.toString());
     setProductImage(product.image);
     setIsProductModalOpen(true);
@@ -872,6 +986,61 @@ export default function AdminDashboard() {
     }
   };
 
+  const downloadTemplate = () => {
+    const ws = xlsx.utils.json_to_sheet([
+      {
+        "Product Name": "Example Cracker",
+        "Category": "Sparklers",
+        "Original Price": 150,
+        "Offer Price": 120,
+        "Global Discount": "Yes"
+      }
+    ]);
+    const wb = xlsx.utils.book_new();
+    xlsx.utils.book_append_sheet(wb, ws, "Template");
+    xlsx.writeFile(wb, "Vamsi_Crackers_Bulk_Template.xlsx");
+  };
+
+  const handleBulkUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsBulkUploading(true);
+    try {
+      const data = await file.arrayBuffer();
+      const workbook = xlsx.read(data, { type: "array" });
+      const firstSheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[firstSheetName];
+      const json = xlsx.utils.sheet_to_json(worksheet);
+
+      if (!json || json.length === 0) {
+        throw new Error("No data found in the uploaded file");
+      }
+
+      const res = await fetch(`${apiUrl}/api/products/bulk`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(json),
+      });
+
+      const resData = await res.json();
+      if (!res.ok) throw new Error(resData.error || "Bulk upload failed");
+
+      showToast(`Bulk upload success: ${resData.addedCount} products added.`, "success");
+      if (resData.errorCount > 0) {
+        console.error("Bulk upload errors:", resData.errors);
+        showToast(`${resData.errorCount} products failed. Check console.`, "error");
+      }
+      
+      fetchData(); // Refresh data
+    } catch (err: any) {
+      showToast(err.message || "Error processing bulk upload", "error");
+    } finally {
+      setIsBulkUploading(false);
+      if (bulkUploadInputRef.current) bulkUploadInputRef.current.value = "";
+    }
+  };
+
   const handleProductSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!productName.trim() || !productPrice || !productOriginalPrice || !productCategoryId || !productImage) {
@@ -883,14 +1052,13 @@ export default function AdminDashboard() {
     const finalProductName = productTamilTranslation ? `${cleanBase} (${productTamilTranslation})` : cleanBase;
 
     const finalDiscount = parseFloat(productDiscount) || 0;
-    const hasDiscount = finalDiscount > 0;
 
     const payload = {
       name: finalProductName,
       price: parseFloat(productPrice),
       originalPrice: parseFloat(productOriginalPrice),
       discount: finalDiscount,
-      applyDiscount: hasDiscount,
+      applyDiscount: productApplyDiscount,
       image: productImage,
       categoryId: parseInt(productCategoryId),
     };
@@ -912,7 +1080,7 @@ export default function AdminDashboard() {
         setProducts((prev) => prev.map((p) => (p.id === editingProduct.id ? data : p)));
         showToast("Product updated successfully!", "success");
       } else {
-        setProducts((prev) => [data, ...prev]);
+        setProducts((prev) => [...prev, data]);
         showToast("Product added successfully!", "success");
       }
       setIsProductModalOpen(false);
@@ -1049,7 +1217,110 @@ export default function AdminDashboard() {
     }, 250);
   };
 
-  const handlePrintOrder = (order: any) => {
+  const handleAddProductToOrder = async () => {
+    const validStages = stagedProducts.filter(sp => sp.productId !== "" && Number(sp.qty) > 0);
+    if (validStages.length === 0) {
+      showToast("Please select at least one product and valid quantity.", "error");
+      return;
+    }
+    
+    let newItems = [...viewingOrder.items];
+    let addedCount = 0;
+    
+    for (const sp of validStages) {
+      const product = products.find(p => String(p.id) === String(sp.productId));
+      if (!product) continue;
+      
+      const existingItemIdx = newItems.findIndex((item: any) => item.name === product.name);
+      const qty = Number(sp.qty);
+      
+      if (existingItemIdx !== -1) {
+        newItems[existingItemIdx] = {
+          ...newItems[existingItemIdx],
+          quantity: newItems[existingItemIdx].quantity + qty
+        };
+      } else {
+        newItems.push({
+          name: product.name,
+          price: product.price,
+          originalPrice: product.originalPrice,
+          quantity: qty
+        });
+      }
+      addedCount++;
+    }
+    
+    if (addedCount === 0) {
+      showToast("No valid products found in catalog.", "error");
+      return;
+    }
+    
+    // Recalculate totals
+    const newTotalOriginal = newItems.reduce((sum, item) => sum + (Number(item.originalPrice) * Number(item.quantity)), 0);
+    const newTotalOffer = newItems.reduce((sum, item) => sum + (Number(item.price) * Number(item.quantity)), 0);
+    const newTotalSavings = newTotalOriginal > newTotalOffer ? newTotalOriginal - newTotalOffer : 0;
+    
+    try {
+      const res = await fetch(`${apiUrl}/api/orders/${viewingOrder.id}/items`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          items: newItems,
+          total_amount: newTotalOffer,
+          total_savings: newTotalSavings
+        })
+      });
+      
+      if (!res.ok) throw new Error("Failed to update order items");
+      
+      // Update local state
+      const updatedOrder = { ...viewingOrder, items: newItems, total_amount: newTotalOffer, total_savings: newTotalSavings };
+      setViewingOrder(updatedOrder);
+      
+      // Update in orders array
+      setOrders(orders.map(o => o.id === updatedOrder.id ? updatedOrder : o));
+      
+      showToast("Products added to order successfully!", "success");
+      setStagedProducts([{productId: "", qty: "1"}]);
+      setIsAddProductModalOpen(false);
+    } catch (err: any) {
+      showToast(err.message || "Error adding products to order", "error");
+    }
+  };
+
+  const handleRemoveProductFromOrder = async (indexToRemove: number) => {
+    let newItems = [...viewingOrder.items];
+    newItems.splice(indexToRemove, 1);
+    
+    // Recalculate totals
+    const newTotalOriginal = newItems.reduce((sum, item) => sum + (Number(item.originalPrice) * Number(item.quantity)), 0);
+    const newTotalOffer = newItems.reduce((sum, item) => sum + (Number(item.price) * Number(item.quantity)), 0);
+    const newTotalSavings = newTotalOriginal > newTotalOffer ? newTotalOriginal - newTotalOffer : 0;
+    
+    try {
+      const res = await fetch(`${apiUrl}/api/orders/${viewingOrder.id}/items`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          items: newItems,
+          total_amount: newTotalOffer,
+          total_savings: newTotalSavings
+        })
+      });
+      
+      if (!res.ok) throw new Error("Failed to update order items");
+      
+      const updatedOrder = { ...viewingOrder, items: newItems, total_amount: newTotalOffer, total_savings: newTotalSavings };
+      setViewingOrder(updatedOrder);
+      setOrders(orders.map(o => o.id === updatedOrder.id ? updatedOrder : o));
+      
+      showToast("Product removed from order successfully!", "success");
+    } catch (err: any) {
+      showToast(err.message || "Error removing product from order", "error");
+    }
+  };
+
+  const handlePrintOrder = (order: any, extraDiscType?: "amount"|"percentage", extraDiscValue?: string, packingChargeStr?: string) => {
     if (!order) return;
     
     const printWindow = window.open('', '_blank');
@@ -1057,9 +1328,6 @@ export default function AdminDashboard() {
       showToast("Please allow popups to print invoices", "error");
       return;
     }
-
-    const totalAmount = Number(order.total_amount || 0);
-    const totalSavings = Number(order.total_savings || 0);
 
     const numberToWords = (num: number): string => {
       const integerNum = Math.round(num);
@@ -1087,6 +1355,21 @@ export default function AdminDashboard() {
     const netRateTotal = netRateItems.reduce((acc: number, item: any) => acc + (Number(item.price) * Number(item.quantity)), 0);
 
     const grossTotal = discountedTotalOriginal + netRateTotal;
+    
+    let totalAmountBase = Number(order.total_amount || 0);
+    const extraDiscVal = Number(extraDiscValue || 0);
+    let extraDiscountAmt = 0;
+    if (extraDiscVal > 0) {
+      if (extraDiscType === "percentage") {
+        extraDiscountAmt = (totalAmountBase * extraDiscVal) / 100;
+      } else {
+        extraDiscountAmt = extraDiscVal;
+      }
+    }
+    const packingChargeVal = Number(packingChargeStr || 0);
+    const previousTotal = totalAmountBase;
+    const totalAmount = previousTotal - extraDiscountAmt + packingChargeVal;
+
     const discountPercent = discountedTotalOriginal > 0 ? ((discountedSavings / discountedTotalOriginal) * 100).toFixed(2) : "0.00";
     
     const renderTable = (items: any[], title: string, isNetRate: boolean, showTitle: boolean) => {
@@ -1195,21 +1478,21 @@ export default function AdminDashboard() {
                 <tr>
                   <td class="bold text-center">Total</td>
                   <td class="text-center"></td>
-                  <td class="text-right">${totalAmount.toFixed(2)}</td>
+                  <td class="text-right">${previousTotal.toFixed(2)}</td>
                 </tr>
                 <tr class="bg-gray">
-                  <td class="bold text-center">Other Charges</td>
-                  <td class="bold text-center">0.00 %</td>
-                  <td class="text-right">0.00</td>
+                  <td class="bold text-center">Packing Charges</td>
+                  <td class="text-center"></td>
+                  <td class="text-right">${packingChargeVal > 0 ? packingChargeVal.toFixed(2) : '0.00'}</td>
                 </tr>
                 <tr>
-                  <td class="bold text-center">RoundOff</td>
-                  <td class="text-center"></td>
-                  <td class="text-right">0.00</td>
+                  <td class="bold text-center">Additional Discount</td>
+                  <td class="text-center">${extraDiscType === 'percentage' && extraDiscVal > 0 ? extraDiscVal + ' %' : ''}</td>
+                  <td class="text-right">${extraDiscountAmt > 0 ? '-' + extraDiscountAmt.toFixed(2) : '0.00'}</td>
                 </tr>
                 <tr class="bg-dark-gray">
                   <td colspan="2" class="text-center">BILL AMOUNT</td>
-                  <td class="text-right">${totalAmount.toFixed(2)}</td>
+                  <td class="text-right">${Math.max(0, totalAmount).toFixed(2)}</td>
                 </tr>
               </table>
             </div>
@@ -1333,12 +1616,12 @@ export default function AdminDashboard() {
             {/* Left Column: Branding */}
             <div className="w-full md:w-5/12 p-8 md:p-12 flex flex-col items-center justify-center text-center relative z-10 border-b md:border-b-0 md:border-r border-white/10 bg-black/20">
               <div className="w-28 h-28 md:w-40 md:h-40 mb-6 md:mb-8 rounded-3xl bg-gradient-to-b from-white/10 to-white/5 p-1.5 backdrop-blur-md shadow-2xl shadow-amber-400/20 border border-white/20">
-                <img src="/assets/images/sri_dhakshina_logo.jpg" alt="Logo" className="w-full h-full object-cover rounded-[1.25rem]" />
+                <img src="/assets/images/vamsi_crackers_logo.png" alt="Logo" className="w-full h-full object-cover rounded-[1.25rem]" />
               </div>
               <h1 className="text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-200 to-white tracking-tight leading-tight mb-2 drop-shadow-lg uppercase">
                 Admin Panel
               </h1>
-              <p className="text-[9px] md:text-[11px] font-black text-amber-400/80 tracking-[0.3em] uppercase mt-2">Sri Dhakshina Crackers</p>
+              <p className="text-[9px] md:text-[11px] font-black text-amber-400/80 tracking-[0.3em] uppercase mt-2">Vamsi Crackers</p>
             </div>
 
             {/* Right Column: Form */}
@@ -1441,11 +1724,11 @@ export default function AdminDashboard() {
         }`}>
           <div className="p-5 flex items-center gap-3 border-b border-white/5 mb-4 bg-gradient-to-r from-white/[0.02] to-transparent">
             <div className="relative w-11 h-11 rounded-lg bg-white p-0.5 overflow-hidden shrink-0 border border-amber-400/40 shadow-[0_0_15px_rgba(245,158,11,0.15)]">
-              <img src="/assets/images/sri_dhakshina_logo.jpg" alt="Logo" className="w-full h-full object-contain rounded-md" />
+              <img src="/assets/images/vamsi_crackers_logo.png" alt="Logo" className="w-full h-full object-contain rounded-md" />
             </div>
             <div className="flex flex-col">
               <h1 className="text-base font-black text-white tracking-tight uppercase leading-tight">
-                Sri Dhakshina
+                Vamsi
                 <span className="block text-amber-400 text-sm mt-0.5">Crackers</span>
               </h1>
               <p className="text-[10.5px] font-black text-indigo-400 tracking-widest uppercase mt-0.5">Admin Portal</p>
@@ -1510,9 +1793,9 @@ export default function AdminDashboard() {
             </button>
             <div className="flex items-center gap-2">
               <div className="w-7 h-7 rounded-md bg-white p-0.5 overflow-hidden border border-amber-400/40">
-                <img src="/assets/images/sri_dhakshina_logo.jpg" alt="Logo" className="w-full h-full object-contain rounded-sm" />
+                <img src="/assets/images/vamsi_crackers_logo.png" alt="Logo" className="w-full h-full object-contain rounded-sm" />
               </div>
-              <span className="font-black text-white text-xs uppercase tracking-wider">Sri Dhakshina</span>
+              <span className="font-black text-white text-xs uppercase tracking-wider">Vamsi</span>
             </div>
             <div className="w-8 h-8"></div> {/* spacer */}
           </div>
@@ -1704,55 +1987,9 @@ export default function AdminDashboard() {
                   </div>
 
                   {/* Quick Activity & Overview Details */}
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
-                    {/* Category Share - Takes up 1 column */}
+                  <div className="grid grid-cols-1 gap-6 mt-8">
+                    {/* Quick Management */}
                     <div className="bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-md transition-shadow flex flex-col overflow-hidden">
-                      <div className="flex items-center justify-between p-6 bg-indigo-50 border-b border-indigo-100">
-                        <div>
-                          <h3 className="text-lg font-black text-indigo-950 tracking-tight">Category Mix</h3>
-                          <p className="text-sm text-indigo-700/70 mt-1 font-medium">Distribution of products</p>
-                        </div>
-                        <div className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center border border-indigo-100">
-                          📊
-                        </div>
-                      </div>
-                      
-                      <div className="p-8 flex-1 flex flex-col">
-                      {categories.length === 0 ? (
-                        <div className="flex-1 flex flex-col items-center justify-center text-center opacity-50 py-10">
-                          <span className="text-4xl mb-3">📁</span>
-                          <p className="text-slate-500 text-base font-medium">No categories added</p>
-                        </div>
-                      ) : (
-                        <div className="space-y-6 flex-1 overflow-y-auto pr-2 custom-scrollbar">
-                          {categories.map((cat, idx) => {
-                            const count = products.filter((p) => p.categoryId === cat.id).length;
-                            const percentage = products.length ? Math.round((count / products.length) * 100) : 0;
-                            const colors = ['bg-indigo-500', 'bg-emerald-500', 'bg-amber-500', 'bg-purple-500', 'bg-pink-500'];
-                            const barColor = colors[idx % colors.length];
-                            
-                            return (
-                              <div key={cat.id} className="space-y-2 group">
-                                <div className="flex justify-between items-center text-base">
-                                  <span className="font-bold text-slate-700 group-hover:text-slate-900 transition-colors">{cat.name}</span>
-                                  <span className="font-black text-slate-900">{count} <span className="text-slate-400 font-medium text-sm ml-1">({percentage}%)</span></span>
-                                </div>
-                                <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                                  <div
-                                    className={`${barColor} h-full rounded-full transition-all duration-1000 ease-out`}
-                                    style={{ width: `${percentage}%` }}
-                                  ></div>
-                                </div>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      )}
-                      </div>
-                    </div>
-
-                    {/* Quick Management - Takes up 2 columns */}
-                    <div className="lg:col-span-2 bg-white border border-slate-100 rounded-3xl shadow-sm hover:shadow-md transition-shadow flex flex-col overflow-hidden">
                       <div className="flex items-center justify-between p-6 bg-indigo-50 border-b border-indigo-100">
                         <div>
                           <h3 className="text-lg font-black text-indigo-950 tracking-tight">Quick Actions</h3>
@@ -1924,6 +2161,31 @@ export default function AdminDashboard() {
                         <span className="text-amber-400">🏷️</span> Global Discount
                       </button>
                       <button
+                        onClick={downloadTemplate}
+                        className="flex-1 lg:flex-none px-4 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-bold text-sm hover:bg-white/10 hover:-translate-y-1 transition-all flex items-center justify-center gap-2 backdrop-blur-md"
+                        title="Download Excel Template for Bulk Upload"
+                      >
+                        <span>📄</span> Template
+                      </button>
+                      <input
+                        type="file"
+                        accept=".xlsx, .xls, .csv"
+                        className="hidden"
+                        ref={bulkUploadInputRef}
+                        onChange={handleBulkUpload}
+                      />
+                      <button
+                        onClick={() => bulkUploadInputRef.current?.click()}
+                        disabled={isBulkUploading}
+                        className="flex-1 lg:flex-none px-4 py-4 rounded-2xl bg-white/5 border border-white/10 text-white font-bold text-sm hover:bg-white/10 hover:-translate-y-1 transition-all flex items-center justify-center gap-2 backdrop-blur-md disabled:opacity-50"
+                      >
+                        {isBulkUploading ? (
+                          <><span className="animate-spin">↻</span> Uploading...</>
+                        ) : (
+                          <><span>📁</span> Bulk Upload</>
+                        )}
+                      </button>
+                      <button
                         onClick={() => { setEditingProduct(null); setProductName(""); setProductPrice(""); setProductOriginalPrice(""); setProductDiscount(""); setProductCategoryId(""); setProductImage(""); setProductTamilTranslation(""); setIsProductModalOpen(true); }}
                         className="flex-1 lg:flex-none px-8 py-4 rounded-2xl bg-white text-slate-900 font-bold text-base hover:-translate-y-1 hover:shadow-xl transition-all flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(255,255,255,0.2)]"
                       >
@@ -1981,6 +2243,22 @@ export default function AdminDashboard() {
                                      <span className="text-emerald-500 font-bold bg-emerald-50 px-2 py-0.5 rounded-md">Save {product.discount || Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% (₹{(product.originalPrice - product.price).toFixed(0)})</span>
                                    </div>
                                  )}
+
+                                 <div className="flex items-center justify-between mb-4 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                                   <div className="flex flex-col">
+                                     <span className="text-xs font-bold text-slate-700 uppercase tracking-wide">Global Discount</span>
+                                     <span className="text-[10px] text-slate-500">{product.apply_discount === 1 ? "Enabled for this product" : "Disabled (Original Price)"}</span>
+                                   </div>
+                                   <label className="relative inline-flex items-center cursor-pointer">
+                                     <input 
+                                       type="checkbox" 
+                                       className="sr-only peer" 
+                                       checked={product.apply_discount === 1}
+                                       onChange={() => toggleApplyDiscount(product)}
+                                     />
+                                     <div className="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
+                                   </label>
+                                 </div>
                                  
                                  <div className="mt-auto flex gap-2 border-t border-slate-100 pt-5">
                                    <button onClick={() => openEditProductModal(product)} className="flex-1 py-2.5 bg-blue-50 text-blue-600 border border-blue-100 rounded-xl text-sm font-bold hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all flex items-center justify-center gap-2">
@@ -2045,11 +2323,73 @@ export default function AdminDashboard() {
                     </div>
                   </div>
                   
-                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
-                    <div className="flex bg-slate-50 p-1.5 rounded-2xl border border-slate-200 gap-1 w-full sm:w-auto">
-                      <button onClick={() => setOrderFilterSource("All")} className={`flex-1 sm:flex-none py-2.5 px-6 rounded-xl font-bold text-sm transition-all ${orderFilterSource === "All" ? "bg-slate-900 text-white shadow-md" : "text-slate-500 hover:bg-slate-100"}`}>All Orders</button>
-                      <button onClick={() => setOrderFilterSource("Website")} className={`flex-1 sm:flex-none py-2.5 px-6 rounded-xl font-bold text-sm transition-all ${orderFilterSource === "Website" ? "bg-slate-900 text-white shadow-md" : "text-slate-500 hover:bg-slate-100"}`}>Website</button>
-                      <button onClick={() => setOrderFilterSource("POS")} className={`flex-1 sm:flex-none py-2.5 px-6 rounded-xl font-bold text-sm transition-all ${orderFilterSource === "POS" ? "bg-slate-900 text-white shadow-md" : "text-slate-500 hover:bg-slate-100"}`}>POS Billing</button>
+                  <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm flex flex-col gap-5 relative z-10">
+                    <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
+                      
+                      {/* Tabs */}
+                      <div className="flex bg-slate-100/80 p-1.5 rounded-2xl border border-slate-200/60 backdrop-blur-sm shrink-0 w-full lg:w-auto overflow-x-auto">
+                        <button onClick={() => setOrderFilterSource("All")} className={`whitespace-nowrap flex-1 lg:flex-none py-2 px-5 rounded-xl font-bold text-sm transition-all duration-300 ${orderFilterSource === "All" ? "bg-white text-indigo-900 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.1)]" : "text-slate-500 hover:text-slate-700 hover:bg-slate-200/50"}`}>All Orders</button>
+                        <button onClick={() => setOrderFilterSource("Website")} className={`whitespace-nowrap flex-1 lg:flex-none py-2 px-5 rounded-xl font-bold text-sm transition-all duration-300 ${orderFilterSource === "Website" ? "bg-white text-indigo-900 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.1)]" : "text-slate-500 hover:text-slate-700 hover:bg-slate-200/50"}`}>🌐 Website</button>
+                        <button onClick={() => setOrderFilterSource("POS")} className={`whitespace-nowrap flex-1 lg:flex-none py-2 px-5 rounded-xl font-bold text-sm transition-all duration-300 ${orderFilterSource === "POS" ? "bg-white text-indigo-900 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.1)]" : "text-slate-500 hover:text-slate-700 hover:bg-slate-200/50"}`}>🖥️ POS</button>
+                      </div>
+
+                      {/* Filters */}
+                      <div className="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto">
+                        
+                        {/* Search Bar */}
+                        <div className="relative w-full sm:w-64 group">
+                          <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400 group-focus-within:text-indigo-500 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                            </svg>
+                          </span>
+                          <input
+                            type="text"
+                            value={orderSearchQuery}
+                            onChange={(e) => setOrderSearchQuery(e.target.value)}
+                            placeholder="Search ID, Name..."
+                            className="w-full bg-slate-50 hover:bg-slate-100 focus:bg-white border border-slate-200 focus:border-indigo-500 rounded-xl pl-10 pr-4 py-2.5 text-sm font-semibold text-slate-800 focus:outline-none focus:ring-4 focus:ring-indigo-500/10 transition-all placeholder:text-slate-400"
+                          />
+                        </div>
+
+                        {/* Payment Filter */}
+                        <div className="relative w-full sm:w-auto">
+                          <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-emerald-500 pointer-events-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M12 7.5a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5Z" /><path fillRule="evenodd" d="M1.5 4.875C1.5 3.839 2.34 3 3.375 3h17.25c1.035 0 1.875.84 1.875 1.875v9.75c0 1.036-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 0 1 1.5 14.625v-9.75ZM8.25 9.75a3.75 3.75 0 1 1 7.5 0 3.75 3.75 0 0 1-7.5 0ZM18.75 9a.75.75 0 0 0-.75.75v.008c0 .414.336.75.75.75h.008a.75.75 0 0 0 .75-.75V9.75a.75.75 0 0 0-.75-.75h-.008ZM4.5 9.75A.75.75 0 0 1 5.25 9h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H5.25a.75.75 0 0 1-.75-.75V9.75Z" clipRule="evenodd" /></svg>
+                          </span>
+                          <select
+                            value={orderPaymentFilter}
+                            onChange={(e) => setOrderPaymentFilter(e.target.value)}
+                            className="w-full sm:w-auto bg-slate-50 hover:bg-slate-100 focus:bg-white border border-slate-200 focus:border-emerald-500 rounded-xl pl-9 pr-8 py-2.5 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all cursor-pointer appearance-none"
+                          >
+                            <option value="All">Payment: All</option>
+                            <option value="Paid">Paid</option>
+                            <option value="Unpaid">Unpaid</option>
+                          </select>
+                          <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" /></svg></div>
+                        </div>
+
+                        {/* Status Filter */}
+                        <div className="relative w-full sm:w-auto">
+                          <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-blue-500 pointer-events-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clipRule="evenodd" /></svg>
+                          </span>
+                          <select
+                            value={orderStatusFilter}
+                            onChange={(e) => setOrderStatusFilter(e.target.value)}
+                            className="w-full sm:w-auto bg-slate-50 hover:bg-slate-100 focus:bg-white border border-slate-200 focus:border-blue-500 rounded-xl pl-9 pr-8 py-2.5 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all cursor-pointer appearance-none"
+                          >
+                            <option value="All">Status: All</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Processing">Processing</option>
+                            <option value="Shipped">Shipped</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Cancelled">Cancelled</option>
+                          </select>
+                          <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" /></svg></div>
+                        </div>
+
+                      </div>
                     </div>
                   </div>
                   
@@ -2066,6 +2406,7 @@ export default function AdminDashboard() {
                                   <th className="px-6 py-5 text-sm font-bold text-slate-500 uppercase tracking-widest whitespace-nowrap">Customer Info</th>
                                   <th className="px-6 py-5 text-sm font-bold text-slate-500 uppercase tracking-widest whitespace-nowrap">Date & Time</th>
                                   <th className="px-6 py-5 text-sm font-bold text-slate-500 uppercase tracking-widest whitespace-nowrap">Amount</th>
+                                  <th className="px-6 py-5 text-sm font-bold text-slate-500 uppercase tracking-widest whitespace-nowrap">Payment</th>
                                   <th className="px-6 py-5 text-sm font-bold text-slate-500 uppercase tracking-widest whitespace-nowrap">Status</th>
                                   <th className="px-6 py-5 text-sm font-bold text-slate-500 uppercase tracking-widest whitespace-nowrap text-right">Actions</th>
                                 </tr>
@@ -2073,7 +2414,7 @@ export default function AdminDashboard() {
                               <tbody className="divide-y divide-slate-50">
                                 {filteredOrders.length === 0 ? (
                                   <tr>
-                                    <td colSpan={6} className="py-20 text-center">
+                                    <td colSpan={7} className="py-20 text-center">
                                       <div className="flex flex-col items-center justify-center opacity-50">
                                         <span className="text-6xl mb-4">🛒</span>
                                         <p className="text-slate-500 font-bold">No orders found.</p>
@@ -2112,25 +2453,83 @@ export default function AdminDashboard() {
                                       <td className="px-6 py-5">
                                         <div className="font-black text-slate-900 text-lg">₹{order.totalAmount || order.total_amount}</div>
                                       </td>
-                                      <td className="px-6 py-5">
-                                        <select
-                                          value={order.status || 'Pending'}
-                                          onChange={(e) => handleUpdateOrderStatus(order.id, e.target.value)}
-                                          className={`text-sm font-bold px-3 py-1.5 rounded-lg border focus:outline-none focus:ring-2 cursor-pointer transition-colors shadow-sm
-                                            ${(!order.status || order.status === 'Pending') ? 'bg-amber-50 text-amber-600 border-amber-200 focus:ring-amber-500/20' : 
-                                              order.status === 'Completed' ? 'bg-emerald-50 text-emerald-600 border-emerald-200 focus:ring-emerald-500/20' :
-                                              order.status === 'Processing' ? 'bg-blue-50 text-blue-600 border-blue-200 focus:ring-blue-500/20' :
-                                              order.status === 'Shipped' ? 'bg-purple-50 text-purple-600 border-purple-200 focus:ring-purple-500/20' :
-                                              order.status === 'Cancelled' ? 'bg-red-50 text-red-600 border-red-200 focus:ring-red-500/20' :
-                                              'bg-slate-50 text-slate-600 border-slate-200 focus:ring-slate-500/20'
-                                            }`}
-                                        >
-                                          <option value="Pending">Pending</option>
-                                          <option value="Processing">Processing</option>
-                                          <option value="Shipped">Shipped</option>
-                                          <option value="Completed">Completed</option>
-                                          <option value="Cancelled">Cancelled</option>
-                                        </select>
+                                      <td className="px-6 py-5 relative">
+                                        <div className="flex items-center gap-2">
+                                          <select
+                                            disabled={updatingStatusForId === order.id}
+                                            value={order.payment_status || 'Unpaid'}
+                                            onChange={(e) => handleUpdatePaymentStatus(order.id, e.target.value)}
+                                            className={`text-sm font-bold px-3 py-1.5 rounded-lg border focus:outline-none focus:ring-2 cursor-pointer transition-colors shadow-sm
+                                              ${(!order.payment_status || order.payment_status === 'Unpaid') ? 'bg-red-50 text-red-600 border-red-200 focus:ring-red-500/20' : 
+                                                'bg-emerald-50 text-emerald-600 border-emerald-200 focus:ring-emerald-500/20'
+                                              } ${updatingStatusForId === order.id ? 'opacity-50' : ''}`}
+                                          >
+                                            <option value="Unpaid">Unpaid</option>
+                                            <option value="Paid">Paid</option>
+                                          </select>
+                                          {updatingStatusForId === order.id && (
+                                            <div className="flex justify-center">
+                                              <svg className="animate-spin h-5 w-5 text-indigo-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                              </svg>
+                                            </div>
+                                          )}
+                                        </div>
+                                      </td>
+                                      <td className="px-6 py-5 relative">
+                                        <div className="flex items-center gap-2">
+                                          <select
+                                            disabled={updatingStatusForId === order.id}
+                                            value={order.status || 'Pending'}
+                                            onChange={(e) => handleUpdateOrderStatus(order.id, e.target.value)}
+                                            className={`text-sm font-bold px-3 py-1.5 rounded-lg border focus:outline-none focus:ring-2 cursor-pointer transition-colors shadow-sm
+                                              ${(!order.status || order.status === 'Pending') ? 'bg-amber-50 text-amber-600 border-amber-200 focus:ring-amber-500/20' : 
+                                                order.status === 'Completed' ? 'bg-emerald-50 text-emerald-600 border-emerald-200 focus:ring-emerald-500/20' :
+                                                order.status === 'Processing' ? 'bg-blue-50 text-blue-600 border-blue-200 focus:ring-blue-500/20' :
+                                                order.status === 'Shipped' ? 'bg-purple-50 text-purple-600 border-purple-200 focus:ring-purple-500/20' :
+                                                order.status === 'Cancelled' ? 'bg-red-50 text-red-600 border-red-200 focus:ring-red-500/20' :
+                                                'bg-slate-50 text-slate-600 border-slate-200 focus:ring-slate-500/20'
+                                              } ${updatingStatusForId === order.id ? 'opacity-50' : ''}`}
+                                          >
+                                            {(!order.status || order.status === 'Pending') && (
+                                              <>
+                                                <option value="Pending">Pending</option>
+                                                <option value="Processing">Processing</option>
+                                                <option value="Shipped">Shipped</option>
+                                                <option value="Completed">Completed</option>
+                                                <option value="Cancelled">Cancelled</option>
+                                              </>
+                                            )}
+                                            {order.status === 'Processing' && (
+                                              <>
+                                                <option value="Processing">Processing</option>
+                                                <option value="Shipped">Shipped</option>
+                                                <option value="Completed">Completed</option>
+                                              </>
+                                            )}
+                                            {order.status === 'Shipped' && (
+                                              <>
+                                                <option value="Shipped">Shipped</option>
+                                                <option value="Completed">Completed</option>
+                                              </>
+                                            )}
+                                            {order.status === 'Completed' && (
+                                              <option value="Completed">Completed</option>
+                                            )}
+                                            {order.status === 'Cancelled' && (
+                                              <option value="Cancelled">Cancelled</option>
+                                            )}
+                                          </select>
+                                          {updatingStatusForId === order.id && (
+                                            <div className="flex justify-center">
+                                              <svg className="animate-spin h-5 w-5 text-indigo-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                              </svg>
+                                            </div>
+                                          )}
+                                        </div>
                                       </td>
                                       <td className="px-6 py-5 text-right">
                                         <div className="flex justify-end gap-2 transition-opacity">
@@ -2434,26 +2833,57 @@ export default function AdminDashboard() {
                   {/* Left: Product Selection */}
                   <div className="flex-1 flex flex-col bg-white border border-slate-200 rounded-[2rem] p-6 shadow-sm min-h-0 overflow-hidden">
                     <h2 className="text-2xl font-black text-slate-900 tracking-tight mb-4 flex-shrink-0">POS Terminal</h2>
-                    <div className="flex gap-3 mb-6 flex-shrink-0">
-                      <input type="text" placeholder="Search product to bill..." value={billingSearch} onChange={e => setBillingSearch(e.target.value)} className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-slate-900" />
-                      <select value={billingCategoryFilter} onChange={e => setBillingCategoryFilter(e.target.value)} className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-slate-900 w-40">
-                        <option value="All">All Categories</option>
-                        {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
-                      </select>
+                    <div className="flex flex-col sm:flex-row gap-3 mb-6 flex-shrink-0">
+                      <div className="relative flex-1 group">
+                        <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400 group-focus-within:text-indigo-500 transition-colors">
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                          </svg>
+                        </span>
+                        <input type="text" placeholder="Search product to bill..." value={billingSearch} onChange={e => setBillingSearch(e.target.value)} className="w-full bg-slate-50 border border-slate-200 hover:bg-slate-100 focus:bg-white rounded-xl pl-11 pr-4 py-3 text-sm font-semibold text-slate-800 focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all placeholder:text-slate-400" />
+                      </div>
+                      
+                      <div className="relative w-full sm:w-56 group">
+                         <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400 pointer-events-none group-focus-within:text-indigo-500 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" />
+                            </svg>
+                         </span>
+                        <select value={billingCategoryFilter} onChange={e => setBillingCategoryFilter(e.target.value)} className="w-full bg-slate-50 border border-slate-200 hover:bg-slate-100 focus:bg-white rounded-xl pl-11 pr-8 py-3 text-sm font-semibold text-slate-800 focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all appearance-none cursor-pointer">
+                          <option value="All">All Categories</option>
+                          {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                        </select>
+                        <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" /></svg></div>
+                      </div>
                     </div>
                     <div className="flex-1 overflow-y-auto min-h-0 pr-2 pb-4">
                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
-                          {products.filter(p => p.name.toLowerCase().includes(billingSearch.toLowerCase()) && (billingCategoryFilter === "All" || p.categoryId.toString() === billingCategoryFilter)).map(product => (
-                            <div key={product.id} onClick={() => {
-                               const existing = billingCart.find(i => i.id === product.id);
-                               if(existing) setBillingCart(billingCart.map(i => i.id === product.id ? {...i, quantity: i.quantity + 1} : i));
-                               else setBillingCart([...billingCart, {...product, quantity: 1}]);
-                            }} className="bg-white border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-indigo-500/30 rounded-2xl p-5 cursor-pointer transition-all flex flex-col items-center text-center group">
-                               {product.image ? <img src={product.image} alt={product.name} loading="lazy" decoding="async" className="h-28 w-full object-contain mb-4 group-hover:scale-105 transition-transform" /> : <div className="h-28 text-5xl flex items-center justify-center mb-4 opacity-50 group-hover:scale-110 transition-transform">📦</div>}
-                               <h4 className="text-sm font-bold text-slate-800 line-clamp-2 leading-snug mb-2">{product.name}</h4>
-                               <span className="text-lg font-black text-indigo-600 mt-auto bg-indigo-50 px-3 py-1 rounded-lg">₹{product.price}</span>
-                            </div>
-                          ))}
+                          {products.filter(p => p.name.toLowerCase().includes(billingSearch.toLowerCase()) && (billingCategoryFilter === "All" || p.categoryId.toString() === billingCategoryFilter)).map(product => {
+                            const isAdded = billingCart.some(i => i.id === product.id);
+                            return (
+                              <div key={product.id} onClick={() => {
+                                 if(isAdded) {
+                                   showToast("Product is already added. Increase quantity in the cart.", "error");
+                                 } else {
+                                   setBillingCart([...billingCart, {...product, quantity: 1}]);
+                                 }
+                              }} className={`border rounded-2xl p-4 transition-all flex flex-col items-center text-center group relative overflow-hidden ${isAdded ? 'bg-slate-50 border-slate-200 opacity-60 cursor-not-allowed' : 'bg-white border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-indigo-500/30 cursor-pointer'}`}>
+                                 {isAdded && <div className="absolute top-3 right-3 bg-emerald-500 text-white text-[9px] font-black px-2 py-1 rounded-md shadow-sm tracking-widest uppercase flex items-center gap-1 z-10"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3 h-3"><path fillRule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clipRule="evenodd" /></svg> IN CART</div>}
+                                 {product.originalPrice > product.price && (
+                                   <div className={`absolute top-3 left-3 text-[9px] font-black px-2 py-1 rounded-md shadow-sm tracking-widest z-10 ${isAdded ? 'bg-slate-300 text-slate-600' : 'bg-rose-500 text-white'}`}>
+                                      {Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% OFF
+                                   </div>
+                                 )}
+                                 {product.image ? <img src={product.image} alt={product.name} loading="lazy" decoding="async" className={`h-28 w-full object-contain mb-3 transition-transform relative z-0 ${isAdded ? 'grayscale' : 'group-hover:scale-105'}`} /> : <div className={`h-28 text-5xl flex items-center justify-center mb-3 transition-transform relative z-0 ${isAdded ? 'opacity-30 grayscale' : 'opacity-50 group-hover:scale-110'}`}>📦</div>}
+                                 <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 bg-slate-100 px-2 py-1 rounded-md mb-2">{categories.find(c => c.id === product.categoryId)?.name || 'Uncategorized'}</span>
+                                 <h4 className={`text-sm font-bold line-clamp-2 leading-snug mb-3 ${isAdded ? 'text-slate-500' : 'text-slate-800'}`}>{product.name}</h4>
+                                 
+                                 <div className="mt-auto flex items-center justify-center gap-2">
+                                   <span className={`text-lg font-black px-3 py-1 rounded-lg ${isAdded ? 'text-slate-400 bg-slate-200/50' : 'text-indigo-600 bg-indigo-50'}`}>₹{product.price}</span>
+                                 </div>
+                              </div>
+                            );
+                          })}
                        </div>
                     </div>
                   </div>
@@ -2467,7 +2897,25 @@ export default function AdminDashboard() {
 
                       <h3 className="text-xl font-black text-white tracking-tight mb-5 flex items-center justify-between border-b border-slate-700/50 pb-4 shrink-0 relative z-10">
                         <span>Current Bill</span>
-                        <span className="bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 px-3 py-1.5 rounded-full text-xs font-bold shadow-inner">{billingCart.reduce((a, c) => a + c.quantity, 0)} Items</span>
+                        <div className="flex items-center gap-4">
+                          {billingCart.length > 0 && (
+                            <button 
+                              onClick={() => {
+                                setBillingCart([]);
+                                setBillingCustomer({ name: '', phone: '', email: '', city: '', address: '' });
+                                setAdditionalDiscountValue('');
+                                setPackingCharge('');
+                                setAdditionalDiscountType('amount');
+                                showToast("Bill cleared completely", "success");
+                              }}
+                              className="text-[10px] text-rose-500 hover:text-rose-400 bg-rose-500/10 hover:bg-rose-500/20 px-2 py-1.5 rounded-lg uppercase tracking-widest font-black transition-colors flex items-center gap-1.5"
+                            >
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-3.5 h-3.5"><path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" /></svg>
+                              Clear
+                            </button>
+                          )}
+                          <span className="bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 px-3 py-1.5 rounded-full text-xs font-bold shadow-inner">{billingCart.reduce((a, c) => a + c.quantity, 0)} Items</span>
+                        </div>
                       </h3>
 
                       {/* Cart Items List */}
@@ -2492,7 +2940,18 @@ export default function AdminDashboard() {
                                     setBillingCart(billingCart.filter(i => i.id !== item.id));
                                   }
                                 }} className="px-2 py-1 text-slate-400 hover:text-white font-black cursor-pointer text-xs">−</button>
-                                <span className="px-1 py-1 text-xs font-black text-white w-6 text-center">{item.quantity}</span>
+                                <input 
+                                  type="number" 
+                                  min="1" 
+                                  value={item.quantity === 0 ? '' : item.quantity} 
+                                  onChange={(e) => {
+                                    const val = parseInt(e.target.value);
+                                    if (!isNaN(val) && val >= 1) {
+                                      setBillingCart(billingCart.map(i => i.id === item.id ? { ...i, quantity: val } : i));
+                                    }
+                                  }}
+                                  className="w-10 bg-transparent text-xs font-black text-white text-center outline-none focus:bg-slate-800 rounded px-0 py-1 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                />
                                 <button onClick={() => setBillingCart(billingCart.map(i => i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i))} className="px-2 py-1 text-slate-400 hover:text-white font-black cursor-pointer text-xs">+</button>
                               </div>
                               <button 
@@ -2502,33 +2961,83 @@ export default function AdminDashboard() {
                             </div>
                           ))
                         )}
-                      </div>
-
-                      {/* Customer Info & Summary */}
-                      <div className="mt-4 pt-4 border-t border-slate-700/50 shrink-0 relative z-10">
-                        <div className="space-y-2 mb-4">
-                          <input type="text" placeholder="Customer Name" value={billingCustomer.name} onChange={(e) => setBillingCustomer({...billingCustomer, name: e.target.value})} className="w-full bg-slate-800/80 border border-slate-700 rounded-xl px-4 py-2.5 text-sm font-semibold text-white outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all placeholder:text-slate-500" />
-                          <div className="grid grid-cols-2 gap-2">
-                            <input type="text" placeholder="Phone" value={billingCustomer.phone} onChange={(e) => setBillingCustomer({...billingCustomer, phone: e.target.value})} className="bg-slate-800/80 border border-slate-700 rounded-xl px-4 py-2.5 text-sm font-semibold text-white outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all placeholder:text-slate-500" />
-                            <input type="email" placeholder="Email (Opt)" value={billingCustomer.email} onChange={(e) => setBillingCustomer({...billingCustomer, email: e.target.value})} className="bg-slate-800/80 border border-slate-700 rounded-xl px-4 py-2.5 text-sm font-semibold text-white outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all placeholder:text-slate-500" />
-                            <input type="text" placeholder="City" value={billingCustomer.city} onChange={(e) => setBillingCustomer({...billingCustomer, city: e.target.value})} className="bg-slate-800/80 border border-slate-700 rounded-xl px-4 py-2.5 text-sm font-semibold text-white outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all placeholder:text-slate-500" />
-                            <input type="text" placeholder="Address" value={billingCustomer.address} onChange={(e) => setBillingCustomer({...billingCustomer, address: e.target.value})} className="bg-slate-800/80 border border-slate-700 rounded-xl px-4 py-2.5 text-sm font-semibold text-white outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all placeholder:text-slate-500" />
-                          </div>
                         </div>
 
-                        {(() => {
-                          const subtotal = billingCart.reduce((a, c) => a + (c.originalPrice * c.quantity), 0);
-                          const total = billingCart.reduce((a, c) => a + (c.price * c.quantity), 0);
-                          const savings = subtotal - total;
-                          
-                          return (
-                            <>
-                              <div className="flex justify-between items-end mb-5 bg-slate-800/50 p-4 rounded-2xl border border-slate-700">
-                                <div>
-                                  <div className="text-xs text-slate-400 tracking-widest font-black uppercase mb-1">Total Amount</div>
-                                  <div className="text-xs text-emerald-400 font-bold bg-emerald-400/10 px-2 py-1 rounded-md inline-block">Savings: ₹{savings.toFixed(2)}</div>
+                        <div className="mt-4 pt-4 border-t border-slate-700/50 shrink-0 relative z-10">
+                          <div className="mb-3">
+                            <div className="grid grid-cols-2 gap-2">
+                              <input type="text" placeholder="Name *" value={billingCustomer.name} onChange={(e) => setBillingCustomer({...billingCustomer, name: e.target.value})} className="bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 text-xs font-semibold text-white outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all placeholder:text-slate-500" />
+                              <input type="text" placeholder="Phone *" value={billingCustomer.phone} onChange={(e) => setBillingCustomer({...billingCustomer, phone: e.target.value})} className="bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 text-xs font-semibold text-white outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all placeholder:text-slate-500" />
+                              <input type="text" placeholder="City *" value={billingCustomer.city} onChange={(e) => setBillingCustomer({...billingCustomer, city: e.target.value})} className="bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 text-xs font-semibold text-white outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all placeholder:text-slate-500" />
+                              <input type="text" placeholder="Address" value={billingCustomer.address} onChange={(e) => setBillingCustomer({...billingCustomer, address: e.target.value})} className="bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 text-xs font-semibold text-white outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all placeholder:text-slate-500" />
+                            </div>
+                          </div>
+
+                          {(() => {
+                            const subtotal = billingCart.reduce((a, c) => a + (c.originalPrice * c.quantity), 0);
+                            const total = billingCart.reduce((a, c) => a + (c.price * c.quantity), 0);
+                            
+                            const extraVal = Number(additionalDiscountValue || 0);
+                            const extraAmt = additionalDiscountType === "percentage" ? (total * extraVal) / 100 : extraVal;
+                            const packChg = Number(packingCharge || 0);
+                            
+                            const finalTotal = Math.max(0, total - extraAmt + packChg);
+                            const finalSavings = (subtotal - total) + extraAmt;
+                            
+                            return (
+                              <>
+                                <div className="grid grid-cols-2 gap-2 mb-3 border-b border-slate-700/50 pb-3">
+                                  {/* Addl. Discount */}
+                                  <div className="flex bg-slate-800/80 border border-slate-700 rounded-lg focus-within:ring-1 focus-within:ring-indigo-500/50 transition-all items-center pl-2.5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5 text-amber-500 flex-shrink-0"><path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" /></svg>
+                                    <div className="relative flex items-center ml-1">
+                                      <select 
+                                        value={additionalDiscountType} 
+                                        onChange={(e) => setAdditionalDiscountType(e.target.value as "amount"|"percentage")}
+                                        className="bg-transparent hover:bg-slate-700/50 text-slate-300 font-bold text-[11px] rounded pl-2 pr-4 py-1 outline-none cursor-pointer appearance-none transition-colors"
+                                      >
+                                        <option value="amount">₹ Amt</option>
+                                        <option value="percentage">% Pct</option>
+                                      </select>
+                                      <div className="absolute inset-y-0 right-0 pr-1 flex items-center pointer-events-none text-slate-400">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3 h-3"><path fillRule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" /></svg>
+                                      </div>
+                                    </div>
+                                    <div className="w-px h-3.5 bg-slate-700 mx-1"></div>
+                                    <input 
+                                      type="number" 
+                                      min="0"
+                                      placeholder="Discount"
+                                      value={additionalDiscountValue}
+                                      onChange={(e) => setAdditionalDiscountValue(e.target.value)}
+                                      className="w-full bg-transparent text-white font-bold text-xs px-2 py-1.5 outline-none placeholder:text-slate-600 placeholder:font-medium"
+                                    />
+                                  </div>
+                                  
+                                  {/* Packing Charges */}
+                                  <div className="flex bg-slate-800/80 border border-slate-700 rounded-lg focus-within:ring-1 focus-within:ring-indigo-500/50 transition-all items-center pl-2.5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0"><path fillRule="evenodd" d="M11.986 3H12a2 2 0 0 1 2 2v6a2 2 0 0 1-1.5 1.937V7A2.5 2.5 0 0 0 10 4.5H4.063A2 2 0 0 1 6 3h.014A2.25 2.25 0 0 1 8.25 1h3.5a2.25 2.25 0 0 1 2.236 2ZM10.5 4v-.75a.75.75 0 0 0-.75-.75h-3.5a.75.75 0 0 0-.75.75V4h5Z" clipRule="evenodd" /><path fillRule="evenodd" d="M3 6a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H3Zm6 8.5a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3Z" clipRule="evenodd" /></svg>
+                                    <span className="text-slate-400 font-bold text-xs pl-1.5 pr-1 py-1.5">₹</span>
+                                    <div className="w-px h-3.5 bg-slate-700 mx-1"></div>
+                                    <input 
+                                      type="number" 
+                                      min="0"
+                                      placeholder="Packing"
+                                      value={packingCharge}
+                                      onChange={(e) => setPackingCharge(e.target.value)}
+                                      className="w-full bg-transparent text-white font-bold text-xs px-2 py-1.5 outline-none placeholder:text-slate-600 placeholder:font-medium"
+                                    />
+                                  </div>
                                 </div>
-                                <div className="text-3xl font-black text-white tracking-tight">₹{total.toFixed(2)}</div>
+                              
+                              <div className="flex justify-between items-end mb-3 bg-slate-800/40 p-3 rounded-xl border border-slate-700/60">
+                                <div>
+                                  <div className="text-[10px] text-slate-400 tracking-widest font-black uppercase mb-1">Total Amount</div>
+                                  <div className="text-[10px] text-emerald-400 font-bold bg-emerald-400/10 px-2 py-0.5 rounded-md inline-block">
+                                    Save ₹{finalSavings.toFixed(0)} ({subtotal > 0 ? Math.round((finalSavings / subtotal) * 100) : 0}% OFF)
+                                  </div>
+                                </div>
+                                <div className="text-2xl font-black text-white tracking-tight">₹{finalTotal.toFixed(2)}</div>
                               </div>
 
                               <button
@@ -2546,9 +3055,11 @@ export default function AdminDashboard() {
                                       customer_email: billingCustomer.email,
                                       customer_city: billingCustomer.city,
                                       customer_address: billingCustomer.address || billingCustomer.city,
-                                      total_amount: total,
-                                      total_savings: savings,
+                                      total_amount: finalTotal,
+                                      total_savings: finalSavings,
                                       source: "POS",
+                                      status: "Completed",
+                                      payment_status: "Paid",
                                       items: billingCart.map(item => ({
                                         id: item.id,
                                         name: item.name,
@@ -2567,7 +3078,6 @@ export default function AdminDashboard() {
 
                                     if(res.ok) {
                                       const newOrder = await res.json();
-                                      // Correctly construct fullOrder for handlePrintOrder
                                       const fullOrder = { 
                                         ...orderData, 
                                         id: newOrder.orderId || Math.floor(Math.random() * 10000),
@@ -2864,14 +3374,14 @@ export default function AdminDashboard() {
       {/* PRODUCT CREATION/EDIT MODAL */}
       {isProductModalOpen && (
         <div className="fixed inset-0 z-[100] bg-slate-900/80 backdrop-blur-xl flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-slate-800 border border-blue-500/30 rounded-[2rem] w-full max-w-3xl shadow-[0_0_60px_rgba(59,130,246,0.15)] overflow-hidden animate-slideDown my-8 relative">
+          <div className="bg-slate-800 border border-blue-500/30 rounded-[2rem] w-full max-w-5xl shadow-[0_0_60px_rgba(59,130,246,0.15)] overflow-hidden animate-slideDown my-8 relative flex flex-col max-h-[95vh]">
             
             {/* Ambient Background Glows */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-[80px] pointer-events-none"></div>
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-[80px] pointer-events-none"></div>
 
             {/* Modal Header */}
-            <div className="bg-gradient-to-r from-blue-900/40 to-transparent px-8 py-6 border-b border-slate-700 flex justify-between items-center relative z-10">
+            <div className="bg-gradient-to-r from-blue-900/40 to-transparent px-8 py-6 border-b border-slate-700 flex justify-between items-center relative z-10 shrink-0">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-500/20 to-indigo-500/20 border border-blue-500/30 text-blue-400 flex items-center justify-center text-xl shadow-inner">
                   {editingProduct ? "✏️" : "✨"}
@@ -2889,8 +3399,11 @@ export default function AdminDashboard() {
             </div>
 
             {/* Modal Body / Form */}
-            <form onSubmit={handleProductSubmit} className="p-8 space-y-8 relative z-10">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <form onSubmit={handleProductSubmit} className="relative z-10 flex-1 flex flex-col overflow-hidden">
+              <div className="flex flex-col lg:flex-row gap-10 p-8 overflow-y-auto custom-scrollbar">
+                {/* Left Column: Product Details */}
+                <div className="flex-[3] space-y-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-2">
                   <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-blue-300">
                     Product Name
@@ -3003,96 +3516,113 @@ export default function AdminDashboard() {
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Image Selection Section */}
-              <div className="space-y-5">
-                <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-blue-300">
-                  <span className="w-5 h-5 rounded border border-blue-500/30 bg-blue-500/10 text-blue-400 flex items-center justify-center text-xs">🖼️</span>
-                  Product Image Source
-                </label>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Left Column: Preview & Upload */}
-                  <div className="space-y-4 flex flex-col h-full">
-                    <div className="flex-1 bg-slate-700/30 rounded-2xl p-4 border border-slate-600 flex flex-col justify-center items-center text-center gap-3 relative overflow-hidden group">
-                      {productImage ? (
-                        <>
-                          <div className="absolute inset-0 bg-slate-800/50"></div>
-                          <img
-                            src={productImage}
-                            alt="Product Preview"
-                            className="w-32 h-32 object-contain relative z-10 drop-shadow-2xl group-hover:scale-105 transition-transform duration-300"
-                          />
-                          <div className="relative z-10 w-full mt-2">
-                            <p className="text-xs text-slate-300 font-mono break-all bg-slate-900/60 px-2 py-1 rounded-md">{productImage}</p>
-                          </div>
-                        </>
-                      ) : (
-                        <div className="flex flex-col items-center justify-center h-32 opacity-40">
-                          <span className="text-4xl mb-2">📸</span>
-                          <span className="text-slate-300 text-xs font-bold uppercase tracking-wide">No Image</span>
-                        </div>
-                      )}
-                    </div>
-                    
-                    <div>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        ref={fileInputRef}
-                        onChange={handleImageUpload}
-                        className="hidden"
-                      />
-                      <button
-                        type="button"
-                        disabled={uploadingImage}
-                        onClick={() => fileInputRef.current?.click()}
-                        className="w-full py-3.5 rounded-xl bg-blue-500/10 hover:bg-blue-500/20 text-blue-300 border border-blue-500/30 text-base font-bold tracking-tight transition-all disabled:opacity-50 flex items-center justify-center gap-2 shadow-inner"
-                      >
-                        {uploadingImage ? (
-                          <>
-                            <span className="animate-spin text-lg">↻</span> Uploading...
-                          </>
-                        ) : (
-                          <>
-                            <span className="text-lg">📁</span> Upload Custom Image
-                          </>
-                        )}
-                      </button>
-                    </div>
+                <div className="flex items-center justify-between col-span-1 md:col-span-2 bg-slate-700/30 p-5 rounded-2xl border border-slate-600/50">
+                  <div className="flex flex-col">
+                    <span className="text-sm font-bold text-amber-300 uppercase tracking-wide">Opt-in to Global Discount</span>
+                    <span className="text-xs text-slate-400 mt-1 font-medium">When enabled, any Global Discount will automatically update this product&apos;s Offer Price.</span>
                   </div>
-
-                  {/* Right Column: Presets */}
-                  <div className="bg-slate-700/30 rounded-2xl p-5 border border-slate-600">
-                    <span className="text-xs font-black tracking-widest uppercase text-slate-400 mb-4 block flex items-center gap-2">
-                      <span>✨</span> Or choose preset
-                    </span>
-                    <div className="grid grid-cols-2 gap-3">
-                      {presetImages.map((img) => (
-                        <button
-                          key={img.label}
-                          type="button"
-                          onClick={() => setProductImage(img.path)}
-                          className={`p-3 rounded-xl border flex flex-col items-center justify-center gap-2 transition-all group ${
-                            productImage === img.path
-                              ? "border-blue-500 bg-blue-500/20 text-blue-200 shadow-[0_0_15px_rgba(59,130,246,0.3)] ring-1 ring-blue-500"
-                              : "border-slate-600 bg-slate-800 hover:border-blue-500/50 hover:bg-slate-700 text-slate-300"
-                          }`}
-                        >
-                          <div className="w-8 h-8 relative">
-                            <img src={img.path} alt={img.label} loading="lazy" decoding="async" className="w-full h-full object-contain opacity-80 group-hover:opacity-100 transition-opacity" />
-                          </div>
-                          <span className="text-xs font-bold tracking-wide uppercase text-center">{img.label}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+                  <label className="relative inline-flex items-center cursor-pointer ml-4 shrink-0">
+                    <input 
+                      type="checkbox" 
+                      className="sr-only peer" 
+                      checked={Boolean(productApplyDiscount)}
+                      onChange={(e) => setProductApplyDiscount(e.target.checked)}
+                    />
+                    <div className="w-14 h-7 bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-amber-500"></div>
+                  </label>
                 </div>
               </div>
 
+              {/* Image Upload (Moved to Left Column) */}
+              <div className="space-y-4 pt-6 border-t border-slate-700/50 mt-2">
+                <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-blue-300">
+                  <span className="w-5 h-5 rounded border border-blue-500/30 bg-blue-500/10 text-blue-400 flex items-center justify-center text-xs">🖼️</span>
+                  Product Image Upload
+                </label>
+                <div className="flex flex-col sm:flex-row gap-6">
+                  <div className="flex-1 bg-slate-700/30 rounded-2xl p-4 border border-slate-600 flex flex-col justify-center items-center text-center gap-3 relative overflow-hidden group min-h-[160px]">
+                    {productImage ? (
+                      <>
+                        <div className="absolute inset-0 bg-slate-800/50"></div>
+                        <img
+                          src={productImage}
+                          alt="Product Preview"
+                          className="w-32 h-32 object-contain relative z-10 drop-shadow-2xl group-hover:scale-105 transition-transform duration-300"
+                        />
+                        <div className="relative z-10 w-full mt-2">
+                          <p className="text-xs text-slate-300 font-mono break-all bg-slate-900/60 px-2 py-1 rounded-md">{productImage}</p>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="flex flex-col items-center justify-center h-32 opacity-40">
+                        <span className="text-4xl mb-2">📸</span>
+                        <span className="text-slate-300 text-xs font-bold uppercase tracking-wide">No Image</span>
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="flex-1 flex flex-col justify-center">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      ref={fileInputRef}
+                      onChange={handleImageUpload}
+                      className="hidden"
+                    />
+                    <button
+                      type="button"
+                      disabled={uploadingImage}
+                      onClick={() => fileInputRef.current?.click()}
+                      className="w-full py-4 rounded-xl bg-blue-500/10 hover:bg-blue-500/20 text-blue-300 border border-blue-500/30 text-base font-bold tracking-tight transition-all disabled:opacity-50 flex items-center justify-center gap-2 shadow-inner"
+                    >
+                      {uploadingImage ? (
+                        <>
+                          <span className="animate-spin text-lg">↻</span> Uploading...
+                        </>
+                      ) : (
+                        <>
+                          <span className="text-lg">📁</span> Upload Custom Image
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Right Column: Image Selection (Presets) */}
+            <div className="flex-[2] border-t lg:border-t-0 lg:border-l border-slate-700/50 pt-8 lg:pt-0 lg:pl-10">
+              <div className="bg-slate-700/30 rounded-2xl p-5 border border-slate-600 h-full flex flex-col">
+                <span className="text-xs font-black tracking-widest uppercase text-slate-400 mb-6 block flex items-center gap-2">
+                  <span>✨</span> Choose from Presets
+                </span>
+                <div className="grid grid-cols-2 gap-4 flex-1 content-start">
+                  {presetImages.map((img) => (
+                    <button
+                      key={img.label}
+                      type="button"
+                      onClick={() => setProductImage(img.path)}
+                      className={`p-3 rounded-xl border flex flex-col items-center justify-center gap-2 transition-all group ${
+                        productImage === img.path
+                          ? "border-blue-500 bg-blue-500/20 text-blue-200 shadow-[0_0_15px_rgba(59,130,246,0.3)] ring-1 ring-blue-500"
+                          : "border-slate-600 bg-slate-800 hover:border-blue-500/50 hover:bg-slate-700 text-slate-300"
+                      }`}
+                    >
+                      <div className="w-10 h-10 relative">
+                        <img src={img.path} alt={img.label} loading="lazy" decoding="async" className="w-full h-full object-contain opacity-80 group-hover:opacity-100 transition-opacity" />
+                      </div>
+                      <span className="text-xs font-bold tracking-wide uppercase text-center">{img.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+          </div>
+
               {/* Modal Actions */}
-              <div className="flex justify-end gap-3 pt-6 border-t border-slate-700">
+              <div className="flex justify-end gap-3 px-8 py-5 border-t border-slate-700 bg-slate-800/80 shrink-0">
                 <button
                   type="button"
                   onClick={() => setIsProductModalOpen(false)}
@@ -3121,38 +3651,45 @@ export default function AdminDashboard() {
         <div className="fixed inset-0 z-[70] bg-slate-900/80 backdrop-blur-xl flex items-center justify-center p-4 overflow-y-auto font-['Outfit']">
           <div className="min-h-full w-full flex items-center justify-center">
             
-            <div className="bg-slate-800 border border-amber-500/30 rounded-[2rem] w-full max-w-md shadow-[0_0_60px_rgba(245,158,11,0.15)] overflow-hidden animate-slideDown relative">
+            <div className="bg-slate-800 border border-amber-500/30 rounded-[2rem] w-full max-w-4xl shadow-[0_0_60px_rgba(245,158,11,0.15)] overflow-hidden animate-slideDown relative flex flex-col md:flex-row">
               
-              {/* Ambient Background Glows */}
-              <div className="absolute top-0 right-0 w-48 h-48 bg-amber-500/10 rounded-full blur-[60px] pointer-events-none"></div>
-              <div className="absolute bottom-0 left-0 w-48 h-48 bg-orange-500/10 rounded-full blur-[60px] pointer-events-none"></div>
-
-              {/* Modal Header */}
-              <div className="bg-gradient-to-r from-amber-900/40 to-transparent px-8 py-6 border-b border-slate-700 flex justify-between items-center relative z-10">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 border border-amber-500/30 text-amber-400 flex items-center justify-center text-lg shadow-inner">
+              {/* Left Side: Information */}
+              <div className="md:w-5/12 bg-gradient-to-br from-amber-900/40 to-slate-900 p-8 border-r border-slate-700/50 flex flex-col relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-[60px] pointer-events-none"></div>
+                
+                <div className="relative z-10 flex-1 flex flex-col">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 border border-amber-500/30 text-amber-400 flex items-center justify-center text-2xl shadow-inner mb-6">
                     🏷️
                   </div>
-                  <h3 className="text-xl font-black text-white tracking-tight">
+                  <h3 className="text-3xl font-black text-white tracking-tight mb-4">
                     Global Discount
                   </h3>
+                  <p className="text-slate-300 text-sm leading-relaxed font-medium mb-6">
+                    Set a flat discount percentage for your entire catalog. This will recalculate the offer price for <strong className="text-amber-400">all eligible products</strong> based on their original price instantly.
+                  </p>
+                  
+                  <div className="mt-auto bg-amber-500/10 border border-amber-500/20 rounded-xl p-4">
+                    <div className="flex items-start gap-3">
+                      <span className="text-amber-400 text-lg mt-0.5">💡</span>
+                      <p className="text-xs text-amber-100/70 font-medium leading-relaxed">
+                        Products with the discount toggle disabled in the products list will <strong className="text-amber-400">not</strong> be affected by this change.
+                      </p>
+                    </div>
+                  </div>
                 </div>
+              </div>
+
+              {/* Right Side: Controls */}
+              <div className="md:w-7/12 p-8 relative flex flex-col justify-between bg-slate-800">
                 <button
                   type="button"
                   onClick={() => setShowGlobalDiscountModal(false)}
-                  className="w-10 h-10 rounded-full bg-slate-700/50 border border-slate-600 text-slate-300 hover:bg-red-500/20 hover:text-red-400 hover:border-red-500/30 transition-all flex items-center justify-center text-lg backdrop-blur-sm"
+                  className="absolute top-6 right-6 w-10 h-10 rounded-full bg-slate-700/50 border border-slate-600 text-slate-300 hover:bg-red-500/20 hover:text-red-400 hover:border-red-500/30 transition-all flex items-center justify-center text-lg backdrop-blur-sm z-20"
                 >
                   ✕
                 </button>
-              </div>
 
-              {/* Modal Body */}
-              <div className="p-8 space-y-8 relative z-10">
-                <p className="text-slate-300 text-sm leading-relaxed font-medium">
-                  Set a flat discount percentage for your entire catalog. This will recalculate the offer price for <strong className="text-amber-400">all products</strong> based on their original price instantly.
-                </p>
-                
-                <div className="bg-slate-900/50 p-6 rounded-2xl border border-slate-700 shadow-inner">
+                <div className="flex-1 flex flex-col justify-center max-w-sm mx-auto w-full pt-8 md:pt-0">
                   <label className="block text-xs font-black uppercase tracking-widest text-amber-500 mb-6 text-center">
                     Set Discount Percentage
                   </label>
@@ -3163,21 +3700,21 @@ export default function AdminDashboard() {
                         const val = parseInt(globalDiscountValue) || 0;
                         if (val > 0) setGlobalDiscountValue(String(val - 5));
                       }}
-                      className="w-12 h-12 rounded-full bg-slate-800 border border-slate-600 text-slate-300 font-black text-xl hover:bg-slate-700 hover:text-amber-400 hover:border-amber-400/50 transition-all flex items-center justify-center cursor-pointer active:scale-95 shadow-sm"
+                      className="w-14 h-14 rounded-full bg-slate-900 border border-slate-700 text-slate-300 font-black text-2xl hover:bg-slate-700 hover:text-amber-400 hover:border-amber-400/50 transition-all flex items-center justify-center cursor-pointer active:scale-95 shadow-sm"
                     >−</button>
                     
                     <div className="relative group">
-                      <div className="relative flex items-center justify-center bg-slate-950 border-2 border-amber-500/50 rounded-2xl w-32 h-20 shadow-[0_0_30px_rgba(245,158,11,0.2)]">
+                      <div className="relative flex items-center justify-center bg-slate-950 border-2 border-amber-500/50 rounded-2xl w-36 h-24 shadow-[0_0_30px_rgba(245,158,11,0.2)]">
                         <input
                           type="number"
                           min="0"
                           max="100"
                           value={globalDiscountValue}
                           onChange={(e) => setGlobalDiscountValue(e.target.value)}
-                          className="w-full h-full bg-transparent text-center text-4xl font-black text-amber-400 outline-none appearance-none"
+                          className="w-full h-full bg-transparent text-center text-5xl font-black text-amber-400 outline-none appearance-none"
                           style={{ MozAppearance: 'textfield' }}
                         />
-                        <span className="absolute right-3 bottom-2 text-amber-500/70 font-black text-base">%</span>
+                        <span className="absolute right-3 bottom-3 text-amber-500/70 font-black text-lg">%</span>
                       </div>
                     </div>
 
@@ -3186,27 +3723,26 @@ export default function AdminDashboard() {
                         const val = parseInt(globalDiscountValue) || 0;
                         if (val < 100) setGlobalDiscountValue(String(val + 5));
                       }}
-                      className="w-12 h-12 rounded-full bg-slate-800 border border-slate-600 text-slate-300 font-black text-xl hover:bg-slate-700 hover:text-amber-400 hover:border-amber-400/50 transition-all flex items-center justify-center cursor-pointer active:scale-95 shadow-sm"
+                      className="w-14 h-14 rounded-full bg-slate-900 border border-slate-700 text-slate-300 font-black text-2xl hover:bg-slate-700 hover:text-amber-400 hover:border-amber-400/50 transition-all flex items-center justify-center cursor-pointer active:scale-95 shadow-sm"
                     >+</button>
                   </div>
                   
                   {/* Visualizer text */}
-                  <div className="mt-8 text-center">
-                    <span className="inline-flex items-center gap-2 bg-slate-800/80 border border-slate-600 px-4 py-2 rounded-xl text-xs text-slate-400 font-medium tracking-wide">
+                  <div className="mt-10 text-center">
+                    <span className="inline-flex items-center gap-3 bg-slate-900/50 border border-slate-700 px-5 py-3 rounded-xl text-sm text-slate-400 font-medium tracking-wide shadow-inner">
                       <span>A ₹1000 product will become</span>
-                      <span className="text-amber-400 font-black text-sm bg-amber-400/10 px-2 py-0.5 rounded-md">₹{1000 - (1000 * (parseInt(globalDiscountValue) || 0) / 100)}</span>
+                      <span className="text-amber-400 font-black text-base bg-amber-400/10 px-3 py-1 rounded-lg">₹{1000 - (1000 * (parseInt(globalDiscountValue) || 0) / 100)}</span>
                     </span>
                   </div>
                 </div>
-              </div>
 
-              {/* Modal Footer */}
-              <div className="px-8 pb-8 flex gap-4 relative z-10">
+              {/* Modal Footer (now part of right side) */}
+              <div className="mt-8 pt-6 border-t border-slate-700 flex gap-4 w-full">
                 <button
                   type="button"
                   onClick={() => setShowGlobalDiscountModal(false)}
                   disabled={isApplyingDiscount}
-                  className="flex-1 py-3.5 rounded-xl bg-slate-700/50 border border-slate-600 hover:bg-slate-700 text-sm font-bold tracking-tight text-slate-300 transition-all disabled:opacity-50"
+                  className="flex-1 py-4 rounded-xl bg-slate-700/50 border border-slate-600 hover:bg-slate-700 text-sm font-bold tracking-tight text-slate-300 transition-all disabled:opacity-50"
                 >
                   Cancel
                 </button>
@@ -3214,11 +3750,11 @@ export default function AdminDashboard() {
                   type="button"
                   onClick={applyGlobalDiscount}
                   disabled={isApplyingDiscount}
-                  className="flex-[2] py-3.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-900 font-black text-sm tracking-tight transition-all shadow-[0_0_20px_rgba(245,158,11,0.3)] hover:shadow-[0_0_30px_rgba(245,158,11,0.4)] hover:-translate-y-0.5 active:scale-95 disabled:opacity-50 disabled:hover:scale-100 flex items-center justify-center gap-2"
+                  className="flex-[2] py-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-900 font-black text-sm tracking-tight transition-all shadow-[0_0_20px_rgba(245,158,11,0.3)] hover:shadow-[0_0_30px_rgba(245,158,11,0.4)] hover:-translate-y-0.5 active:scale-95 disabled:opacity-50 disabled:hover:scale-100 flex items-center justify-center gap-2"
                 >
                   {isApplyingDiscount ? (
                     <>
-                      <svg className="animate-spin h-4 w-4 text-slate-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <svg className="animate-spin h-5 w-5 text-slate-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>
@@ -3232,28 +3768,38 @@ export default function AdminDashboard() {
                 </button>
               </div>
             </div>
+            </div>
           </div>
         </div>
       )}
 
       {/* ORDER ITEMS VIEW MODAL */}
       {viewingOrder && (
-        <div className="fixed inset-0 z-[60] bg-[#0a0514]/90 backdrop-blur-xl flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-slate-800/95 backdrop-blur-xl border border-slate-700/50 rounded-3xl w-[95vw] max-w-7xl overflow-hidden shadow-[0_0_80px_rgba(30,27,75,0.8)] animate-slideDown my-8 flex flex-col max-h-[90vh]">
+        <div className="fixed inset-0 z-[60] bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white border border-slate-200 rounded-3xl w-[95vw] max-w-7xl overflow-hidden shadow-2xl animate-slideDown my-8 flex flex-col max-h-[90vh]">
             {/* Modal Header */}
-            <div className="bg-slate-900/50 px-8 py-5 border-b border-slate-700/50 flex justify-between items-center shrink-0">
+            <div className="bg-indigo-50/50 px-8 py-6 border-b border-indigo-100 flex justify-between items-center shrink-0">
               <div>
-                <h3 className="text-xl font-black text-white tracking-tight flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-indigo-500/20 flex items-center justify-center border border-indigo-500/30 text-indigo-400">🛍️</div>
+                <h3 className="text-2xl font-black text-indigo-950 tracking-tight flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center border border-indigo-100 shadow-sm text-indigo-500 text-xl">🛍️</div>
                   Order #{viewingOrder.id} Details
                 </h3>
-                <p className="text-slate-400 text-sm font-bold mt-1 tracking-tight">
-                  Customer: <span className="text-indigo-300">{viewingOrder.customer_name}</span> | Total Items: <span className="text-indigo-300">{viewingOrder.items.length}</span>
+                <p className="text-slate-500 text-base font-medium mt-2 tracking-tight flex items-center gap-2">
+                  <span>Customer: <span className="text-indigo-700 font-black">{viewingOrder.customer_name}</span></span>
+                  <span className="text-slate-300">|</span>
+                  <span>Total Items: <span className="text-indigo-700 font-black">{viewingOrder.items.length}</span></span>
+                  <span className="text-slate-300">|</span>
+                  <span className="flex items-center gap-2">
+                    Payment: 
+                    <span className={`px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider ${(!viewingOrder.payment_status || viewingOrder.payment_status === 'Unpaid') ? 'bg-red-100 text-red-600 border border-red-200' : 'bg-emerald-100 text-emerald-600 border border-emerald-200'}`}>
+                      {viewingOrder.payment_status || 'Unpaid'}
+                    </span>
+                  </span>
                 </p>
               </div>
               <button
                 onClick={() => setViewingOrder(null)}
-                className="text-slate-400 hover:text-white transition-colors p-2 rounded-lg hover:bg-white/10"
+                className="text-slate-400 hover:text-slate-600 transition-colors p-2 rounded-lg hover:bg-slate-100"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
@@ -3262,70 +3808,256 @@ export default function AdminDashboard() {
             </div>
 
             {/* Modal Body / Items List */}
-            <div className="p-8 overflow-y-auto custom-scrollbar flex-grow space-y-6 relative">
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-500/10 rounded-full blur-[100px] pointer-events-none"></div>
-              <div className="bg-slate-900/40 border border-slate-700/50 rounded-2xl overflow-hidden backdrop-blur-sm relative z-10">
+            <div className="p-8 overflow-y-auto custom-scrollbar flex-grow space-y-6 relative bg-slate-50/50">
+              <div className="flex justify-end mb-1">
+                <button
+                  onClick={() => setIsAddProductModalOpen(true)}
+                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white text-sm font-black tracking-tight transition-all shadow-md shadow-indigo-500/30 hover:shadow-lg hover:shadow-indigo-500/40 flex items-center gap-2 active:scale-[0.98]"
+                >
+                  <div className="bg-white/20 p-1 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-4 h-4 text-white">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                  </div>
+                  Add Extra Products
+                </button>
+              </div>
+              <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm relative z-10">
                 <table className="w-full text-left border-collapse">
                   <thead>
-                    <tr className="border-b border-slate-700/50 bg-slate-900/60 text-slate-400 text-xs font-black uppercase tracking-widest">
-                      <th className="py-4 px-6">Product</th>
-                      <th className="py-4 px-6 text-center">Quantity</th>
-                      <th className="py-4 px-6 text-right">Net Price</th>
-                      <th className="py-4 px-6 text-right text-white">Total</th>
+                    <tr className="border-b border-slate-200 bg-slate-50 text-slate-500 text-sm font-black uppercase tracking-widest">
+                      <th className="py-5 px-6">Product Name</th>
+                      <th className="py-5 px-6 text-center">Quantity</th>
+                      <th className="py-5 px-6 text-right">Unit Price</th>
+                      <th className="py-5 px-6 text-right text-slate-900">Total Price</th>
+                      <th className="py-5 px-6 text-center w-16"></th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-700/30 text-base font-bold">
+                  <tbody className="divide-y divide-slate-100 text-lg">
                     {viewingOrder.items.map((item: any, idx: number) => (
-                      <tr key={idx} className="hover:bg-slate-800/30 transition-colors">
-                        <td className="py-4 px-6 text-slate-200 font-black">{item.name}</td>
-                        <td className="py-4 px-6 text-center">
-                          <span className="bg-slate-800 px-3.5 py-1.5 rounded-lg text-indigo-300 border border-slate-700 shadow-inner">{item.quantity}</span>
+                      <tr key={idx} className="hover:bg-indigo-50/30 transition-colors group">
+                        <td className="py-5 px-6 text-slate-800 font-bold">{item.name}</td>
+                        <td className="py-5 px-6 text-center">
+                          <span className="bg-indigo-50 px-4 py-2 rounded-xl text-indigo-700 border border-indigo-100 shadow-sm font-black inline-block min-w-[3rem] text-center">{item.quantity}</span>
                         </td>
-                        <td className="py-4 px-6 text-right text-slate-400">
-                          <span className="font-semibold">₹{item.originalPrice}</span>
+                        <td className="py-5 px-6 text-right text-slate-500 font-medium">
+                          ₹{item.originalPrice}
                         </td>
-                        <td className="py-4 px-6 text-right text-white font-black">₹{item.originalPrice * item.quantity}</td>
+                        <td className="py-5 px-6 text-right text-slate-900 font-black">₹{item.originalPrice * item.quantity}</td>
+                        <td className="py-5 px-6 text-center">
+                          <button
+                            onClick={() => handleRemoveProductFromOrder(idx)}
+                            className="p-2 rounded-lg text-red-500 hover:text-red-600 hover:bg-red-50 transition-all"
+                            title="Remove Product"
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                            </svg>
+                          </button>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
-                  <tfoot className="bg-slate-900/60 border-t border-slate-700/50">
+                  <tfoot className="bg-slate-50 border-t border-slate-200">
                     <tr>
-                      <td colSpan={3} className="py-4 px-6 text-right text-sm font-black tracking-tight text-slate-400">Total Amount:</td>
-                      <td className="py-4 px-6 text-right text-lg font-black text-white">₹{viewingOrder.total_amount + (viewingOrder.total_savings || 0)}</td>
+                      <td colSpan={4} className="py-5 px-6 text-right text-base font-bold tracking-tight text-slate-500">Total Amount:</td>
+                      <td className="py-5 px-6 text-right text-xl font-black text-slate-900">₹{viewingOrder.total_amount + (viewingOrder.total_savings || 0)}</td>
                     </tr>
                     {(viewingOrder.total_savings || 0) > 0 && (
-                      <tr className="border-t border-slate-700/30">
-                        <td colSpan={3} className="py-3 px-6 text-right text-xs font-black tracking-tight text-emerald-400">
-                          Discount ({Math.round(((viewingOrder.total_savings || 0) / (viewingOrder.total_amount + (viewingOrder.total_savings || 0))) * 100)}% OFF):
+                      <tr className="border-t border-slate-200">
+                        <td colSpan={4} className="py-4 px-6 text-right text-sm font-bold tracking-tight text-emerald-600">
+                          Discount Applied ({Math.round(((viewingOrder.total_savings || 0) / (viewingOrder.total_amount + (viewingOrder.total_savings || 0))) * 100)}% OFF):
                         </td>
-                        <td className="py-3 px-6 text-right text-base font-black text-emerald-400">-₹{viewingOrder.total_savings || 0}</td>
+                        <td className="py-4 px-6 text-right text-lg font-black text-emerald-600">-₹{viewingOrder.total_savings || 0}</td>
                       </tr>
                     )}
-                    <tr className="border-t border-slate-700/50 bg-indigo-950/20">
-                      <td colSpan={3} className="py-5 px-6 text-right text-base font-black tracking-tight text-indigo-200">Net Amount To Pay:</td>
-                      <td className="py-5 px-6 text-right text-2xl font-black text-white">₹{viewingOrder.total_amount}</td>
+                    <tr className="border-t border-slate-200 bg-slate-50">
+                      <td colSpan={3} className="py-4 px-6 border-r border-slate-200/60">
+                        <div className="flex items-center gap-3">
+                          <span className="text-sm font-black text-slate-500 uppercase tracking-widest flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 text-amber-500"><path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" /></svg> Addl. Discount:</span>
+                          <div className="relative">
+                            <select 
+                              value={additionalDiscountType} 
+                              onChange={(e) => setAdditionalDiscountType(e.target.value as "amount"|"percentage")}
+                              className="bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-bold text-sm rounded-xl pl-4 pr-9 py-2 focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 shadow-sm transition-all cursor-pointer appearance-none"
+                            >
+                              <option value="amount">Amount (₹)</option>
+                              <option value="percentage">Percentage (%)</option>
+                            </select>
+                            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400">
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" /></svg>
+                            </div>
+                          </div>
+                          <div className="relative">
+                            <input 
+                              type="number" 
+                              min="0"
+                              placeholder="Value"
+                              value={additionalDiscountValue}
+                              onChange={(e) => setAdditionalDiscountValue(e.target.value)}
+                              className="w-28 bg-white hover:bg-slate-50 border border-slate-200 text-slate-800 font-bold text-sm rounded-xl px-4 py-2 focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 shadow-sm transition-all placeholder:text-slate-400 placeholder:font-medium"
+                            />
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-4 px-6 text-right text-base font-bold tracking-tight text-slate-500">Additional Discount:</td>
+                      <td className="py-4 px-6 text-right text-lg font-black text-emerald-600">
+                        -₹{(() => {
+                           const extraVal = Number(additionalDiscountValue || 0);
+                           if(extraVal === 0) return "0";
+                           return additionalDiscountType === "percentage" 
+                             ? ((viewingOrder.total_amount * extraVal) / 100).toFixed(2) 
+                             : extraVal.toFixed(2);
+                        })()}
+                      </td>
+                    </tr>
+                    <tr className="border-t border-slate-200 bg-slate-50">
+                      <td colSpan={3} className="py-4 px-6 border-r border-slate-200/60">
+                        <div className="flex items-center gap-3">
+                          <span className="text-sm font-black text-slate-500 uppercase tracking-widest flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 text-emerald-500"><path fillRule="evenodd" d="M11.986 3H12a2 2 0 0 1 2 2v6a2 2 0 0 1-1.5 1.937V7A2.5 2.5 0 0 0 10 4.5H4.063A2 2 0 0 1 6 3h.014A2.25 2.25 0 0 1 8.25 1h3.5a2.25 2.25 0 0 1 2.236 2ZM10.5 4v-.75a.75.75 0 0 0-.75-.75h-3.5a.75.75 0 0 0-.75.75V4h5Z" clipRule="evenodd" /><path fillRule="evenodd" d="M3 6a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H3Zm6 8.5a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3Z" clipRule="evenodd" /></svg> Packing Charges:</span>
+                          <div className="relative">
+                            <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400 font-bold">₹</span>
+                            <input 
+                              type="number" 
+                              min="0"
+                              placeholder="0.00"
+                              value={packingCharge}
+                              onChange={(e) => setPackingCharge(e.target.value)}
+                              className="w-32 bg-white hover:bg-slate-50 border border-slate-200 text-slate-800 font-bold text-sm rounded-xl pl-8 pr-4 py-2 focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 shadow-sm transition-all placeholder:text-slate-400 placeholder:font-medium"
+                            />
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-4 px-6 text-right text-base font-bold tracking-tight text-slate-500">Packing Charges:</td>
+                      <td className="py-4 px-6 text-right text-lg font-black text-slate-900">
+                        +₹{Number(packingCharge || 0).toFixed(2)}
+                      </td>
+                    </tr>
+                    <tr className="border-t border-indigo-200 bg-indigo-50">
+                      <td colSpan={4} className="py-6 px-6 text-right text-lg font-black tracking-tight text-indigo-900">Final Amount To Pay:</td>
+                      <td className="py-6 px-6 text-right text-3xl font-black text-indigo-700">
+                        ₹{(() => {
+                           const extraVal = Number(additionalDiscountValue || 0);
+                           const extraAmt = additionalDiscountType === "percentage" 
+                             ? (viewingOrder.total_amount * extraVal) / 100 
+                             : extraVal;
+                           const packChg = Number(packingCharge || 0);
+                           return Math.max(0, viewingOrder.total_amount - extraAmt + packChg).toFixed(2);
+                        })()}
+                      </td>
                     </tr>
                   </tfoot>
                 </table>
               </div>
             </div>
-            
             {/* Modal Footer */}
-            <div className="bg-slate-900/50 border-t border-slate-700/50 px-8 py-5 flex justify-end gap-4 shrink-0">
+            <div className="bg-slate-50 border-t border-slate-200 px-8 py-5 flex justify-end gap-4 shrink-0">
               <button
-                onClick={() => handlePrintOrder(viewingOrder)}
-                className="px-8 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-blue-600 hover:from-indigo-600 hover:to-blue-700 text-white text-sm font-black tracking-tight transition-all shadow-lg shadow-indigo-500/20 flex items-center gap-2 border border-indigo-400/20"
+                onClick={() => handlePrintOrder(viewingOrder, additionalDiscountType, additionalDiscountValue, packingCharge)}
+                className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-indigo-500 to-blue-600 hover:from-indigo-600 hover:to-blue-700 text-white text-base font-black tracking-tight transition-all shadow-lg shadow-indigo-500/20 flex items-center gap-2 border border-indigo-400/20"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0v-2.94a2.25 2.25 0 0 1 2.25-2.25h6a2.25 2.25 0 0 1 2.25 2.25v2.94ZM15 10.125a1.125 1.125 0 1 1-2.25 0 1.125 1.125 0 0 1 2.25 0Z" />
                 </svg>
                 Print / Download PDF
               </button>
               <button
-                onClick={() => setViewingOrder(null)}
-                className="px-8 py-3 rounded-xl bg-slate-800 border border-slate-700 hover:bg-slate-700 hover:border-slate-600 text-sm font-black tracking-tight text-white transition-all shadow-lg"
+                onClick={() => { setViewingOrder(null); setAdditionalDiscountValue(""); setPackingCharge(""); setStagedProducts([{productId: "", qty: "1"}]); }}
+                className="px-8 py-3.5 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 hover:border-slate-400 text-base font-black tracking-tight text-slate-700 transition-all shadow-sm"
               >
                 Close View
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ADD EXTRA PRODUCTS MODAL */}
+      {isAddProductModalOpen && (
+        <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 sm:p-6 bg-slate-900/40 backdrop-blur-sm">
+          <div className="absolute inset-0" onClick={() => setIsAddProductModalOpen(false)}></div>
+          <div className="relative w-full max-w-3xl bg-white rounded-3xl border border-slate-200 shadow-2xl overflow-hidden animate-slideDown flex flex-col max-h-[85vh]">
+            <div className="px-8 py-6 border-b border-slate-200 flex justify-between items-center bg-slate-50 shrink-0">
+              <h3 className="text-xl font-black text-slate-800 flex items-center gap-2 tracking-tight">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6 text-indigo-500">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+                Add Extra Products to Order
+              </h3>
+              <button
+                onClick={() => setIsAddProductModalOpen(false)}
+                className="text-slate-400 hover:text-slate-600 transition-colors p-2 rounded-lg hover:bg-slate-100"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
+              </button>
+            </div>
+            
+            <div className="p-8 overflow-y-auto custom-scrollbar flex-grow space-y-4">
+              <div className="flex justify-end mb-2">
+                <button
+                  onClick={() => setStagedProducts([...stagedProducts, {productId: "", qty: "1"}])}
+                  className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 text-sm font-bold transition-colors flex items-center gap-1"
+                >
+                  + Add Row
+                </button>
+              </div>
+              <div className="space-y-3">
+                {stagedProducts.map((sp, index) => (
+                  <div key={index} className="flex items-center gap-4 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                    <select
+                      value={sp.productId}
+                      onChange={(e) => {
+                        const newStaged = [...stagedProducts];
+                        newStaged[index].productId = e.target.value;
+                        setStagedProducts(newStaged);
+                      }}
+                      className="flex-1 bg-white border border-slate-200 text-slate-700 font-bold text-sm rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm transition-all"
+                    >
+                      <option value="">Select a product...</option>
+                      {products.map(p => (
+                        <option key={p.id} value={p.id}>{p.name} (₹{p.price})</option>
+                      ))}
+                    </select>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-bold text-slate-500">Qty:</span>
+                      <input
+                        type="number"
+                        min="1"
+                        value={sp.qty}
+                        onChange={(e) => {
+                          const newStaged = [...stagedProducts];
+                          newStaged[index].qty = e.target.value;
+                          setStagedProducts(newStaged);
+                        }}
+                        className="w-24 bg-white border border-slate-200 text-slate-700 font-bold text-sm rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm transition-all"
+                      />
+                    </div>
+                    {stagedProducts.length > 1 && (
+                      <button
+                        onClick={() => setStagedProducts(stagedProducts.filter((_, i) => i !== index))}
+                        className="p-2.5 rounded-lg bg-red-50 hover:bg-red-100 text-red-500 transition-colors"
+                        title="Remove row"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="px-8 py-5 border-t border-slate-200 bg-slate-50 flex justify-end gap-3 shrink-0">
+              <button
+                onClick={() => setIsAddProductModalOpen(false)}
+                className="px-6 py-2.5 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 text-sm font-black tracking-tight transition-all shadow-sm"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleAddProductToOrder}
+                className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-black tracking-tight transition-all shadow-sm flex items-center gap-2"
+              >
+                Add Selected to Order
               </button>
             </div>
           </div>

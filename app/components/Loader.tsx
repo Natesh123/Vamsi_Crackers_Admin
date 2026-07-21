@@ -42,7 +42,7 @@ export default function Loader() {
       <div className="relative flex flex-col items-center">
         <div className="absolute inset-0 bg-amber-400/20 blur-3xl rounded-full animate-pulse"></div>
         <img
-          src="/assets/images/sri_dhakshina_logo.jpg"
+          src="/assets/images/vamsi_crackers_logo.png"
           alt="Loading..."
           className="relative w-64 h-64 md:w-80 md:h-80 rounded-full object-cover mb-8 shadow-[0_0_40px_rgba(255,215,0,0.4)] animate-pulse"
         />
