@@ -160,25 +160,22 @@ export default function Footer() {
                 {/* Brand + Social Row */}
                 <div className={`flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 mb-14 pb-14 border-b border-white/[0.06] transition-all duration-1000 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
                     {/* Brand */}
-                    <div className="flex items-center gap-5 group cursor-pointer">
-                        <div className="relative w-[76px] h-[76px] rounded-2xl overflow-hidden border-2 border-festive-gold/50 shadow-[0_0_40px_rgba(255,215,0,0.15)] bg-white p-1.5 group-hover:shadow-[0_0_60px_rgba(255,215,0,0.35)] group-hover:border-festive-gold/80 transition-all duration-700">
+                    <div className="flex flex-row items-center gap-4 md:gap-6 group cursor-pointer">
+                        <div className="relative shrink-0 w-[80px] h-[80px] md:w-[140px] md:h-[140px] rounded-full overflow-hidden border-2 border-festive-gold/50 shadow-[0_0_40px_rgba(255,215,0,0.15)] bg-[#0A021A] p-1.5 group-hover:shadow-[0_0_60px_rgba(255,215,0,0.35)] group-hover:border-festive-gold/80 transition-all duration-700">
                             <Image
-                                src="/assets/images/vamsi_crackers_logo.png"
+                                src="/assets/images/vamsi_crackers_logo_v2.png"
                                 alt="Vamsi Crackers Logo"
                                 fill
-                                className="object-contain group-hover:scale-110 transition-transform duration-700"
+                                className="object-contain group-hover:scale-105 transition-transform duration-700"
                             />
                         </div>
-                        <div>
-                            <h2 className="text-2xl lg:text-3xl font-black uppercase tracking-tight leading-none">
-                                Vamsi{' '}
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-festive-gold via-yellow-200 to-festive-gold">
-                                    Crackers
-                                </span>
+                        <div className="flex flex-col text-left">
+                            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-wide drop-shadow-md uppercase">
+                                VAMSI <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-orange-500">CRACKERS</span>
                             </h2>
-                            <p className="text-[10px] text-festive-gold/60 font-bold tracking-[0.35em] uppercase mt-1.5">
-                                Sivakasi&apos;s Finest Since 2024
-                            </p>
+                            <span className="text-xs sm:text-sm md:text-base text-gray-300 font-medium tracking-[0.2em] uppercase mt-1">
+                                Sivakasi
+                            </span>
                         </div>
                     </div>
 
@@ -246,26 +243,26 @@ export default function Footer() {
                             <span className="w-1.5 h-1.5 bg-festive-gold rounded-full" />
                             About Us
                         </h3>
-                        <p className="text-gray-200 text-base leading-[1.9] font-medium">
+                        <p className="text-gray-200 text-lg leading-[1.9] font-medium tracking-wide">
                             Bringing the magic of fireworks directly from the heart of{' '}
-                            <span className="text-white font-bold relative">
+                            <span className="text-white font-bold relative text-xl">
                                 Sivakasi
-                                <span className="absolute bottom-0 left-0 w-full h-[1px] bg-festive-gold/30" />
+                                <span className="absolute bottom-0 left-0 w-full h-[2px] bg-festive-gold/40" />
                             </span>{' '}
                             to your doorstep. We promise premium quality, unbeatable prices, and the highest safety standards in every product.
                         </p>
                         {/* Premium Trust Badges */}
-                        <div className="flex flex-wrap gap-2.5 pt-3">
+                        <div className="grid grid-cols-2 gap-3 sm:flex sm:flex-wrap pt-3">
                             {[
                                 { icon: '🏭', text: 'Factory Direct' },
                                 { icon: '✅', text: 'Safety Certified' },
                                 { icon: '🚚', text: 'All India Delivery' }
-                            ].map((badge) => (
+                            ].map((badge, index) => (
                                 <span
                                     key={badge.text}
-                                    className="group text-xs font-bold text-gray-300 bg-white/[0.05] border border-white/[0.1] rounded-xl px-4 py-2.5 tracking-wider uppercase flex items-center gap-1.5 hover:bg-festive-gold/10 hover:border-festive-gold/30 hover:text-white transition-all duration-300 cursor-default shadow-sm"
+                                    className={`group text-[10px] md:text-sm font-bold text-gray-200 bg-white/[0.05] border border-white/[0.1] rounded-xl px-2 py-3 md:px-5 md:py-3 tracking-widest uppercase flex flex-col md:flex-row items-center justify-center gap-1.5 md:gap-2 hover:bg-festive-gold/20 hover:border-festive-gold/50 hover:text-white transition-all duration-300 cursor-default shadow-md text-center ${index === 2 ? 'col-span-2 w-[80%] mx-auto sm:w-auto' : ''}`}
                                 >
-                                    <span className="text-base group-hover:scale-110 transition-transform">{badge.icon}</span>
+                                    <span className="text-lg md:text-xl group-hover:scale-110 transition-transform">{badge.icon}</span>
                                     {badge.text}
                                 </span>
                             ))}
@@ -285,20 +282,20 @@ export default function Footer() {
                                     {item.isLink ? (
                                         <Link
                                             href={item.href}
-                                            className="group flex items-center gap-3 text-gray-300 hover:text-white transition-all duration-300 font-semibold text-base py-2.5 px-3 -mx-3 rounded-xl hover:bg-white/[0.06]"
+                                            className="group flex items-center gap-3 text-gray-200 hover:text-white transition-all duration-300 font-bold text-lg py-3 px-4 -mx-4 rounded-xl hover:bg-white/[0.08]"
                                         >
-                                            <span className="w-0 group-hover:w-5 h-[2px] bg-gradient-to-r from-festive-gold to-transparent transition-all duration-300 rounded-full" />
-                                            <span className="group-hover:translate-x-1 transition-transform duration-300">
+                                            <span className="w-0 group-hover:w-6 h-[3px] bg-gradient-to-r from-festive-gold to-transparent transition-all duration-300 rounded-full" />
+                                            <span className="group-hover:translate-x-2 transition-transform duration-300 tracking-wide">
                                                 {item.name}
                                             </span>
                                         </Link>
                                     ) : (
                                         <a
                                             href={item.href}
-                                            className="group flex items-center gap-3 text-gray-300 hover:text-white transition-all duration-300 font-semibold text-base py-2.5 px-3 -mx-3 rounded-xl hover:bg-white/[0.06]"
+                                            className="group flex items-center gap-3 text-gray-200 hover:text-white transition-all duration-300 font-bold text-lg py-3 px-4 -mx-4 rounded-xl hover:bg-white/[0.08]"
                                         >
-                                            <span className="w-0 group-hover:w-5 h-[2px] bg-gradient-to-r from-festive-gold to-transparent transition-all duration-300 rounded-full" />
-                                            <span className="group-hover:translate-x-1 transition-transform duration-300">
+                                            <span className="w-0 group-hover:w-6 h-[3px] bg-gradient-to-r from-festive-gold to-transparent transition-all duration-300 rounded-full" />
+                                            <span className="group-hover:translate-x-2 transition-transform duration-300 tracking-wide">
                                                 {item.name}
                                             </span>
                                         </a>
@@ -325,10 +322,10 @@ export default function Footer() {
                                     </svg>
                                 </div>
                                 <div>
-                                    <p className="text-white font-bold text-base md:text-lg leading-snug">
-                                        Kavulur Veeracheliapuram,<br />Sivakasi
+                                    <p className="text-white font-bold text-lg md:text-xl leading-relaxed">
+                                        D.NO. 177/5/18, Pernaickenpatti,<br />Sithurajapuram, Virudhunagar
                                     </p>
-                                    <p className="text-gray-300 text-[15px] font-medium mt-2">Tamil Nadu 626005, India</p>
+                                    <p className="text-gray-300 text-base md:text-lg font-bold mt-2 tracking-wider uppercase">Tamil Nadu, 626 189</p>
                                 </div>
                             </div>
 
@@ -355,7 +352,7 @@ export default function Footer() {
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 text-gray-300 flex-shrink-0">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
-                                <span className="text-[13px] sm:text-sm font-bold text-gray-200">Mon - Sun: 8:00 AM – 9:00 PM</span>
+                                <span className="text-base sm:text-lg font-bold text-white tracking-wide">Mon - Sun: 8:00 AM – 9:00 PM</span>
                             </div>
                         </div>
                     </div>

@@ -2,12 +2,11 @@
 import Image from 'next/image';
 import { useRef } from 'react';
 
-const brands = [
-  { id: 1, name: "Sony", img: "/assets/images/brands/sony.png" },
-  { id: 2, name: "Leo", img: "/assets/images/brands/leo.png" },
-  { id: 3, name: "Vanitha", img: "/assets/images/brands/vanitha.png" },
-  { id: 4, name: "Vadivel", img: "/assets/images/brands/vadivel.png" },
-];
+const brands = Array.from({ length: 16 }).map((_, i) => ({
+  id: i + 1,
+  name: `Brand ${i + 1}`,
+  img: `/assets/images/brands_split/brand_${i + 1}.png`
+}));
 
 export default function OurBrands() {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -46,18 +45,18 @@ export default function OurBrands() {
         {/* Navigation Arrows */}
         <button 
             onClick={() => scroll('left')}
-            className="absolute left-0 md:-left-4 top-1/2 -translate-y-1/2 z-20 w-16 h-16 rounded-full bg-white text-festive-purple flex items-center justify-center hover:bg-festive-purple hover:text-white hover:scale-110 transition-all duration-300 shadow-[0_8px_30px_rgb(0,0,0,0.12)] opacity-100 md:opacity-0 group-hover:opacity-100"
+            className="absolute left-2 md:-left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 md:w-16 md:h-16 rounded-full bg-white text-festive-purple flex items-center justify-center hover:bg-festive-purple hover:text-white hover:scale-110 transition-all duration-300 shadow-[0_8px_30px_rgb(0,0,0,0.12)] opacity-90 md:opacity-0 group-hover:opacity-100"
         >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-7 h-7 -ml-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5 md:w-7 md:h-7 -ml-1">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
             </svg>
         </button>
 
         <button 
             onClick={() => scroll('right')}
-            className="absolute right-0 md:-right-4 top-1/2 -translate-y-1/2 z-20 w-16 h-16 rounded-full bg-festive-gold text-white flex items-center justify-center hover:bg-yellow-500 hover:scale-110 transition-all duration-300 shadow-[0_8px_30px_rgb(0,0,0,0.12)] opacity-100 md:opacity-0 group-hover:opacity-100"
+            className="absolute right-2 md:-right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 md:w-16 md:h-16 rounded-full bg-festive-gold text-white flex items-center justify-center hover:bg-yellow-500 hover:scale-110 transition-all duration-300 shadow-[0_8px_30px_rgb(0,0,0,0.12)] opacity-90 md:opacity-0 group-hover:opacity-100"
         >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-7 h-7 ml-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5 md:w-7 md:h-7 ml-1">
               <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
             </svg>
         </button>
@@ -65,7 +64,7 @@ export default function OurBrands() {
         {/* Scrollable Container */}
         <div 
             ref={scrollRef}
-            className="w-full flex overflow-x-auto gap-8 md:gap-12 items-center py-12 snap-x snap-mandatory px-4 md:px-8"
+            className="w-full flex overflow-x-auto gap-4 sm:gap-6 md:gap-8 items-center py-6 md:py-8 snap-x snap-mandatory px-4 md:px-8"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {/* Hide webkit scrollbar */}
@@ -74,7 +73,7 @@ export default function OurBrands() {
           {[...brands, ...brands, ...brands].map((brand, i) => (
             <div key={`${brand.id}-${i}`} className="flex-none snap-center group/item cursor-pointer">
               {/* Premium Card Container */}
-              <div className="relative w-64 h-64 md:w-80 md:h-80 bg-white rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100 flex items-center justify-center p-8 transition-all duration-500 group-hover/item:-translate-y-4 group-hover/item:shadow-[0_20px_50px_rgb(0,0,0,0.15)] overflow-hidden">
+              <div className="relative w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 bg-white rounded-2xl md:rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100 flex items-center justify-center p-4 md:p-6 transition-all duration-500 group-hover/item:-translate-y-2 md:group-hover/item:-translate-y-3 group-hover/item:shadow-[0_20px_50px_rgb(0,0,0,0.15)] overflow-hidden">
                 
                 {/* Background glow effect inside card */}
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-50/50 opacity-0 group-hover/item:opacity-100 transition-opacity duration-500"></div>
@@ -83,7 +82,9 @@ export default function OurBrands() {
                     src={brand.img} 
                     alt={brand.name} 
                     fill 
-                    className="object-contain p-8 mix-blend-multiply filter group-hover/item:scale-110 transition-transform duration-700 relative z-10" 
+                    className="object-contain p-4 md:p-6 mix-blend-multiply filter group-hover/item:scale-110 transition-transform duration-700 relative z-10" 
+                    sizes="(max-width: 768px) 128px, 192px"
+                    quality={100}
                 />
               </div>
             </div>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useCart } from "../context/CartContext";
 
@@ -27,6 +27,23 @@ export default function CartDrawer() {
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [errors, setErrors] = useState({ name: false, phone: false, email: false, city: false, address: false });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [minOrderValue, setMinOrderValue] = useState(0);
+
+  useEffect(() => {
+    if (isCartOpen) {
+      const fetchMinOrderValue = async () => {
+        try {
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+          const res = await fetch(`${apiUrl}/api/settings/min-order-value/get`);
+          if (res.ok) {
+            const data = await res.json();
+            setMinOrderValue(Number(data.value) || 0);
+          }
+        } catch (e) {}
+      };
+      fetchMinOrderValue();
+    }
+  }, [isCartOpen]);
 
   if (!isCartOpen) return null;
 
@@ -209,9 +226,15 @@ export default function CartDrawer() {
                             >
                               −
                             </button>
-                            <span className="px-4 py-2 text-base font-black min-w-[36px] text-center bg-white border-x border-gray-200 text-slate-900 shadow-inner">
-                              {item.quantity}
-                            </span>
+                            <input 
+                              type="number" 
+                              value={item.quantity} 
+                              onChange={(e) => {
+                                const val = e.target.value === '' ? 0 : parseInt(e.target.value);
+                                if (!isNaN(val) && val >= 0) updateQuantity(item.id, val);
+                              }}
+                              className="px-2 py-2 w-12 text-base font-black text-center bg-white border-x border-gray-200 text-slate-900 shadow-inner outline-none focus:bg-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                            />
                             <button
                               onClick={() => updateQuantity(item.id, item.quantity + 1)}
                               className="px-3.5 py-2 text-base font-black text-slate-500 hover:bg-gray-100 hover:text-festive-purple transition-colors cursor-pointer"
@@ -226,7 +249,7 @@ export default function CartDrawer() {
                             </div>
                             <button
                               onClick={() => removeFromCart(item.id)}
-                              className="text-slate-400 hover:text-festive-red hover:bg-red-50 rounded-full w-8 h-8 flex items-center justify-center transition-all cursor-pointer flex-shrink-0"
+                              className="text-festive-red bg-red-50 hover:bg-festive-red hover:text-white rounded-full w-8 h-8 flex items-center justify-center transition-all cursor-pointer flex-shrink-0"
                             >
                               ✕
                             </button>
@@ -350,12 +373,20 @@ export default function CartDrawer() {
               >
                 <span className="text-xl">🗑️</span>
               </button>
-              <button
-                onClick={handleConfirmOrder}
-                className="flex-1 sm:px-8 h-14 rounded-xl bg-festive-red hover:bg-festive-gold text-white hover:text-festive-purple font-black text-base uppercase tracking-widest hover:scale-[1.03] active:scale-95 transition-all shadow-[0_8px_20px_rgba(220,38,38,0.25)] hover:shadow-[0_10px_25px_rgba(255,215,0,0.4)] border border-transparent hover:border-festive-gold cursor-pointer flex items-center justify-center gap-2"
-              >
-                <span className="text-xl">✨</span> Confirm Order
-              </button>
+              
+              {minOrderValue > 0 && cartTotal < minOrderValue ? (
+                <div className="flex-1 sm:px-6 h-14 rounded-xl bg-orange-50 text-orange-800 font-bold text-sm sm:text-base border border-orange-200 flex flex-col items-center justify-center text-center shadow-inner leading-tight">
+                  <span>Min Order: ₹{minOrderValue.toLocaleString('en-IN')}</span>
+                  <span className="text-xs text-orange-600 tracking-wide uppercase">Add ₹{(minOrderValue - cartTotal).toLocaleString('en-IN')} more</span>
+                </div>
+              ) : (
+                <button
+                  onClick={handleConfirmOrder}
+                  className="flex-1 sm:px-8 h-14 rounded-xl bg-festive-red hover:bg-festive-gold text-white hover:text-festive-purple font-black text-base uppercase tracking-widest hover:scale-[1.03] active:scale-95 transition-all shadow-[0_8px_20px_rgba(220,38,38,0.25)] hover:shadow-[0_10px_25px_rgba(255,215,0,0.4)] border border-transparent hover:border-festive-gold cursor-pointer flex items-center justify-center gap-2"
+                >
+                  <span className="text-xl">✨</span> Confirm Order
+                </button>
+              )}
             </div>
           </div>
         )}

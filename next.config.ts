@@ -5,7 +5,23 @@ const nextConfig: NextConfig = {
     appIsrStatus: false,
     buildActivity: false,
     buildActivityPosition: 'bottom-right',
-  }
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '5001',
+        pathname: '/**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '5000',
+        pathname: '/**',
+      }
+    ],
+  },
 };
 
 export default nextConfig;

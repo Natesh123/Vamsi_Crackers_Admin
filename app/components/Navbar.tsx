@@ -46,23 +46,23 @@ export default function Navbar({ priceListUrl = "" }: NavbarProps) {
                 <div className="w-full max-w-[1920px] mx-auto flex items-center justify-between px-3 sm:px-4 lg:px-8 xl:px-12 2xl:px-16 relative z-10">
                     {/* Logo Section */}
                     <div className="flex items-center gap-3 sm:gap-4 group cursor-pointer w-auto">
-                        <div className="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full overflow-visible border-2 border-festive-gold bg-gradient-to-br from-white/20 to-white/5 shadow-[0_0_30px_rgba(255,215,0,0.4)] backdrop-blur-md transition-all duration-500 group-hover:scale-110 group-hover:shadow-[0_0_50px_rgba(255,215,0,0.8)] p-[2.5px] ring-2 ring-festive-gold/20 group-hover:ring-festive-gold/40">
-                            <div className="relative w-full h-full rounded-full overflow-hidden bg-white shadow-inner">
+                        <div className="relative w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 shrink-0 rounded-full overflow-visible border-2 border-festive-gold bg-gradient-to-br from-white/20 to-white/5 shadow-[0_0_20px_rgba(255,215,0,0.4)] backdrop-blur-md transition-all duration-500 group-hover:scale-105 group-hover:shadow-[0_0_40px_rgba(255,215,0,0.7)] p-[2px] ring-2 ring-festive-gold/20 group-hover:ring-festive-gold/40">
+                            <div className="relative w-full h-full rounded-full overflow-hidden bg-[#0A021A] shadow-inner">
                                 <Image 
-                                    src="/assets/images/vamsi_crackers_logo.png" 
+                                    src="/assets/images/vamsi_crackers_logo_v2.png" 
                                     alt="Logo" 
                                     fill 
-                                    className="object-contain object-center scale-110 p-1"
+                                    className="object-contain object-center scale-110"
                                 />
                             </div>
                         </div>
-                        <div className="absolute left-1/2 -translate-x-1/2 xl:static xl:translate-x-0 flex flex-col text-center xl:text-left">
-                            <h1 className="whitespace-nowrap text-sm sm:text-base lg:text-[1.3rem] 2xl:text-[1.4rem] font-black tracking-tight uppercase leading-tight text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-                                Vamsi <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-[#fff2aa] to-festive-gold drop-shadow-[0_0_10px_rgba(255,215,0,0.3)]">Crackers</span>
+                        <div className="flex flex-col">
+                            <h1 className="text-lg sm:text-2xl md:text-3xl font-black text-white tracking-tight uppercase leading-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                                VAMSI <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-orange-500">CRACKERS</span>
                             </h1>
-                            <span className="whitespace-nowrap text-[9px] sm:text-[10px] tracking-[0.3em] uppercase font-black text-yellow-500 mt-0.5 block drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
-                                Sivakasi's Pride
-                            </span>
+                            <p className="hidden sm:block text-[9px] md:text-[11px] font-bold text-indigo-200 tracking-[0.2em] uppercase mt-1 drop-shadow-md">
+                                Champions of Celebration
+                            </p>
                         </div>
                     </div>
 
@@ -80,7 +80,7 @@ export default function Navbar({ priceListUrl = "" }: NavbarProps) {
                                     href={item.name === "Pricelist" && priceListUrl ? priceListUrl : item.link}
                                     target={item.name === "Pricelist" && priceListUrl ? "_blank" : undefined}
                                     rel={item.name === "Pricelist" && priceListUrl ? "noreferrer" : undefined}
-                                    className="whitespace-nowrap text-[12px] 2xl:text-[13px] font-black uppercase tracking-[0.1em] transition-all duration-300 text-white hover:text-festive-gold drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] hover:drop-shadow-[0_0_12px_rgba(255,215,0,0.6)]"
+                                    className="whitespace-nowrap text-[14px] 2xl:text-[15px] font-black uppercase tracking-[0.1em] transition-all duration-300 text-white hover:text-festive-gold drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] hover:drop-shadow-[0_0_12px_rgba(255,215,0,0.6)]"
                                 >
                                     {item.name}
                                 </a>
@@ -161,9 +161,17 @@ export default function Navbar({ priceListUrl = "" }: NavbarProps) {
 
             {/* Mobile Menu Overlay */}
             <div
-                className={`fixed inset-0 bg-[#120822]/98 backdrop-blur-3xl z-40 xl:hidden transition-all duration-500 ease-in-out ${isOpen ? "opacity-100 visible" : "opacity-0 invisible"
+                className={`fixed inset-0 bg-[#120822]/98 backdrop-blur-md z-40 xl:hidden transition-all duration-500 ease-in-out ${isOpen ? "opacity-100 visible" : "opacity-0 invisible"
                     }`}
             >
+                {/* Close Button Inside Overlay */}
+                <button
+                    onClick={() => setIsOpen(false)}
+                    className="absolute top-6 right-6 w-12 h-12 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white hover:bg-white/20 transition-colors z-50"
+                    aria-label="Close menu"
+                >
+                    <span className="text-xl">✕</span>
+                </button>
                 <div className={`flex flex-col h-full items-center justify-center gap-8 pt-24 pb-10 overflow-y-auto transition-transform duration-700 ${isOpen ? "translate-y-0" : "translate-y-10"}`}>
                     {[
                         { name: "Home", link: "/" },

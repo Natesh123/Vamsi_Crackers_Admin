@@ -23,6 +23,7 @@ interface Product {
   image: string;
   categoryId: number;
   category?: string;
+  is_active?: number | boolean;
 }
 
 interface Toast {
@@ -157,6 +158,135 @@ export default function AdminDashboard() {
 
     return () => clearInterval(interval);
   }, [unreadOrders.length, playAlarm]);
+  const [bannerText, setBannerText] = useState("");
+  const [isBannerLoading, setIsBannerLoading] = useState(false);
+  const [bannerImages, setBannerImages] = useState<string[]>([]);
+  const [isUploadingBanner, setIsUploadingBanner] = useState(false);
+  const [minOrderValue, setMinOrderValue] = useState("");
+  const [isUpdatingMinOrder, setIsUpdatingMinOrder] = useState(false);
+
+  useEffect(() => {
+    const fetchBanner = async () => {
+      try {
+        const res = await fetch(`${apiUrl}/api/settings/banner-text/get`);
+        if (res.ok) {
+          const data = await res.json();
+          setBannerText(data.text || "");
+        }
+      } catch(e) {}
+    };
+    const fetchBannerImages = async () => {
+      try {
+        const res = await fetch(`${apiUrl}/api/settings/banner-images/get`);
+        if (res.ok) {
+          const data = await res.json();
+          setBannerImages(data.images || []);
+        }
+      } catch(e) {}
+    };
+    const fetchMinOrderValue = async () => {
+      try {
+        const res = await fetch(`${apiUrl}/api/settings/min-order-value/get`);
+        if (res.ok) {
+          const data = await res.json();
+          setMinOrderValue(data.value || "");
+        }
+      } catch(e) {}
+    };
+    fetchBanner();
+    fetchBannerImages();
+    fetchMinOrderValue();
+  }, [apiUrl]);
+
+  const handleUpdateBanner = async () => {
+    setIsBannerLoading(true);
+    try {
+      const res = await fetch(`${apiUrl}/api/settings/banner-text/update`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: bannerText })
+      });
+      if (res.ok) {
+        showToast("Banner text updated successfully!", "success");
+      } else {
+        showToast("Error updating banner text.", "error");
+      }
+    } catch (error) {
+      showToast("Error updating banner text.", "error");
+    } finally {
+      setIsBannerLoading(false);
+    }
+  };
+
+  const handleUpdateMinOrderValue = async () => {
+    setIsUpdatingMinOrder(true);
+    try {
+      const res = await fetch(`${apiUrl}/api/settings/min-order-value/update`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ value: minOrderValue })
+      });
+      if (res.ok) {
+        showToast("Minimum order value updated successfully!", "success");
+      } else {
+        showToast("Error updating minimum order value.", "error");
+      }
+    } catch (error) {
+      showToast("Error updating minimum order value.", "error");
+    } finally {
+      setIsUpdatingMinOrder(false);
+    }
+  };
+
+  const handleSaveBannerImages = async (newImages: string[]) => {
+    try {
+      const res = await fetch(`${apiUrl}/api/settings/banner-images/update`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ images: newImages })
+      });
+      if (!res.ok) throw new Error("Failed to update banner images");
+    } catch(e) {
+      console.error(e);
+      showToast("Error updating banner images.");
+    }
+  };
+
+  const handleBannerImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploadingBanner(true);
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const res = await fetch(`${apiUrl}/api/upload`, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) throw new Error("Upload failed");
+
+      const data = await res.json();
+      const newImages = [...bannerImages, data.fileUrl];
+      setBannerImages(newImages);
+      await handleSaveBannerImages(newImages);
+      showToast("Banner image uploaded successfully!");
+    } catch (error) {
+      console.error("Upload error:", error);
+      showToast("Error uploading banner image.");
+    } finally {
+      setIsUploadingBanner(false);
+    }
+  };
+
+  const handleRemoveBannerImage = async (index: number) => {
+    const newImages = bannerImages.filter((_, i) => i !== index);
+    setBannerImages(newImages);
+    await handleSaveBannerImages(newImages);
+    showToast("Banner image removed.");
+  };
 
   const handleMarkNotificationsAsRead = async () => {
     try {
@@ -200,14 +330,24 @@ export default function AdminDashboard() {
           name: name || "Unknown",
           phone: phone || "No Phone",
           totalSpent: 0,
+          totalPaid: 0,
+          totalUnpaid: 0,
           orderCount: 0,
           lastOrderDate: orderDate
         });
       }
 
       const customer = customerMap.get(key);
-      customer.totalSpent += parseFloat(orderAmount);
+      const amount = parseFloat(orderAmount) || 0;
+      customer.totalSpent += amount;
       customer.orderCount += 1;
+      
+      const pStatus = order.payment_status || 'Unpaid';
+      if (pStatus === 'Paid') {
+        customer.totalPaid += amount;
+      } else {
+        customer.totalUnpaid += amount;
+      }
       
       if (new Date(orderDate) > new Date(customer.lastOrderDate)) {
         customer.lastOrderDate = orderDate;
@@ -219,6 +359,7 @@ export default function AdminDashboard() {
     return Array.from(customerMap.values()).sort((a, b) => b.totalSpent - a.totalSpent);
   }, [orders]);
 
+
   // Reports Aggregation
   const salesReports = useMemo(() => {
     const daily: Record<string, { orders: number; revenue: number; ts: number }> = {};
@@ -227,7 +368,7 @@ export default function AdminDashboard() {
 
     const filteredOrders = orders.filter(order => {
       const dateStr = order.created_at || order.createdAt;
-      if (!dateStr) return false;
+      if (!dateStr || order.payment_status !== 'Paid') return false;
       const orderTime = new Date(dateStr).getTime();
       
       let isValid = true;
@@ -306,6 +447,7 @@ export default function AdminDashboard() {
   const [productsPage, setProductsPage] = useState(1);
   const [ordersPage, setOrdersPage] = useState(1);
   const [customersPage, setCustomersPage] = useState(1);
+  const [customerSearchTerm, setCustomerSearchTerm] = useState("");
   const itemsPerPage = 8;
 
   // Authentication state
@@ -355,6 +497,7 @@ export default function AdminDashboard() {
   const [productOriginalPrice, setProductOriginalPrice] = useState("");
   const [productDiscount, setProductDiscount] = useState("");
   const [productApplyDiscount, setProductApplyDiscount] = useState(true);
+  const [productIsActive, setProductIsActive] = useState(true);
   const [productCategoryId, setProductCategoryId] = useState("");
   const [productImage, setProductImage] = useState("");
   const [uploadingImage, setUploadingImage] = useState(false);
@@ -375,6 +518,38 @@ export default function AdminDashboard() {
   const [isTranslatingNewCat, setIsTranslatingNewCat] = useState(false);
   const [editCatTamilTranslation, setEditCatTamilTranslation] = useState("");
   const [isTranslatingEditCat, setIsTranslatingEditCat] = useState(false);
+
+  const filteredCustomers = useMemo(() => {
+    if (!customerSearchTerm) return uniqueCustomers;
+    const lower = customerSearchTerm.toLowerCase();
+    return uniqueCustomers.filter(c => 
+      (c.name || "").toLowerCase().includes(lower) || 
+      (c.phone || "").toLowerCase().includes(lower)
+    );
+  }, [uniqueCustomers, customerSearchTerm]);
+
+  const downloadExcel = () => {
+    const header = ["Name", "Phone", "Total Orders", "Total Spent", "Total Paid", "Total Unpaid", "Last Active"];
+    const rows = filteredCustomers.map(c => [
+      `"${c.name.replace(/"/g, '""')}"`,
+      `"${c.phone}"`,
+      c.orderCount,
+      c.totalSpent,
+      c.totalPaid,
+      c.totalUnpaid,
+      `"${new Date(c.lastOrderDate).toLocaleString()}"`
+    ].join(","));
+    
+    const csvContent = [header.join(","), ...rows].join("\n");
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", `customers_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const translateText = async (text: string): Promise<string> => {
     if (!text || !text.trim()) return "";
@@ -824,7 +999,7 @@ export default function AdminDashboard() {
     showToast("Logged out successfully.", "success");
   };
 
-  const showToast = (message: string, type: "success" | "error") => {
+  const showToast = (message: string, type: "success" | "error" = "success") => {
     setToast({ message, type });
     setTimeout(() => setToast(null), 3000);
   };
@@ -915,6 +1090,7 @@ export default function AdminDashboard() {
     setProductOriginalPrice("");
     setProductDiscount("");
     setProductApplyDiscount(true);
+    setProductIsActive(true);
     setProductTamilTranslation("");
     setProductCategoryId(categories[0]?.id.toString() || "");
     setProductImage(presetImages[0].path);
@@ -935,6 +1111,7 @@ export default function AdminDashboard() {
     setProductOriginalPrice(product.originalPrice.toString());
     setProductDiscount(product.discount !== undefined ? product.discount.toString() : "");
     setProductApplyDiscount(product.apply_discount !== undefined ? Boolean(product.apply_discount) : true);
+    setProductIsActive(product.is_active !== undefined ? Boolean(product.is_active) : true);
     setProductCategoryId(product.categoryId.toString());
     setProductImage(product.image);
     setIsProductModalOpen(true);
@@ -1059,6 +1236,7 @@ export default function AdminDashboard() {
       originalPrice: parseFloat(productOriginalPrice),
       discount: finalDiscount,
       applyDiscount: productApplyDiscount,
+      isActive: productIsActive,
       image: productImage,
       categoryId: parseInt(productCategoryId),
     };
@@ -1158,7 +1336,41 @@ export default function AdminDashboard() {
           </style>
         </head>
         <body>
-          <div class="header-title">CRACKERS CITY - SALES REPORT</div>
+          <!-- Application Theme Header -->
+          <div style="display: flex; align-items: center; justify-content: space-between; background: linear-gradient(135deg, #2a0845 0%, #4a1c6a 100%); padding: 25px 30px; margin-bottom: 25px; border-bottom: 4px solid #f59e0b; border-radius: 12px 12px 0 0; -webkit-print-color-adjust: exact; print-color-adjust: exact;">
+            
+            <!-- Left: Logo & Core Info -->
+            <div style="display: flex; align-items: center; z-index: 1;">
+              <div style="margin-right: 25px; display: flex; align-items: center; justify-content: center; width: 100px; height: 100px; border-radius: 50%; overflow: hidden;">
+                <img src="${window.location.origin}/assets/images/vamsi_crackers_logo_v2.png" alt="Vamsi Crackers" style="width: 100%; height: 100%; object-fit: cover; filter: drop-shadow(0px 2px 8px rgba(255,255,255,0.2)); transform: scale(1.15);" />
+              </div>
+              
+              <div>
+                <h1 style="margin: 0 0 6px 0; font-size: 28px; text-transform: uppercase; font-weight: 900; letter-spacing: 2px; text-shadow: 1px 1px 3px rgba(0,0,0,0.6);">
+                  <span style="color: #ffffff;">VAMSI</span> <span style="color: #fbbf24;">CRACKERS</span>
+                </h1>
+                <div style="font-size: 15px; font-weight: 800; color: #fbbf24; margin-bottom: 6px; letter-spacing: 0.5px;">PROPRIETOR: <span style="color: #ffffff;">SWETHA</span></div>
+                <div style="font-size: 13px; color: #e2e8f0; max-width: 350px; line-height: 1.5; font-weight: 500;">
+                  D.NO. 177/5/18, Pernaickenpatti,<br/>Sithurajapuram, Virudhunagar, Tamil Nadu 626 189, India
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Contact Info -->
+            <div style="display: flex; flex-direction: column; gap: 6px; z-index: 1; align-items: flex-end; font-size: 13px; font-weight: 600; color: #f8fafc;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 16px; line-height: 1;">📱</span> +91 90800 19031
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 16px; line-height: 1;">✉️</span> vamsidharuncrackers@gmail.com
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 16px; line-height: 1;">🌐</span> <a href="https://www.vamsicrackers.in" target="_blank" style="color: #fbbf24; text-decoration: underline; font-weight: bold;">www.vamsicrackers.in</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="header-title">SALES REPORT</div>
           <div class="header-subtitle">Period: ${reportPeriod}</div>
 
           <div class="summary-box">
@@ -1320,15 +1532,9 @@ export default function AdminDashboard() {
     }
   };
 
-  const handlePrintOrder = (order: any, extraDiscType?: "amount"|"percentage", extraDiscValue?: string, packingChargeStr?: string) => {
-    if (!order) return;
-    
-    const printWindow = window.open('', '_blank');
-    if (!printWindow) {
-      showToast("Please allow popups to print invoices", "error");
-      return;
-    }
 
+  const getInvoiceHTML = (order: any, extraDiscType?: "amount"|"percentage", extraDiscValue?: string, packingChargeStr?: string) => {
+    if (!order) return null;
     const numberToWords = (num: number): string => {
       const integerNum = Math.round(num);
       const a = ['','One ','Two ','Three ','Four ', 'Five ','Six ','Seven ','Eight ','Nine ','Ten ','Eleven ','Twelve ','Thirteen ','Fourteen ','Fifteen ','Sixteen ','Seventeen ','Eighteen ','Nineteen '];
@@ -1348,10 +1554,10 @@ export default function AdminDashboard() {
 
     const discountedItems = order.items.filter((item: any) => Number(item.originalPrice) > Number(item.price));
     const netRateItems = order.items.filter((item: any) => Number(item.originalPrice) <= Number(item.price));
+    const allItems = [...discountedItems, ...netRateItems];
 
     const discountedTotalOriginal = discountedItems.reduce((acc: number, item: any) => acc + (Number(item.originalPrice) * Number(item.quantity)), 0);
     const discountedTotalOffer = discountedItems.reduce((acc: number, item: any) => acc + (Number(item.price) * Number(item.quantity)), 0);
-    const discountedSavings = discountedTotalOriginal - discountedTotalOffer;
     const netRateTotal = netRateItems.reduce((acc: number, item: any) => acc + (Number(item.price) * Number(item.quantity)), 0);
 
     const grossTotal = discountedTotalOriginal + netRateTotal;
@@ -1369,138 +1575,156 @@ export default function AdminDashboard() {
     const packingChargeVal = Number(packingChargeStr || 0);
     const previousTotal = totalAmountBase;
     const totalAmount = previousTotal - extraDiscountAmt + packingChargeVal;
-
-    const discountPercent = discountedTotalOriginal > 0 ? ((discountedSavings / discountedTotalOriginal) * 100).toFixed(2) : "0.00";
-    
-    const renderTable = (items: any[], title: string, isNetRate: boolean, showTitle: boolean) => {
-      if (items.length === 0) return '';
-      return `
-        ${showTitle ? `<div style="margin-top: 15px; font-weight: bold; font-size: 14px;">${title}</div>` : `<div style="margin-top: 15px;"></div>`}
-        <table style="${showTitle ? 'margin-top: 5px;' : 'margin-top: 0px;'}">
-          <thead>
-            <tr>
-              <th style="width: 5%;">No.</th>
-              <th class="text-left">Particulars</th>
-              <th style="width: 8%;">Unit</th>
-              <th style="width: 10%;">Rate</th>
-              <th style="width: 8%;">Qty</th>
-              <th style="width: 12%;">Amount</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${items.map((item: any, idx: number) => `
-              <tr>
-                <td class="text-center bold">${idx + 1}</td>
-                <td class="bold">${item.name}</td>
-                <td class="text-center">BOX</td>
-                <td class="text-right">${isNetRate ? Number(item.price).toFixed(2) : Number(item.originalPrice).toFixed(2)}</td>
-                <td class="text-center">${Number(item.quantity).toFixed(2)}</td>
-                <td class="text-right">${((isNetRate ? Number(item.price) : Number(item.originalPrice)) * Number(item.quantity)).toFixed(2)}</td>
-              </tr>
-            `).join('')}
-          </tbody>
-        </table>
-      `;
-    };
-
-    const hasBothTables = discountedItems.length > 0 && netRateItems.length > 0;
+    const totalQty = allItems.reduce((sum, item) => sum + Number(item.quantity), 0);
 
     const html = `
       <!DOCTYPE html>
       <html>
         <head>
-          <title>Order Invoice #${order.id}</title>
+          <title>Order Invoice #${order.id.toString().padStart(4, '0')}</title>
           <style>
             @page { margin: 0; }
-            body { font-family: 'Arial', sans-serif; padding: 10mm; color: #000; line-height: 1.4; max-width: 210mm; margin: 0 auto; font-size: 12px; }
-            .header-title { text-align: center; font-weight: bold; text-decoration: underline; font-size: 16px; margin-bottom: 20px; text-transform: ; letter-spacing: 1px; }
-            .flex-between { display: flex; justify-content: space-between; }
-            .bold { font-weight: bold; }
-            .bill-to p { margin: 2px 0; }
-            .bill-to .title { margin-bottom: 5px; }
-            .contact-no { margin-top: 10px; }
-            table { width: 100%; border-collapse: collapse; margin-top: 5px; border: 1px solid #000; }
-            th, td { border: 1px solid #000; padding: 5px 6px; }
-            th { background-color: #cbd5e1; font-weight: bold; text-align: center; }
+            body { font-family: 'Helvetica', 'Arial', sans-serif; color: #333; line-height: 1.4; max-width: 210mm; margin: 0 auto; font-size: 12px; padding: 10mm; }
+            table { width: 100%; border-collapse: collapse; margin-top: -1px; }
+            th, td { border: 1px solid #94a3b8; padding: 4px 6px; }
+            th { text-align: center; }
             .text-center { text-align: center; }
             .text-right { text-align: right; }
             .text-left { text-align: left; }
-            .footer-section { display: flex; margin-top: 30px; font-size: 12px; page-break-inside: avoid; }
-            .words-section { flex: 1; padding-right: 20px; display: flex; flex-direction: column; justify-content: space-between; }
-            .totals-section { width: 320px; }
-            .totals-table { width: 100%; border-collapse: collapse; border: 1px solid #000; }
-            .totals-table td { border: 1px solid #000; padding: 5px 6px; }
-            .bg-gray { background-color: #f1f5f9; }
-            .bg-dark-gray { background-color: #cbd5e1; font-weight: bold; font-size: 14px; }
-            .computer-generated { text-align: center; font-style: italic; font-size: 10px; margin-top: 20px; }
+            .bold { font-weight: bold; }
           </style>
         </head>
         <body>
-          <div class="header-title">ESTIMATE QUOTATION</div>
-          
-          <div class="flex-between bold">
-            <div class="bill-to">
-              <div class="title">Bill To:</div>
-              <p>Mr/Mrs. ${order.customer_name.toUpperCase()}</p>
-              <p>${order.customer_city.toUpperCase()}, ${order.customer_address.toUpperCase()}.</p>
-              <div class="contact-no">Contact No : ${order.customer_phone}</div>
-            </div>
-            <div class="text-right" style="line-height: 1.8;">
-              <div>Quotation No. : ${order.id.toString().padStart(4, '0')}</div>
-              <div>Quotation Date. : ${new Date(order.created_at || Date.now()).toLocaleDateString('en-IN').replace(/\//g, '-')}</div>
-            </div>
+          <div style="display: flex; border: 1px solid #94a3b8; font-size: 12px;">
+            <div style="width: 33.33%; padding: 5px; border-right: 1px solid #94a3b8;">GSTIN : </div>
+            <div style="width: 33.33%; padding: 5px; border-right: 1px solid #94a3b8; text-align: center; font-weight: bold; background-color: #f8fafc; -webkit-print-color-adjust: exact; print-color-adjust: exact;">TAX INVOICE</div>
+            <div style="width: 33.34%; padding: 5px; text-align: right;">Original Copy</div>
           </div>
-
-          ${renderTable(discountedItems, "Discountable Items", false, hasBothTables)}
-          ${renderTable(netRateItems, "Net Rate Items (No Discount)", true, hasBothTables)}
-
-          <div class="computer-generated">This is Computer Generated Invoice</div>
-
-          <div class="footer-section">
-            <div class="words-section">
+          
+          <div style="display: flex; border: 1px solid #94a3b8; border-top: none;">
+            <div style="width: 65%; border-right: 1px solid #94a3b8; padding: 10px; display: flex; align-items: center;">
+              <div style="margin-right: 15px;">
+                <img src="${window.location.origin}/assets/images/vamsi_crackers_logo_v2.png" alt="Logo" style="width: 80px; height: 80px; object-fit: contain; background: #2a0845; border-radius: 50%; padding: 5px;" />
+              </div>
               <div>
-                <div style="font-style: italic; margin-bottom: 5px;">Amount in Words</div>
-                <div class="bold italic">${numberToWords(totalAmount)}</div>
+                <h1 style="margin: 0 0 5px 0; font-size: 18px; color: #1e3a8a;">Vamsi Crackers</h1>
+                <p style="margin: 0; font-size: 11px; color: #4b5563;">D.NO. 177/5/18, Pernaickenpatti, Sithurajapuram,<br/>Virudhunagar, Tamil Nadu 626 189, India<br/>Mobile: +91 90800 19031 | Web: www.vamsicrackers.in</p>
               </div>
             </div>
-            <div class="totals-section">
-              <table class="totals-table">
-                <tr>
-                  <td class="bold text-center" style="width: 50%;">Sub Total</td>
-                  <td class="bold text-center" style="width: 20%;"></td>
-                  <td class="text-right" style="width: 30%;">${grossTotal.toFixed(2)}</td>
-                </tr>
-                <tr class="bg-gray">
-                  <td class="bold text-center">Overall Discount</td>
-                  <td class="bold text-center">${discountPercent} %</td>
-                  <td class="text-right">${discountedSavings.toFixed(2)}</td>
-                </tr>
-                <tr>
-                  <td class="bold text-center">Total</td>
-                  <td class="text-center"></td>
-                  <td class="text-right">${previousTotal.toFixed(2)}</td>
-                </tr>
-                <tr class="bg-gray">
-                  <td class="bold text-center">Packing Charges</td>
-                  <td class="text-center"></td>
-                  <td class="text-right">${packingChargeVal > 0 ? packingChargeVal.toFixed(2) : '0.00'}</td>
-                </tr>
-                <tr>
-                  <td class="bold text-center">Additional Discount</td>
-                  <td class="text-center">${extraDiscType === 'percentage' && extraDiscVal > 0 ? extraDiscVal + ' %' : ''}</td>
-                  <td class="text-right">${extraDiscountAmt > 0 ? '-' + extraDiscountAmt.toFixed(2) : '0.00'}</td>
-                </tr>
-                <tr class="bg-dark-gray">
-                  <td colspan="2" class="text-center">BILL AMOUNT</td>
-                  <td class="text-right">${Math.max(0, totalAmount).toFixed(2)}</td>
-                </tr>
+            <div style="width: 35%; padding: 10px;">
+              <h3 style="margin: 0 0 5px 0; font-size: 14px;">Bill To:</h3>
+              <p style="margin: 0; font-size: 12px;" class="bold">Mr/Mrs. ${order.customer_name || 'Walk-in Customer'}</p>
+              <p style="margin: 0; font-size: 12px;">${order.customer_city ? order.customer_city + ', ' : ''}${order.customer_address || ''}</p>
+              <p style="margin: 0; font-size: 12px;">Contact: ${order.customer_phone || ''}</p>
+            </div>
+          </div>
+          
+          <div style="display: flex; border: 1px solid #94a3b8; border-top: none; text-align: center;">
+            <div style="width: 33.33%; padding: 5px; border-right: 1px solid #94a3b8;">
+              <div style="color: #4b5563; margin-bottom: 3px;">Order No</div>
+              <div class="bold">${order.id.toString().padStart(4, '0')}</div>
+            </div>
+            <div style="width: 33.33%; padding: 5px; border-right: 1px solid #94a3b8;">
+              <div style="color: #4b5563; margin-bottom: 3px;">Receipt No</div>
+              <div class="bold">INV-${order.id.toString().padStart(4, '0')}</div>
+            </div>
+            <div style="width: 33.34%; padding: 5px;">
+              <div style="color: #4b5563; margin-bottom: 3px;">Date</div>
+              <div class="bold">${new Date(order.created_at || Date.now()).toLocaleDateString('en-GB').replace(/\//g, '-')}</div>
+            </div>
+          </div>
+          
+          <table style="border-top: none;">
+            <thead>
+              <tr>
+                <th style="width: 5%;">S.No</th>
+                <th style="width: 35%;" class="text-left">ITEM</th>
+                <th style="width: 8%;">Qty</th>
+                <th style="width: 12%;">MRP</th>
+                <th style="width: 16%;">DISC</th>
+                <th style="width: 12%;">PRICE</th>
+                <th style="width: 12%;">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${allItems.map((item: any, idx: number) => {
+                const isNetRate = Number(item.originalPrice) <= Number(item.price);
+                const mrp = isNetRate ? Number(item.price) : Number(item.originalPrice);
+                const offerPrice = Number(item.price);
+                const itemDiscPercent = isNetRate ? "0" : (((mrp - offerPrice)/mrp)*100).toFixed(0);
+                const amount = offerPrice * Number(item.quantity);
+                return `
+                  <tr>
+                    <td class="text-center">${idx + 1}</td>
+                    <td>${item.name}</td>
+                    <td class="text-center">${item.quantity}</td>
+                    <td class="text-right">₹ ${mrp.toFixed(0)}</td>
+                    <td class="text-center">${itemDiscPercent}% (Rs.${(mrp - offerPrice).toFixed(0)})</td>
+                    <td class="text-right">₹ ${offerPrice.toFixed(0)}</td>
+                    <td class="text-right">₹ ${amount.toFixed(0)}</td>
+                  </tr>
+                `;
+              }).join('')}
+              
+              <tr>
+                <td colspan="2" class="text-right bold">Total Qty</td>
+                <td class="text-center bold">${totalQty}</td>
+                <td colspan="3"></td>
+                <td class="text-right bold">₹ ${previousTotal.toFixed(0)}</td>
+              </tr>
+              <tr>
+                <td colspan="3" class="text-left bold" style="vertical-align: middle;">${numberToWords(totalAmount)}</td>
+                <td colspan="2" class="text-right bold" style="white-space: nowrap; vertical-align: middle;">Total Tax : ₹ ${(packingChargeVal - extraDiscountAmt).toFixed(0)}</td>
+                <td colspan="2" class="text-right bold" style="background-color: #65a30d; color: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; white-space: nowrap; font-size: 13px; vertical-align: middle;">Total Due : ₹ ${Math.max(0, totalAmount).toFixed(0)}</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <div style="display: flex; border: 1px solid #94a3b8; border-top: none;">
+            <div style="width: 65%; padding: 5px; border-right: 1px solid #94a3b8;">
+              <div class="bold" style="margin-bottom: 5px; color: #1e3a8a;">Bank Details</div>
+              <table style="width: 100%; font-size: 11px; border: none; margin-top: 0;">
+                <tr><td style="border: none; padding: 2px;">Acc Holder</td><td style="border: none; padding: 2px;" class="bold">SWETHA S .</td></tr>
+                <tr><td style="border: none; padding: 2px;">Acc No</td><td style="border: none; padding: 2px;" class="bold">403100050600180</td></tr>
+                <tr><td style="border: none; padding: 2px;">Acc Type</td><td style="border: none; padding: 2px;">Savings Account</td></tr>
+                <tr><td style="border: none; padding: 2px;">Bank</td><td style="border: none; padding: 2px;">TMBL SITHURAJAPURAM</td></tr>
+                <tr><td style="border: none; padding: 2px;">IFSC</td><td style="border: none; padding: 2px;">TMBL0000403</td></tr>
               </table>
             </div>
+            <div style="width: 35%; padding: 5px; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-end; font-weight: bold;">
+              Authorized Signatory
+            </div>
+          </div>
+          
+          <div style="border: 1px solid #94a3b8; border-top: none; padding: 5px; font-size: 11px; color: #4b5563;">
+            <div style="margin-bottom: 3px;">Terms & Conditions</div>
+            <div>* Invoice was created on a computer and is invalid without the signature and seal.</div>
+            <div>* Goods once sold cannot be taken back or exchanged.</div>
+          </div>
+          
+          <div style="border: 1px solid #94a3b8; border-top: none; padding: 8px; text-align: center; background-color: #fef08a; color: #854d0e; font-weight: bold; -webkit-print-color-adjust: exact; print-color-adjust: exact;">
+            <div style="margin-bottom: 2px;">Thank You for your business with Vamsi Crackers</div>
+            <div style="font-weight: normal;">For any queries, please contact +91 90800 19031</div>
           </div>
         </body>
       </html>
     `;
 
+    return html;
+  };
+
+  const handlePrintOrder = (order: any, extraDiscType?: "amount"|"percentage", extraDiscValue?: string, packingChargeStr?: string) => {
+    if (!order) return;
+    
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+      showToast("Please allow popups to print invoices", "error");
+      return;
+    }
+    
+    const html = getInvoiceHTML(order, extraDiscType, extraDiscValue, packingChargeStr);
+    if (!html) return;
+    
     printWindow.document.open();
     printWindow.document.write(html);
     printWindow.document.close();
@@ -1509,6 +1733,67 @@ export default function AdminDashboard() {
       printWindow.focus();
       printWindow.print();
     }, 250);
+  };
+
+  const handleWhatsAppShare = async (order: any, extraDiscType?: "amount"|"percentage", extraDiscValue?: string, packingChargeStr?: string) => {
+    if (!order) return;
+    const html = getInvoiceHTML(order, extraDiscType, extraDiscValue, packingChargeStr);
+    if (!html) return;
+    
+    try {
+      showToast("Generating PDF for WhatsApp...", "success");
+      // @ts-ignore
+      const html2pdfModule = await import('html2pdf.js');
+      const html2pdf = html2pdfModule.default;
+      
+      const container = document.createElement('div');
+      container.innerHTML = html;
+      
+      const opt = {
+        margin:       0,
+        filename:     `Estimate_${order.id}.pdf`,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+      };
+
+      const pdfBlob = await html2pdf().set(opt).from(container).output('blob');
+      const file = new File([pdfBlob], `Estimate_${order.id}.pdf`, { type: 'application/pdf' });
+      let shared = false;
+      
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+          await navigator.share({
+            files: [file],
+            title: `Estimate ${order.id}`,
+            text: `Hi ${order.customer_name}, here is your estimate quotation from Vamsi Crackers.`
+          });
+          shared = true;
+        } catch (err) {
+          console.log("Share failed, falling back to download", err);
+        }
+      }
+      
+      if (!shared) {
+        // Download fallback
+        const url = URL.createObjectURL(pdfBlob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Estimate_${order.id}.pdf`;
+        a.click();
+        URL.revokeObjectURL(url);
+        
+        showToast("PDF downloaded. Please attach it in WhatsApp.", "success");
+        
+        let phone = order.customer_phone.replace(/\D/g,'');
+        if (phone.length === 10) phone = '91' + phone;
+        const text = `Hi ${order.customer_name}, here is your estimate quotation (PDF) from Vamsi Crackers. I am sending the document now.`;
+        window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
+      }
+    } catch(err: any) {
+      console.error(err);
+      showToast("Failed to generate PDF.", "error");
+    }
   };
 
   const openGlobalDiscountModal = () => {
@@ -1727,9 +2012,9 @@ export default function AdminDashboard() {
               <img src="/assets/images/vamsi_crackers_logo.png" alt="Logo" className="w-full h-full object-contain rounded-md" />
             </div>
             <div className="flex flex-col">
-              <h1 className="text-base font-black text-white tracking-tight uppercase leading-tight">
+              <h1 className="text-base font-black text-white tracking-tight uppercase leading-tight flex items-center">
                 Vamsi
-                <span className="block text-amber-400 text-sm mt-0.5">Crackers</span>
+                <span className="text-amber-400 text-sm ml-1">Crackers</span>
               </h1>
               <p className="text-[10.5px] font-black text-indigo-400 tracking-widest uppercase mt-0.5">Admin Portal</p>
             </div>
@@ -1747,6 +2032,7 @@ export default function AdminDashboard() {
               { id: "contacts", label: "Contact Us", icon: "✉️" },
               { id: "reports", label: "Sales Reports", icon: "📈" },
               { id: "billing", label: "POS Billing", icon: "🧾" },
+              { id: "banner", label: "Banner", icon: "🖼️" },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -1785,7 +2071,7 @@ export default function AdminDashboard() {
         {/* Main Content Area */}
         <div className="flex-1 flex flex-col h-full overflow-hidden relative bg-slate-900">
           {/* Mobile Header Banner */}
-          <div className="lg:hidden flex items-center justify-between px-6 py-4 bg-[#0a0514] border-b border-white/5 shrink-0 relative z-30">
+          <div className="lg:hidden flex items-center justify-between px-6 py-4 bg-[#0a0514] border-b border-white/5 shrink-0 relative z-30 print:hidden">
             <button onClick={() => setIsMobileSidebarOpen(true)} className="p-2 -ml-2 text-white hover:text-indigo-400 focus:outline-none transition-colors">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -1922,7 +2208,7 @@ export default function AdminDashboard() {
                         
                         <div className="text-right relative z-10">
                           <p className="text-[10px] font-black text-emerald-200/80 uppercase tracking-widest mb-0.5 group-hover:text-emerald-100 transition-colors duration-300">Total Revenue</p>
-                          <p className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-br from-emerald-400 to-emerald-200 drop-shadow-md">₹{orders.reduce((a,c) => a + (parseFloat(c.totalAmount || c.total_amount) || 0), 0).toFixed(2)}</p>
+                          <p className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-br from-emerald-400 to-emerald-200 drop-shadow-md">₹{orders.filter(c => c.payment_status === "Paid").reduce((a,c) => a + (parseFloat(c.totalAmount || c.total_amount) || 0), 0).toFixed(2)}</p>
                         </div>
                         
                         <div className="w-px h-10 bg-white/20 relative z-10"></div>
@@ -2002,7 +2288,7 @@ export default function AdminDashboard() {
 
                       <div className="p-8 flex-1 flex flex-col">
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
                         <button
                           onClick={() => { setEditingProduct(null); setProductName(""); setProductPrice(""); setProductOriginalPrice(""); setProductDiscount(""); setProductCategoryId(""); setProductImage(""); setProductTamilTranslation(""); setIsProductModalOpen(true); }}
                           className="flex flex-col items-center justify-center p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:border-indigo-200 hover:bg-indigo-50/50 hover:-translate-y-1 transition-all group cursor-pointer"
@@ -2024,6 +2310,29 @@ export default function AdminDashboard() {
                           <h4 className="font-bold text-slate-900 text-base">Create Category</h4>
                           <p className="text-sm text-slate-500 mt-1 text-center">Organize your products</p>
                         </button>
+
+                        <div className="flex flex-col items-center justify-center p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:border-amber-200 hover:bg-amber-50/50 transition-all">
+                          <div className="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center text-xl mb-4 text-amber-500">
+                            ₹
+                          </div>
+                          <h4 className="font-bold text-slate-900 text-base mb-2">Min Order Value</h4>
+                          <div className="flex w-full gap-2">
+                            <input 
+                              type="number" 
+                              value={minOrderValue}
+                              onChange={(e) => setMinOrderValue(e.target.value)}
+                              placeholder="Amount" 
+                              className="w-full text-center px-3 py-2 rounded-xl border border-slate-200 font-bold text-slate-700 focus:outline-none focus:border-amber-400"
+                            />
+                            <button 
+                              onClick={handleUpdateMinOrderValue}
+                              disabled={isUpdatingMinOrder}
+                              className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl transition-colors disabled:opacity-50"
+                            >
+                              {isUpdatingMinOrder ? '...' : 'Set'}
+                            </button>
+                          </div>
+                        </div>
                       </div>
 
                       <div className="mt-auto bg-slate-900 rounded-2xl p-6 flex items-center justify-between shadow-lg shadow-slate-900/10">
@@ -2233,7 +2542,12 @@ export default function AdminDashboard() {
                                    ₹{product.price}
                                  </div>
                                  
-                                 <p className="text-sm font-bold text-blue-500 mb-2 uppercase tracking-wider">{categories.find(c => c.id === product.categoryId)?.name || "Uncategorized"}</p>
+                                 <div className="flex items-center justify-between mb-2">
+                                   <p className="text-sm font-bold text-blue-500 uppercase tracking-wider">{categories.find(c => c.id === product.categoryId)?.name || "Uncategorized"}</p>
+                                   <span className={`px-2 py-1 text-[10px] font-black uppercase tracking-wider rounded-md border ${(product.is_active === 1 || product.is_active === true || product.is_active === undefined) ? 'bg-emerald-50 text-emerald-600 border-emerald-200' : 'bg-red-50 text-red-600 border-red-200'}`}>
+                                     {(product.is_active === 1 || product.is_active === true || product.is_active === undefined) ? 'ACTIVE' : 'INACTIVE'}
+                                   </span>
+                                 </div>
                                  <h4 className="font-bold text-slate-900 text-lg line-clamp-2 leading-tight mb-4">{product.name}</h4>
                                  
                                  {product.originalPrice > product.price && (
@@ -2602,16 +2916,44 @@ export default function AdminDashboard() {
                       </div>
                     </div>
                   </div>
+                  
+                  <div className="flex flex-col sm:flex-row gap-4 relative z-10 mb-2">
+                    <div className="relative flex-1">
+                      <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                      </div>
+                      <input 
+                        type="text" 
+                        placeholder="Search customers by name or phone..." 
+                        value={customerSearchTerm}
+                        onChange={(e) => {
+                          setCustomerSearchTerm(e.target.value);
+                          setCustomersPage(1);
+                        }}
+                        className="w-full bg-white border border-slate-200 rounded-xl py-3 pl-12 pr-4 text-sm font-bold text-slate-700 placeholder-slate-400 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all outline-none shadow-sm"
+                      />
+                    </div>
+                    
+                    <button onClick={() => downloadExcel()} className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-emerald-50 text-emerald-600 font-bold text-sm rounded-xl border border-emerald-200 hover:bg-emerald-100 hover:border-emerald-300 transition-colors whitespace-nowrap shadow-sm">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                      </svg>
+                      Export to Excel
+                    </button>
+                  </div>
+
                   <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
-                    {uniqueCustomers.length === 0 ? (
+                    {filteredCustomers.length === 0 ? (
                       <div className="p-16 text-center">
                         <div className="text-6xl mb-4 opacity-50">👥</div>
-                        <h3 className="text-lg font-bold text-slate-900">Customer Directory</h3>
-                        <p className="text-slate-500 text-base mt-2">The customer directory is automatically populated from order history.</p>
+                        <h3 className="text-lg font-bold text-slate-900">{uniqueCustomers.length === 0 ? "Customer Directory" : "No customers found"}</h3>
+                        <p className="text-slate-500 text-base mt-2">{uniqueCustomers.length === 0 ? "The customer directory is automatically populated from order history." : "Try adjusting your search filter."}</p>
                       </div>
                     ) : (
                       (() => {
-                        const totalPages = Math.ceil(uniqueCustomers.length / itemsPerPage) || 1;
+                        const totalPages = Math.ceil(filteredCustomers.length / itemsPerPage) || 1;
                         return (
                           <>
                             <div className="overflow-x-auto">
@@ -2627,7 +2969,7 @@ export default function AdminDashboard() {
                                   </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-50">
-                                  {uniqueCustomers.slice((customersPage - 1) * itemsPerPage, customersPage * itemsPerPage).map((customer, index) => (
+                                  {filteredCustomers.slice((customersPage - 1) * itemsPerPage, customersPage * itemsPerPage).map((customer, index) => (
                                     <tr key={customer.key || index} className="hover:bg-slate-50/50 transition-colors group">
                                       <td className="px-6 py-5 text-center text-sm font-bold text-slate-400">
                                         {(customersPage - 1) * itemsPerPage + index + 1}
@@ -2651,7 +2993,18 @@ export default function AdminDashboard() {
                                         </div>
                                       </td>
                                       <td className="px-6 py-5">
-                                        <div className="font-black text-slate-900 text-base">₹{customer.totalSpent.toFixed(2)}</div>
+                                        <div className="font-black text-slate-900 text-base mb-1">₹{customer.totalSpent.toFixed(2)}</div>
+                                        <div className="mt-1.5">
+                                          {customer.totalUnpaid > 0 ? (
+                                            <div className="inline-flex items-center gap-1.5 bg-red-50 px-2.5 py-1 rounded border border-red-100 text-red-600 text-[11px] font-black uppercase tracking-wider w-fit shadow-sm">
+                                              <span className="w-1.5 h-1.5 rounded-full bg-red-500 shadow-[0_0_4px_rgba(239,68,68,0.5)]"></span> Unpaid
+                                            </div>
+                                          ) : (
+                                            <div className="inline-flex items-center gap-1.5 bg-emerald-50 px-2.5 py-1 rounded border border-emerald-100 text-emerald-700 text-[11px] font-black uppercase tracking-wider w-fit shadow-sm">
+                                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_4px_rgba(16,185,129,0.5)]"></span> Paid
+                                            </div>
+                                          )}
+                                        </div>
                                       </td>
                                       <td className="px-6 py-5">
                                         <div className="text-base font-medium text-slate-700">{new Date(customer.lastOrderDate).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' })}</div>
@@ -2669,7 +3022,7 @@ export default function AdminDashboard() {
                                 </tbody>
                               </table>
                             </div>
-                            {uniqueCustomers.length > itemsPerPage && (
+                            {filteredCustomers.length > itemsPerPage && (
                               <div className="flex justify-center my-6">
                                 <div className="flex items-center gap-2 bg-white p-2 rounded-2xl shadow-sm border border-slate-100">
                                   <button disabled={customersPage === 1} onClick={() => setCustomersPage(p => p - 1)} className="p-2 rounded-xl hover:bg-slate-50 disabled:opacity-50 transition-colors">
@@ -2755,12 +3108,53 @@ export default function AdminDashboard() {
 
                   {/* Report Table - This is what prints */}
                   <div className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm print:shadow-none print:border-none print:m-0 print:p-0">
+                    <style type="text/css" media="print">{`
+                      @page { size: auto; margin: 0mm; }
+                      body { padding: 10mm; background-color: #ffffff; }
+                    `}</style>
                     {/* Print Only Header */}
-                    <div className="hidden print:block text-center py-8 border-b border-slate-200">
-                      <h1 className="text-3xl font-black text-slate-900 uppercase tracking-widest">Sales Report</h1>
-                      <p className="text-slate-500 mt-2 font-medium">
-                        {reportType === 'date' ? 'Day' : reportType === 'month' ? 'Month' : 'Year'} Breakdown
-                      </p>
+                    <div className="hidden print:block mb-6">
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'linear-gradient(135deg, #2a0845 0%, #4a1c6a 100%)', padding: '25px 30px', borderBottom: '4px solid #f59e0b', borderRadius: '12px 12px 0 0', WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
+                        
+                        {/* Left: Logo & Core Info */}
+                        <div style={{ display: 'flex', alignItems: 'center', zIndex: 1 }}>
+                          <div style={{ marginRight: '25px', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100px', height: '100px', borderRadius: '50%', overflow: 'hidden' }}>
+                            <img src="/assets/images/vamsi_crackers_logo_v2.png" alt="Vamsi Crackers" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'drop-shadow(0px 2px 8px rgba(255,255,255,0.2))', transform: 'scale(1.15)' }} />
+                          </div>
+                          
+                          <div>
+                            <h1 style={{ margin: '0 0 6px 0', fontSize: '28px', textTransform: 'uppercase', fontWeight: 900, letterSpacing: '2px', textShadow: '1px 1px 3px rgba(0,0,0,0.6)' }}>
+                              <span style={{ color: '#ffffff' }}>VAMSI</span> <span style={{ color: '#fbbf24' }}>CRACKERS</span>
+                            </h1>
+                            <div style={{ fontSize: '15px', fontWeight: 800, color: '#fbbf24', marginBottom: '6px', letterSpacing: '0.5px' }}>
+                              PROPRIETOR: <span style={{ color: '#ffffff' }}>SWETHA</span>
+                            </div>
+                            <div style={{ fontSize: '13px', color: '#e2e8f0', maxWidth: '350px', lineHeight: 1.5, fontWeight: 500 }}>
+                              D.NO. 177/5/18, Pernaickenpatti,<br/>Sithurajapuram, Virudhunagar, Tamil Nadu 626 189, India
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Right: Contact Info */}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', zIndex: 1, alignItems: 'flex-end', fontSize: '13px', fontWeight: 600, color: '#f8fafc' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <span style={{ fontSize: '16px', lineHeight: 1 }}>📱</span> +91 90800 19031
+                          </div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <span style={{ fontSize: '16px', lineHeight: 1 }}>✉️</span> vamsidharuncrackers@gmail.com
+                          </div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <span style={{ fontSize: '16px', lineHeight: 1 }}>🌐</span> <span style={{ color: '#fbbf24', textDecoration: 'underline', fontWeight: 'bold' }}>www.vamsicrackers.in</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="text-center mt-6">
+                        <h1 className="text-2xl font-black text-slate-900 uppercase tracking-widest" style={{ textDecoration: 'underline' }}>Sales Report</h1>
+                        <p className="text-slate-500 mt-2 font-bold">
+                          {reportType === 'date' ? 'Day' : reportType === 'month' ? 'Month' : 'Year'} Breakdown
+                        </p>
+                      </div>
                     </div>
 
                     <div className="overflow-x-auto">
@@ -3249,8 +3643,100 @@ export default function AdminDashboard() {
                 </div>
               )}
 
+              {activeTab === "banner" && (
+                <div className="p-4 md:p-8 space-y-6 md:space-y-8 animate-fadeIn overflow-y-auto h-full pb-32">
+                  <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-3xl p-8 lg:p-10 text-white relative overflow-hidden shadow-2xl shadow-indigo-900/20 border border-indigo-500/20 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
+                    <div className="relative z-10">
+                      <h2 className="text-3xl font-black text-white tracking-tight flex items-center gap-3">
+                        <span className="text-3xl">🖼️</span> Scrolling Banner
+                      </h2>
+                      <p className="text-indigo-200 text-base mt-2 font-medium max-w-xl">
+                        Update the scrolling banner images that appear on the customer website.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-6">
+                    {/* Image Banners */}
+                    <div className="bg-slate-800/50 backdrop-blur-xl border border-white/10 rounded-3xl p-6 md:p-8 shadow-2xl">
+                      <div className="flex justify-between items-center mb-6">
+                        <h3 className="text-xl font-bold text-white">Scrolling Image Banners</h3>
+                        <div>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            id="bannerImageUpload"
+                            className="hidden"
+                            onChange={handleBannerImageUpload}
+                            disabled={isUploadingBanner}
+                          />
+                          <label
+                            htmlFor="bannerImageUpload"
+                            className="cursor-pointer px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl transition-colors shadow-lg flex items-center gap-2"
+                          >
+                            {isUploadingBanner ? (
+                              <span className="animate-spin text-xl">⏳</span>
+                            ) : (
+                              <span className="text-xl">📤</span>
+                            )}
+                            Upload Banner Image
+                          </label>
+                        </div>
+                      </div>
+
+                      {bannerImages.length === 0 ? (
+                        <div className="text-center py-12 bg-slate-900/30 rounded-2xl border border-dashed border-slate-700/50">
+                          <span className="text-4xl block mb-3 opacity-50">🖼️</span>
+                          <p className="text-slate-300 font-semibold text-lg">No banner images uploaded yet.</p>
+                          <p className="text-slate-500 text-sm mt-1">Upload images to display on the customer portal carousel.</p>
+                        </div>
+                      ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          {bannerImages.map((imgUrl, idx) => (
+                            <div key={idx} className="relative group rounded-2xl overflow-hidden border border-white/10 shadow-xl bg-slate-900 aspect-video md:aspect-[21/9]">
+                              {/* Image */}
+                              <img 
+                                src={imgUrl} 
+                                alt={`Banner ${idx + 1}`} 
+                                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out" 
+                              />
+                              
+                              {/* Gradient Overlay */}
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
+                              
+                              {/* Content Overlay */}
+                              <div className="absolute inset-0 p-5 flex flex-col justify-between">
+                                <div className="flex justify-between items-start">
+                                  <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-black/40 backdrop-blur-md rounded-lg border border-white/10 text-white font-bold text-xs uppercase tracking-widest shadow-lg">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                                    Slide {idx + 1}
+                                  </span>
+                                  
+                                  <button
+                                    onClick={() => handleRemoveBannerImage(idx)}
+                                    className="w-10 h-10 bg-red-500/80 hover:bg-red-500 text-white rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(239,68,68,0.3)] hover:scale-110 transition-all duration-300 backdrop-blur-md border border-red-400/50 opacity-0 group-hover:opacity-100 -translate-y-2 group-hover:translate-y-0"
+                                    title="Remove Banner"
+                                  >
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+                                      <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                    </svg>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+
+                  </div>
+                </div>
+              )}
+
               {/* FALLBACK FOR NEW DYNAMIC MODULES */}
-              {!["overview", "categories", "products", "orders", "customers", "reports", "billing", "contacts"].includes(activeTab) && (
+              {!["overview", "categories", "products", "orders", "customers", "reports", "billing", "contacts", "banner"].includes(activeTab) && (
                 <div className="flex flex-col items-center justify-center h-[60vh] bg-[#180a27]/40 backdrop-blur-sm border border-slate-200 rounded-3xl p-10 text-center animate-slideDown shadow-xl shadow-black/20">
                   <div className="text-6xl mb-6 opacity-80">
                     {activeTab === "inventory" ? "📦" : activeTab === "customers" ? "👥" : activeTab === "offers" ? "🎁" : activeTab === "reports" ? "📈" : activeTab === "settings" ? "⚙️" : "✨"}
@@ -3530,6 +4016,22 @@ export default function AdminDashboard() {
                       onChange={(e) => setProductApplyDiscount(e.target.checked)}
                     />
                     <div className="w-14 h-7 bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-amber-500"></div>
+                  </label>
+                </div>
+
+                <div className="flex items-center justify-between col-span-1 md:col-span-2 bg-slate-700/30 p-5 rounded-2xl border border-slate-600/50">
+                  <div className="flex flex-col">
+                    <span className="text-sm font-bold text-emerald-400 uppercase tracking-wide">Product Status: {productIsActive ? "ACTIVE" : "INACTIVE"}</span>
+                    <span className="text-xs text-slate-400 mt-1 font-medium">When inactive, this product will be hidden from the customer portal.</span>
+                  </div>
+                  <label className="relative inline-flex items-center cursor-pointer ml-4 shrink-0">
+                    <input 
+                      type="checkbox" 
+                      className="sr-only peer" 
+                      checked={Boolean(productIsActive)}
+                      onChange={(e) => setProductIsActive(e.target.checked)}
+                    />
+                    <div className="w-14 h-7 bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-emerald-500"></div>
                   </label>
                 </div>
               </div>
@@ -3826,10 +4328,11 @@ export default function AdminDashboard() {
                 <table className="w-full text-left border-collapse">
                   <thead>
                     <tr className="border-b border-slate-200 bg-slate-50 text-slate-500 text-sm font-black uppercase tracking-widest">
-                      <th className="py-5 px-6">Product Name</th>
-                      <th className="py-5 px-6 text-center">Quantity</th>
-                      <th className="py-5 px-6 text-right">Unit Price</th>
-                      <th className="py-5 px-6 text-right text-slate-900">Total Price</th>
+                      <th className="py-5 px-6">Particulars</th>
+                      <th className="py-5 px-6 text-center">Qty</th>
+                      <th className="py-5 px-6 text-right">Rate</th>
+                      <th className="py-5 px-6 text-center">Unit</th>
+                      <th className="py-5 px-6 text-right text-slate-900">Amount</th>
                       <th className="py-5 px-6 text-center w-16"></th>
                     </tr>
                   </thead>
@@ -3843,6 +4346,7 @@ export default function AdminDashboard() {
                         <td className="py-5 px-6 text-right text-slate-500 font-medium">
                           ₹{item.originalPrice}
                         </td>
+                        <td className="py-5 px-6 text-center text-slate-500 font-bold">BOX</td>
                         <td className="py-5 px-6 text-right text-slate-900 font-black">₹{item.originalPrice * item.quantity}</td>
                         <td className="py-5 px-6 text-center">
                           <button
@@ -3952,6 +4456,15 @@ export default function AdminDashboard() {
             </div>
             {/* Modal Footer */}
             <div className="bg-slate-50 border-t border-slate-200 px-8 py-5 flex justify-end gap-4 shrink-0">
+              <button
+                onClick={() => handleWhatsAppShare(viewingOrder, additionalDiscountType, additionalDiscountValue, packingCharge)}
+                className="hidden px-8 py-3.5 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-base font-black tracking-tight transition-all shadow-lg shadow-green-500/20 flex items-center gap-2 border border-green-400/20"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                  <path d="M16.6 14c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1-.7-.3-1.4-.7-2-1.2-.5-.5-1-1.1-1.4-1.7-.1-.2 0-.4.1-.5.1-.1.2-.3.4-.4.1-.1.2-.3.2-.4.1-.2 0-.4 0-.5C10 9.5 9.4 8 9.3 7.4c-.1-.5-.2-.5-.4-.5h-.5c-.2 0-.5.1-.8.4-.3.3-1.2 1.2-1.2 3 0 1.8 1.2 3.5 1.4 3.7.2.2 2.5 3.9 6.1 5.4 1.4.6 2.4.9 3.2 1.2.8.3 1.6.3 2.2.2.7-.1 2.1-.9 2.4-1.7.3-.8.3-1.5.2-1.7-.1-.2-.3-.5-.4zM12 20.1h-.1c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3.3.9.9-3.2-.2-.3c-.9-1.4-1.4-3-1.4-4.7 0-4.9 4-8.9 8.9-8.9 2.4 0 4.6.9 6.3 2.6 1.7 1.7 2.6 3.9 2.6 6.3 0 4.9-4 8.9-8.9 8.9zm0-16.7c-4.3 0-7.8 3.5-7.8 7.8 0 1.4.4 2.8 1.1 4l.3.5-.8 3 3.1-.8.5.3c1.2.7 2.6 1.1 4 1.1 4.3 0 7.8-3.5 7.8-7.8 0-2.1-.8-4-2.3-5.5-1.5-1.5-3.5-2.3-5.6-2.3z" />
+                </svg>
+                Share on WhatsApp
+              </button>
               <button
                 onClick={() => handlePrintOrder(viewingOrder, additionalDiscountType, additionalDiscountValue, packingCharge)}
                 className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-indigo-500 to-blue-600 hover:from-indigo-600 hover:to-blue-700 text-white text-base font-black tracking-tight transition-all shadow-lg shadow-indigo-500/20 flex items-center gap-2 border border-indigo-400/20"

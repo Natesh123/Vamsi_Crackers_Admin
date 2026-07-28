@@ -199,7 +199,7 @@ const metadata = {
     title: "Vamsi Crackers",
     description: "Crackers shop website",
     icons: {
-        icon: "/assets/images/vamsi_crackers_logo.png"
+        icon: "/assets/images/vamsi_crackers_logo_v2.png"
     }
 };
 function RootLayout({ children }) {

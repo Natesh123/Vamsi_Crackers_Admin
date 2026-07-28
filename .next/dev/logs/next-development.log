@@ -1,885 +1,930 @@
-[00:00:02.637] Server  LOG      ✓ Ready in 1835ms
-[00:00:09.743] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:10.130] Browser WARN    Image with src "/assets/images/vamsi_crackers_logo.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
-[00:00:10.130] Browser WARN    Image with src "/assets/images/gallery/firework_1.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
-[00:00:10.130] Browser WARN    Image with src "/assets/images/gallery/firework_2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
-[00:00:10.130] Browser WARN    Image with src "/assets/images/gallery/firework_3.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
-[00:00:10.131] Browser WARN    Image with src "/assets/images/gallery/firework_4.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
-[00:00:34.777] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:05:36.020] Browser LOG     Playing 5-minute recurring alarm...
-[00:38:32.566] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:40:43.504] Server  LOG      ✓ Compiled in 800ms
-[00:40:59.088] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:43:55.503] Server  LOG      ✓ Compiled in 1114ms
-[00:47:51.602] Server  LOG      ✓ Compiled in 2.7s
-[00:48:09.202] Server  LOG      ✓ Compiled in 831ms
-[00:48:09.309] Browser ERROR   ./app/admin/page.tsx:1181:11
-Ecmascript file had an error
-  1179 |     }
-  1180 |     const previousTotal = totalAmountBase;
-> 1181 |     const totalAmount = previousTotal - extraDiscountAmt;
-       |           ^^^^^^^^^^^
-  1182 |
-  1183 |     const discountPercent = discountedTotalOriginal > 0 ? ((discountedSavings / discountedTotalOriginal) * 100).toFixed(2) : "0.00";
-  1184 |     
-
-the name `totalAmount` is defined multiple times
-
-Import traces:
-  Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[00:48:10.691] Browser ERROR   ./app/admin/page.tsx:1181:11
-Ecmascript file had an error
-  1179 |     }
-  1180 |     const previousTotal = totalAmountBase;
-> 1181 |     const totalAmount = previousTotal - extraDiscountAmt;
-       |           ^^^^^^^^^^^
-  1182 |
-  1183 |     const discountPercent = discountedTotalOriginal > 0 ? ((discountedSavings / discountedTotalOriginal) * 100).toFixed(2) : "0.00";
-  1184 |     
-
-the name `totalAmount` is defined multiple times
-
-Import traces:
-  Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[00:48:45.242] Server  LOG      ✓ Compiled in 458ms
-[00:48:45.341] Browser ERROR   ./app/admin/page.tsx:1181:11
-Ecmascript file had an error
-  1179 |     }
-  1180 |     const previousTotal = totalAmountBase;
-> 1181 |     const totalAmount = previousTotal - extraDiscountAmt;
-       |           ^^^^^^^^^^^
-  1182 |
-  1183 |     const discountPercent = discountedTotalOriginal > 0 ? ((discountedSavings / discountedTotalOriginal) * 100).toFixed(2) : "0.00";
-  1184 |     
-
-the name `totalAmount` is defined multiple times
-
-Import traces:
-  Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[00:48:45.646] Browser ERROR   ./app/admin/page.tsx:1181:11
-Ecmascript file had an error
-  1179 |     }
-  1180 |     const previousTotal = totalAmountBase;
-> 1181 |     const totalAmount = previousTotal - extraDiscountAmt;
-       |           ^^^^^^^^^^^
-  1182 |
-  1183 |     const discountPercent = discountedTotalOriginal > 0 ? ((discountedSavings / discountedTotalOriginal) * 100).toFixed(2) : "0.00";
-  1184 |     
-
-the name `totalAmount` is defined multiple times
-
-Import traces:
-  Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[00:49:03.082] Server  ERROR    ⨯ ./app/admin/page.tsx:1181:11
-Ecmascript file had an error
-  1179 |     }
-  1180 |     const previousTotal = totalAmountBase;
-> 1181 |     const totalAmount = previousTotal - extraDiscountAmt;
-       |           ^^^^^^^^^^^
-  1182 |
-  1183 |     const discountPercent = discountedTotalOriginal > 0 ? ((discountedSavings / discountedTotalOriginal) * 100).toFixed(2) : "0.00";
-  1184 |     
-
-the name `totalAmount` is defined multiple times
-
-Import traces:
-  Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-
-
-[00:49:03.250] Browser ERROR   ./app/admin/page.tsx:1181:11
-Ecmascript file had an error
-  1179 |     }
-  1180 |     const previousTotal = totalAmountBase;
-> 1181 |     const totalAmount = previousTotal - extraDiscountAmt;
-       |           ^^^^^^^^^^^
-  1182 |
-  1183 |     const discountPercent = discountedTotalOriginal > 0 ? ((discountedSavings / discountedTotalOriginal) * 100).toFixed(2) : "0.00";
-  1184 |     
-
-the name `totalAmount` is defined multiple times
-
-Import traces:
-  Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[00:49:03.644] Browser ERROR   ./app/admin/page.tsx:1181:11
-Ecmascript file had an error
-  1179 |     }
-  1180 |     const previousTotal = totalAmountBase;
-> 1181 |     const totalAmount = previousTotal - extraDiscountAmt;
-       |           ^^^^^^^^^^^
-  1182 |
-  1183 |     const discountPercent = discountedTotalOriginal > 0 ? ((discountedSavings / discountedTotalOriginal) * 100).toFixed(2) : "0.00";
-  1184 |     
-
-the name `totalAmount` is defined multiple times
-
-Import traces:
-  Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[00:49:04.131] Browser ERROR   ./app/admin/page.tsx:1181:11
-Ecmascript file had an error
-  1179 |     }
-  1180 |     const previousTotal = totalAmountBase;
-> 1181 |     const totalAmount = previousTotal - extraDiscountAmt;
-       |           ^^^^^^^^^^^
-  1182 |
-  1183 |     const discountPercent = discountedTotalOriginal > 0 ? ((discountedSavings / discountedTotalOriginal) * 100).toFixed(2) : "0.00";
-  1184 |     
-
-the name `totalAmount` is defined multiple times
-
-Import traces:
-  Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[00:49:04.226] Browser ERROR   ./app/admin/page.tsx:1181:11
-Ecmascript file had an error
-  1179 |     }
-  1180 |     const previousTotal = totalAmountBase;
-> 1181 |     const totalAmount = previousTotal - extraDiscountAmt;
-       |           ^^^^^^^^^^^
-  1182 |
-  1183 |     const discountPercent = discountedTotalOriginal > 0 ? ((discountedSavings / discountedTotalOriginal) * 100).toFixed(2) : "0.00";
-  1184 |     
-
-the name `totalAmount` is defined multiple times
-
-Import traces:
-  Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[00:49:04.705] Browser ERROR   ./app/admin/page.tsx:1181:11
-Ecmascript file had an error
-  1179 |     }
-  1180 |     const previousTotal = totalAmountBase;
-> 1181 |     const totalAmount = previousTotal - extraDiscountAmt;
-       |           ^^^^^^^^^^^
-  1182 |
-  1183 |     const discountPercent = discountedTotalOriginal > 0 ? ((discountedSavings / discountedTotalOriginal) * 100).toFixed(2) : "0.00";
-  1184 |     
-
-the name `totalAmount` is defined multiple times
-
-Import traces:
-  Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[00:49:04.705] Browser ERROR   ./app/admin/page.tsx:1181:11
-Ecmascript file had an error
-  1179 |     }
-  1180 |     const previousTotal = totalAmountBase;
-> 1181 |     const totalAmount = previousTotal - extraDiscountAmt;
-       |           ^^^^^^^^^^^
-  1182 |
-  1183 |     const discountPercent = discountedTotalOriginal > 0 ? ((discountedSavings / discountedTotalOriginal) * 100).toFixed(2) : "0.00";
-  1184 |     
-
-the name `totalAmount` is defined multiple times
-
-Import traces:
-  Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[00:49:04.872] Browser ERROR   ./app/admin/page.tsx:1181:11
-Ecmascript file had an error
-  1179 |     }
-  1180 |     const previousTotal = totalAmountBase;
-> 1181 |     const totalAmount = previousTotal - extraDiscountAmt;
-       |           ^^^^^^^^^^^
-  1182 |
-  1183 |     const discountPercent = discountedTotalOriginal > 0 ? ((discountedSavings / discountedTotalOriginal) * 100).toFixed(2) : "0.00";
-  1184 |     
-
-the name `totalAmount` is defined multiple times
-
-Import traces:
-  Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[00:49:05.051] Browser ERROR   uncaughtError: Error: ./app/admin/page.tsx:1181:11
-Ecmascript file had an error
-  1179 |     }
-  1180 |     const previousTotal = totalAmountBase;
-> 1181 |     const totalAmount = previousTotal - extraDiscountAmt;
-       |           ^^^^^^^^^^^
-  1182 |
-  1183 |     const discountPercent = discountedTotalOriginal > 0 ? ((discountedSavings / discountedTotalOriginal) * 100).toFixed(2) : "0.00";
-  1184 |     
-
-the name `totalAmount` is defined multiple times
-
-Import traces:
-  Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-
-
-[00:49:05.237] Browser ERROR   ./app/admin/page.tsx:1181:11
-Ecmascript file had an error
-  1179 |     }
-  1180 |     const previousTotal = totalAmountBase;
-> 1181 |     const totalAmount = previousTotal - extraDiscountAmt;
-       |           ^^^^^^^^^^^
-  1182 |
-  1183 |     const discountPercent = discountedTotalOriginal > 0 ? ((discountedSavings / discountedTotalOriginal) * 100).toFixed(2) : "0.00";
-  1184 |     
-
-the name `totalAmount` is defined multiple times
-
-Import traces:
-  Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[00:49:05.237] Browser ERROR   ./app/admin/page.tsx:1181:11
-Ecmascript file had an error
-  1179 |     }
-  1180 |     const previousTotal = totalAmountBase;
-> 1181 |     const totalAmount = previousTotal - extraDiscountAmt;
-       |           ^^^^^^^^^^^
-  1182 |
-  1183 |     const discountPercent = discountedTotalOriginal > 0 ? ((discountedSavings / discountedTotalOriginal) * 100).toFixed(2) : "0.00";
-  1184 |     
-
-the name `totalAmount` is defined multiple times
-
-Import traces:
-  Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[00:49:05.644] Browser ERROR   ./app/admin/page.tsx:1181:11
-Ecmascript file had an error
-  1179 |     }
-  1180 |     const previousTotal = totalAmountBase;
-> 1181 |     const totalAmount = previousTotal - extraDiscountAmt;
-       |           ^^^^^^^^^^^
-  1182 |
-  1183 |     const discountPercent = discountedTotalOriginal > 0 ? ((discountedSavings / discountedTotalOriginal) * 100).toFixed(2) : "0.00";
-  1184 |     
-
-the name `totalAmount` is defined multiple times
-
-Import traces:
-  Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[00:49:05.644] Browser ERROR   ./app/admin/page.tsx:1181:11
-Ecmascript file had an error
-  1179 |     }
-  1180 |     const previousTotal = totalAmountBase;
-> 1181 |     const totalAmount = previousTotal - extraDiscountAmt;
-       |           ^^^^^^^^^^^
-  1182 |
-  1183 |     const discountPercent = discountedTotalOriginal > 0 ? ((discountedSavings / discountedTotalOriginal) * 100).toFixed(2) : "0.00";
-  1184 |     
-
-the name `totalAmount` is defined multiple times
-
-Import traces:
-  Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[00:49:46.978] Server  LOG      ✓ Compiled in 344ms
-[00:49:47.998] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:53:22.608] Server  LOG      ✓ Compiled in 570ms
-[00:53:38.352] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:58:38.605] Browser LOG     Playing 5-minute recurring alarm...
-[01:03:38.711] Browser LOG     Playing 5-minute recurring alarm...
-[01:04:20.625] Server  LOG      ✓ Compiled in 389ms
-[01:04:51.450] Server  LOG      ✓ Compiled in 458ms
-[01:05:29.866] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:09:23.889] Server  LOG      ✓ Compiled in 823ms
-[01:10:04.572] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:13:04.960] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:15:37.098] Server  LOG      ✓ Compiled in 463ms
-[01:15:53.665] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:19:50.461] Server  LOG      ✓ Compiled in 643ms
-[01:20:20.222] Server  LOG      ✓ Compiled in 542ms
-[01:20:35.777] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:23:48.912] Server  LOG      ✓ Compiled in 552ms
-[01:25:07.994] Server  LOG      ✓ Compiled in 284ms
-[01:26:38.754] Server  LOG      ✓ Compiled in 183ms
-[01:28:03.438] Server  LOG      ✓ Compiled in 393ms
-[01:39:40.495] Server  LOG      ✓ Compiled in 377ms
-[01:40:32.091] Server  LOG      ✓ Compiled in 530ms
-[01:41:23.819] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[05:44:39.764] Browser WARN    Image with src "/assets/images/brands/sony.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
-[05:44:39.764] Browser WARN    Image with src "/assets/images/brands/leo.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
-[05:44:39.764] Browser WARN    Image with src "/assets/images/brands/vanitha.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
-[05:44:39.764] Browser WARN    Image with src "/assets/images/brands/vadivel.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
-[06:09:18.150] Server  LOG      ✓ Compiled in 910ms
-[06:27:28.147] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[06:30:06.971] Server  LOG      ✓ Compiled in 821ms
-[06:32:07.641] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[06:34:28.148] Server  LOG      ✓ Compiled in 529ms
-[06:38:53.747] Server  LOG      ✓ Compiled in 531ms
-[10:31:48.815] Server  LOG      ✓ Compiled in 1185ms
-[10:33:47.648] Server  LOG      ✓ Compiled in 670ms
-[10:37:24.327] Server  LOG      ✓ Compiled in 563ms
-[10:37:47.566] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[10:38:07.599] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[10:41:51.737] Server  LOG      ✓ Compiled in 574ms
-[10:43:59.079] Server  LOG      ✓ Compiled in 519ms
-[10:44:21.188] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[10:47:20.852] Server  LOG      ✓ Compiled in 507ms
-[10:47:20.971] Browser ERROR   ./app/admin/page.tsx:2916:33
+[00:00:02.170] Server  LOG      ✓ Ready in 1451ms
+[00:00:05.439] Server  LOG      ○ Compiling / ...
+[00:00:06.038] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:06.634] Browser WARN    Image with src "/assets/images/vamsi_crackers_logo_v2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:00:06.657] Server  ERROR    ⨯ "upstream image" "http://localhost:5001/uploads/banner_fireworks_1785135377536.png" "resolved to private ip" "[\"::1\",\"127.0.0.1\"]"
+[00:00:06.716] Server  ERROR    ⨯ "upstream image" "http://localhost:5001/uploads/banner_celebration_1785135397243.png" "resolved to private ip" "[\"::1\",\"127.0.0.1\"]"
+[00:00:06.721] Server  ERROR    ⨯ "upstream image" "http://localhost:5001/uploads/banner_diwali_1785135386868.png" "resolved to private ip" "[\"::1\",\"127.0.0.1\"]"
+[00:00:07.095] Browser WARN    Image with src "/assets/images/gallery/firework_1.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:00:07.095] Browser WARN    Image with src "/assets/images/gallery/firework_2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:00:07.095] Browser WARN    Image with src "/assets/images/gallery/firework_3.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:00:07.095] Browser WARN    Image with src "/assets/images/gallery/firework_4.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:00:07.298] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:02:12.787] Server  LOG      ✓ Compiled in 299ms
+[00:05:50.207] Server  LOG      ✓ Compiled in 899ms
+[00:09:11.200] Server  LOG      ✓ Compiled in 783ms
+[00:10:27.504] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:12:24.094] Server  LOG      ✓ Compiled in 748ms
+[00:13:42.855] Server  LOG      ✓ Compiled in 510ms
+[00:15:22.779] Server  LOG      ✓ Compiled in 583ms
+[00:17:01.344] Server  LOG      ✓ Compiled in 444ms
+[00:17:24.337] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:17:24.710] Browser WARN    Image with src "/assets/images/vamsi_crackers_logo_v2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:17:24.710] Browser WARN    Image with src "/assets/images/gallery/firework_1.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:17:24.710] Browser WARN    Image with src "/assets/images/gallery/firework_2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:17:24.710] Browser WARN    Image with src "/assets/images/gallery/firework_3.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:17:24.710] Browser WARN    Image with src "/assets/images/gallery/firework_4.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:17:24.710] Browser WARN    Image with src "/assets/images/brands/sony.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:17:24.710] Browser WARN    Image with src "/assets/images/brands/leo.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:17:24.710] Browser WARN    Image with src "/assets/images/brands/vanitha.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:17:24.710] Browser WARN    Image with src "/assets/images/brands/vadivel.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:18:05.895] Server  LOG      ✓ Compiled in 421ms
+[00:19:21.294] Server  LOG      ✓ Compiled in 413ms
+[00:22:34.586] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:22:34.992] Browser WARN    Image with src "/assets/images/vamsi_crackers_logo_v2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:22:34.992] Browser WARN    Image with src "/assets/images/gallery/firework_1.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:22:34.992] Browser WARN    Image with src "/assets/images/gallery/firework_2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:22:34.992] Browser WARN    Image with src "/assets/images/gallery/firework_3.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:22:34.992] Browser WARN    Image with src "/assets/images/gallery/firework_4.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:22:34.992] Browser WARN    Image with src "/assets/images/brands/sony.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:22:34.992] Browser WARN    Image with src "/assets/images/brands/leo.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:22:34.992] Browser WARN    Image with src "/assets/images/brands/vanitha.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:22:34.992] Browser WARN    Image with src "/assets/images/brands/vadivel.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:22:52.421] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:24:36.756] Server  LOG      ✓ Compiled in 599ms
+[00:27:11.222] Server  LOG      ✓ Compiled in 505ms
+[00:29:02.831] Server  LOG      ✓ Compiled in 479ms
+[00:30:16.792] Server  LOG      ✓ Compiled in 198ms
+[00:40:46.213] Server  LOG      ✓ Compiled in 606ms
+[00:41:14.464] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:41:14.914] Browser WARN    Image with src "/assets/images/vamsi_crackers_logo_v2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:41:14.914] Browser WARN    Image with src "/assets/images/gallery/firework_1.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:41:14.914] Browser WARN    Image with src "/assets/images/gallery/firework_2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:41:14.914] Browser WARN    Image with src "/assets/images/gallery/firework_3.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:41:14.914] Browser WARN    Image with src "/assets/images/gallery/firework_4.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:41:14.914] Browser WARN    Image with src "/assets/images/brands/sony.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:41:14.914] Browser WARN    Image with src "/assets/images/brands/leo.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:41:14.914] Browser WARN    Image with src "/assets/images/brands/vanitha.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:41:14.914] Browser WARN    Image with src "/assets/images/brands/vadivel.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:44:21.596] Server  LOG      ✓ Compiled in 308ms
+[00:44:44.037] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:44:45.415] Browser WARN    Image with src "/assets/images/vamsi_crackers_logo_v2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[00:49:19.848] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:49:20.379] Browser WARN    Image with src "/assets/images/vamsi_crackers_logo_v2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[01:48:04.991] Server  LOG      ✓ Compiled in 169ms
+[01:48:28.144] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:48:29.071] Browser WARN    Image with src "/assets/images/vamsi_crackers_logo_v2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[01:52:35.313] Server  LOG      ✓ Compiled in 1269ms
+[01:53:08.213] Server  LOG      ✓ Compiled in 572ms
+[01:54:55.045] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[01:54:56.479] Browser WARN    Image with src "/assets/images/vamsi_crackers_logo_v2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[04:28:13.006] Server  LOG      ✓ Compiled in 803ms
+[04:28:25.341] Server  LOG      ✓ Compiled in 400ms
+[04:34:09.170] Server  LOG      ✓ Compiled in 274ms
+[04:35:01.321] Server  LOG      ✓ Compiled in 405ms
+[04:37:47.651] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[04:37:48.860] Browser WARN    Image with src "/assets/images/vamsi_crackers_logo_v2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[04:38:22.668] Server  LOG      ✓ Compiled in 434ms
+[04:38:39.863] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[04:38:40.996] Browser WARN    Image with src "/assets/images/vamsi_crackers_logo_v2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[04:59:24.698] Server  LOG      ✓ Compiled in 921ms
+[05:00:04.364] Server  LOG      ✓ Compiled in 946ms
+[05:00:40.469] Server  LOG      ✓ Compiled in 456ms
+[05:01:07.325] Server  LOG      ✓ Compiled in 279ms
+[05:01:52.916] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[05:01:53.728] Browser WARN    Image with src "/assets/images/vamsi_crackers_logo_v2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[05:01:58.240] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[05:03:39.208] Server  LOG      ✓ Compiled in 720ms
+[05:03:40.030] Browser WARN    Image with src "/assets/images/brands/sony.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[05:03:40.030] Browser WARN    Image with src "/assets/images/brands/leo.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[05:04:05.921] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[05:04:06.943] Browser WARN    Image with src "/assets/images/vamsi_crackers_logo_v2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[05:04:06.943] Browser WARN    Image with src "/assets/images/brands/sony.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[05:04:06.943] Browser WARN    Image with src "/assets/images/brands/leo.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[05:04:06.943] Browser WARN    Image with src "/assets/images/brands/vanitha.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[05:04:06.943] Browser WARN    Image with src "/assets/images/brands/vadivel.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[05:07:57.510] Server  LOG      ✓ Compiled in 665ms
+[05:13:14.794] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[05:13:17.020] Browser WARN    Image with src "/assets/images/vamsi_crackers_logo_v2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[05:13:17.020] Browser WARN    Image with src "/assets/images/brands/sony.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[05:13:17.020] Browser WARN    Image with src "/assets/images/brands/leo.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[05:13:17.020] Browser WARN    Image with src "/assets/images/brands/vanitha.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[05:13:17.020] Browser WARN    Image with src "/assets/images/brands/vadivel.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[05:14:44.954] Server  LOG      ✓ Compiled in 707ms
+[08:17:51.823] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[08:17:53.522] Browser WARN    Image with src "/assets/images/vamsi_crackers_logo_v2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[08:17:53.522] Browser WARN    Image with src "/assets/images/brands/sony.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[08:17:53.522] Browser WARN    Image with src "/assets/images/brands/leo.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[08:17:53.522] Browser WARN    Image with src "/assets/images/brands/vanitha.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[08:17:53.522] Browser WARN    Image with src "/assets/images/brands/vadivel.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[08:24:57.507] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[08:24:58.853] Browser WARN    Image with src "/assets/images/vamsi_crackers_logo_v2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[08:24:58.853] Browser WARN    Image with src "/assets/images/brands/sony.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[08:24:58.853] Browser WARN    Image with src "/assets/images/brands/leo.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[08:24:58.853] Browser WARN    Image with src "/assets/images/brands/vanitha.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[08:24:58.853] Browser WARN    Image with src "/assets/images/brands/vadivel.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[08:27:06.425] Server  LOG      ✓ Compiled in 707ms
+[08:27:23.898] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[08:27:25.064] Browser WARN    Image with src "/assets/images/vamsi_crackers_logo_v2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[08:29:40.740] Server  LOG      ✓ Compiled in 766ms
+[08:30:04.011] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[08:30:05.440] Browser WARN    Image with src "/assets/images/vamsi_crackers_logo_v2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[08:30:59.843] Server  LOG      ✓ Compiled in 271ms
+[08:31:00.396] Browser WARN    Image with src "/assets/images/brands/sony.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[08:31:00.396] Browser WARN    Image with src "/assets/images/brands/leo.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[08:31:00.396] Browser WARN    Image with src "/assets/images/brands/vanitha.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[08:31:00.396] Browser WARN    Image with src "/assets/images/brands/vadivel.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[08:31:19.408] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[08:31:20.824] Browser WARN    Image with src "/assets/images/vamsi_crackers_logo_v2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[08:31:20.824] Browser WARN    Image with src "/assets/images/brands/sony.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[08:31:20.824] Browser WARN    Image with src "/assets/images/brands/leo.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[08:31:20.824] Browser WARN    Image with src "/assets/images/brands/vanitha.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[08:31:20.824] Browser WARN    Image with src "/assets/images/brands/vadivel.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:08:35.755] Server  LOG      ✓ Compiled in 237ms
+[09:08:36.371] Browser WARN    Image with src "/assets/images/brands_split/brand_3.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:08:36.371] Browser WARN    Image with src "/assets/images/brands_split/brand_2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:08:36.371] Browser WARN    Image with src "/assets/images/brands_split/brand_1.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:08:36.371] Browser WARN    Image with src "/assets/images/brands_split/brand_4.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:08:57.569] Browser WARN    Image with src "/assets/images/brands_split/brand_9.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:08:57.569] Browser WARN    Image with src "/assets/images/brands_split/brand_11.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:08:57.569] Browser WARN    Image with src "/assets/images/brands_split/brand_10.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:08:57.569] Browser WARN    Image with src "/assets/images/brands_split/brand_8.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:08:57.569] Browser WARN    Image with src "/assets/images/brands_split/brand_13.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:08:57.569] Browser WARN    Image with src "/assets/images/brands_split/brand_12.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:08:57.569] Browser WARN    Image with src "/assets/images/brands_split/brand_14.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:08:57.569] Browser WARN    Image with src "/assets/images/brands_split/brand_15.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:08:57.569] Browser WARN    Image with src "/assets/images/brands_split/brand_16.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:09:01.551] Browser WARN    Image with src "/assets/images/brands_split/brand_5.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:09:01.772] Browser WARN    Image with src "/assets/images/brands_split/brand_6.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:09:02.607] Browser WARN    Image with src "/assets/images/brands_split/brand_7.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:10:01.388] Server  LOG      ✓ Compiled in 377ms
+[09:10:02.370] Browser WARN    Image with src "/assets/images/brands_split/brand_1.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:10:02.370] Browser WARN    Image with src "/assets/images/brands_split/brand_2.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:10:02.370] Browser WARN    Image with src "/assets/images/brands_split/brand_3.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:10:02.370] Browser WARN    Image with src "/assets/images/brands_split/brand_4.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:10:02.370] Browser WARN    Image with src "/assets/images/brands_split/brand_5.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:10:02.370] Browser WARN    Image with src "/assets/images/brands_split/brand_6.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:10:02.370] Browser WARN    Image with src "/assets/images/brands_split/brand_7.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:10:02.370] Browser WARN    Image with src "/assets/images/brands_split/brand_8.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:10:02.370] Browser WARN    Image with src "/assets/images/brands_split/brand_9.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:10:02.370] Browser WARN    Image with src "/assets/images/brands_split/brand_10.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:10:02.370] Browser WARN    Image with src "/assets/images/brands_split/brand_11.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:10:02.370] Browser WARN    Image with src "/assets/images/brands_split/brand_12.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:10:02.370] Browser WARN    Image with src "/assets/images/brands_split/brand_13.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:10:02.370] Browser WARN    Image with src "/assets/images/brands_split/brand_14.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:10:02.370] Browser WARN    Image with src "/assets/images/brands_split/brand_15.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:10:02.371] Browser WARN    Image with src "/assets/images/brands_split/brand_16.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:25:32.906] Server  LOG      ✓ Compiled in 336ms
+[09:26:05.414] Server  LOG      ✓ Compiled in 233ms
+[09:26:15.807] Server  LOG      ✓ Compiled in 373ms
+[09:26:33.997] Server  WARN    Image with src "/assets/images/brands_split/brand_1.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:34.001] Server  WARN    Image with src "/assets/images/brands_split/brand_2.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:34.002] Server  WARN    Image with src "/assets/images/brands_split/brand_3.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:34.003] Server  WARN    Image with src "/assets/images/brands_split/brand_4.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:34.004] Server  WARN    Image with src "/assets/images/brands_split/brand_5.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:34.005] Server  WARN    Image with src "/assets/images/brands_split/brand_6.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:34.006] Server  WARN    Image with src "/assets/images/brands_split/brand_7.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:34.008] Server  WARN    Image with src "/assets/images/brands_split/brand_8.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:34.009] Server  WARN    Image with src "/assets/images/brands_split/brand_9.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:34.010] Server  WARN    Image with src "/assets/images/brands_split/brand_10.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:34.011] Server  WARN    Image with src "/assets/images/brands_split/brand_11.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:34.012] Server  WARN    Image with src "/assets/images/brands_split/brand_12.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:34.013] Server  WARN    Image with src "/assets/images/brands_split/brand_13.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:34.018] Server  WARN    Image with src "/assets/images/brands_split/brand_14.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:34.020] Server  WARN    Image with src "/assets/images/brands_split/brand_15.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:34.021] Server  WARN    Image with src "/assets/images/brands_split/brand_16.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:34.364] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[09:26:35.015] Browser WARN    Image with src "/assets/images/brands_split/brand_1.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:35.015] Browser WARN    Image with src "/assets/images/brands_split/brand_2.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:35.015] Browser WARN    Image with src "/assets/images/brands_split/brand_3.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:35.015] Browser WARN    Image with src "/assets/images/brands_split/brand_4.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:35.015] Browser WARN    Image with src "/assets/images/brands_split/brand_5.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:35.015] Browser WARN    Image with src "/assets/images/brands_split/brand_6.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:35.015] Browser WARN    Image with src "/assets/images/brands_split/brand_7.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:35.015] Browser WARN    Image with src "/assets/images/brands_split/brand_8.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:35.015] Browser WARN    Image with src "/assets/images/brands_split/brand_9.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:35.015] Browser WARN    Image with src "/assets/images/brands_split/brand_10.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:35.015] Browser WARN    Image with src "/assets/images/brands_split/brand_11.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:35.015] Browser WARN    Image with src "/assets/images/brands_split/brand_12.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:35.015] Browser WARN    Image with src "/assets/images/brands_split/brand_13.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:35.015] Browser WARN    Image with src "/assets/images/brands_split/brand_14.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:35.015] Browser WARN    Image with src "/assets/images/brands_split/brand_15.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:35.015] Browser WARN    Image with src "/assets/images/brands_split/brand_16.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:26:35.015] Browser WARN    Image with src "/assets/images/vamsi_crackers_logo_v2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:26:35.015] Browser WARN    Image with src "/assets/images/gallery/firework_1.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:26:35.015] Browser WARN    Image with src "/assets/images/gallery/firework_2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:26:35.015] Browser WARN    Image with src "/assets/images/gallery/firework_3.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:26:35.015] Browser WARN    Image with src "/assets/images/gallery/firework_4.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:28:49.754] Server  LOG      ✓ Compiled in 203ms
+[09:29:11.648] Server  LOG      ✓ Compiled in 185ms
+[09:29:26.422] Server  WARN    Image with src "/assets/images/brands_split/brand_1.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:26.424] Server  WARN    Image with src "/assets/images/brands_split/brand_2.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:26.425] Server  WARN    Image with src "/assets/images/brands_split/brand_3.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:26.425] Server  WARN    Image with src "/assets/images/brands_split/brand_4.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:26.426] Server  WARN    Image with src "/assets/images/brands_split/brand_5.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:26.429] Server  WARN    Image with src "/assets/images/brands_split/brand_6.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:26.431] Server  WARN    Image with src "/assets/images/brands_split/brand_7.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:26.432] Server  WARN    Image with src "/assets/images/brands_split/brand_8.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:26.433] Server  WARN    Image with src "/assets/images/brands_split/brand_9.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:26.434] Server  WARN    Image with src "/assets/images/brands_split/brand_10.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:26.434] Server  WARN    Image with src "/assets/images/brands_split/brand_11.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:26.435] Server  WARN    Image with src "/assets/images/brands_split/brand_12.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:26.436] Server  WARN    Image with src "/assets/images/brands_split/brand_13.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:26.437] Server  WARN    Image with src "/assets/images/brands_split/brand_14.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:26.438] Server  WARN    Image with src "/assets/images/brands_split/brand_15.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:26.439] Server  WARN    Image with src "/assets/images/brands_split/brand_16.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:26.825] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[09:29:27.267] Browser WARN    Image with src "/assets/images/brands_split/brand_1.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:27.267] Browser WARN    Image with src "/assets/images/brands_split/brand_2.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:27.267] Browser WARN    Image with src "/assets/images/brands_split/brand_3.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:27.267] Browser WARN    Image with src "/assets/images/brands_split/brand_4.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:27.267] Browser WARN    Image with src "/assets/images/brands_split/brand_5.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:27.267] Browser WARN    Image with src "/assets/images/brands_split/brand_6.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:27.267] Browser WARN    Image with src "/assets/images/brands_split/brand_7.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:27.267] Browser WARN    Image with src "/assets/images/brands_split/brand_8.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:27.267] Browser WARN    Image with src "/assets/images/brands_split/brand_9.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:27.267] Browser WARN    Image with src "/assets/images/brands_split/brand_10.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:27.267] Browser WARN    Image with src "/assets/images/brands_split/brand_11.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:27.267] Browser WARN    Image with src "/assets/images/brands_split/brand_12.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:27.267] Browser WARN    Image with src "/assets/images/brands_split/brand_13.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:27.267] Browser WARN    Image with src "/assets/images/brands_split/brand_14.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:27.267] Browser WARN    Image with src "/assets/images/brands_split/brand_15.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:27.267] Browser WARN    Image with src "/assets/images/brands_split/brand_16.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:29:27.267] Browser WARN    Image with src "/assets/images/vamsi_crackers_logo_v2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:29:27.267] Browser WARN    Image with src "/assets/images/gallery/firework_1.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:29:27.267] Browser WARN    Image with src "/assets/images/gallery/firework_2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:29:27.267] Browser WARN    Image with src "/assets/images/gallery/firework_3.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:29:27.267] Browser WARN    Image with src "/assets/images/gallery/firework_4.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:52:30.661] Server  LOG      ✓ Compiled in 693ms
+[09:56:11.194] Server  LOG      ✓ Compiled in 174ms
+[09:58:35.234] Server  LOG      ✓ Compiled in 621ms
+[09:58:49.053] Server  WARN    Image with src "/assets/images/brands_split/brand_1.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.055] Server  WARN    Image with src "/assets/images/brands_split/brand_2.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.057] Server  WARN    Image with src "/assets/images/brands_split/brand_3.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.058] Server  WARN    Image with src "/assets/images/brands_split/brand_4.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.059] Server  WARN    Image with src "/assets/images/brands_split/brand_5.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.060] Server  WARN    Image with src "/assets/images/brands_split/brand_6.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.061] Server  WARN    Image with src "/assets/images/brands_split/brand_7.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.061] Server  WARN    Image with src "/assets/images/brands_split/brand_8.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.062] Server  WARN    Image with src "/assets/images/brands_split/brand_9.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.066] Server  WARN    Image with src "/assets/images/brands_split/brand_10.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.066] Server  WARN    Image with src "/assets/images/brands_split/brand_11.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.068] Server  WARN    Image with src "/assets/images/brands_split/brand_12.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.068] Server  WARN    Image with src "/assets/images/brands_split/brand_13.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.069] Server  WARN    Image with src "/assets/images/brands_split/brand_14.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.070] Server  WARN    Image with src "/assets/images/brands_split/brand_15.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.071] Server  WARN    Image with src "/assets/images/brands_split/brand_16.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.414] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[09:58:49.919] Browser WARN    Image with src "/assets/images/brands_split/brand_1.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.919] Browser WARN    Image with src "/assets/images/brands_split/brand_2.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.919] Browser WARN    Image with src "/assets/images/brands_split/brand_3.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.919] Browser WARN    Image with src "/assets/images/brands_split/brand_4.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.919] Browser WARN    Image with src "/assets/images/brands_split/brand_5.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.919] Browser WARN    Image with src "/assets/images/brands_split/brand_6.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.921] Browser WARN    Image with src "/assets/images/brands_split/brand_7.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.922] Browser WARN    Image with src "/assets/images/brands_split/brand_8.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.922] Browser WARN    Image with src "/assets/images/brands_split/brand_9.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.922] Browser WARN    Image with src "/assets/images/brands_split/brand_10.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.922] Browser WARN    Image with src "/assets/images/brands_split/brand_11.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.922] Browser WARN    Image with src "/assets/images/brands_split/brand_12.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.922] Browser WARN    Image with src "/assets/images/brands_split/brand_13.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.922] Browser WARN    Image with src "/assets/images/brands_split/brand_14.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.922] Browser WARN    Image with src "/assets/images/brands_split/brand_15.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.922] Browser WARN    Image with src "/assets/images/brands_split/brand_16.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[09:58:49.922] Browser WARN    Image with src "/assets/images/vamsi_crackers_logo_v2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:58:49.922] Browser WARN    Image with src "/assets/images/gallery/firework_1.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:58:49.922] Browser WARN    Image with src "/assets/images/gallery/firework_2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:58:49.922] Browser WARN    Image with src "/assets/images/gallery/firework_3.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[09:58:49.922] Browser WARN    Image with src "/assets/images/gallery/firework_4.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[10:03:53.774] Server  LOG      ✓ Compiled in 425ms
+[10:08:10.846] Server  LOG      ✓ Compiled in 379ms
+[10:10:03.667] Server  LOG      ✓ Compiled in 248ms
+[10:15:50.266] Server  LOG      ✓ Compiled in 890ms
+[10:15:50.372] Browser ERROR   ./app/page.tsx:216:19
 Parsing ecmascript source code failed
-  2914 |                               <button 
-  2915 |                                 onClick={() => setBillingCart(billingCart.filter(i => i.id !== item.id))}
-> 2916 |                                 <button 
-       |                                 ^
-  2917 |                                   onClick={() => setBillingCart(billingCart.filter(i => i.id !== item.id))}
-  2918 |                                   className="text-slate-400 hover:text-red-400 rounded-lg p-1.5 transition-colors cursor-pointer shrink-0 text-sm"
-  2919 |                                 >✕</button>
+  214 |
+  215 |                 </div>
+> 216 |             </div>
+      |                   ^
+> 217 |         </section>
+      | ^^^^^^^^^
+  218 |
+  219 |
+  220 |         {/* OUR BRANDS SECTION */}
 
-Expression expected
+Expected '</', got 'jsx text (
+        )'
 
 Import traces:
   Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
 
   Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[10:47:22.298] Browser ERROR   ./app/admin/page.tsx:2916:33
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[10:15:51.038] Browser ERROR   ./app/page.tsx:216:19
 Parsing ecmascript source code failed
-  2914 |                               <button 
-  2915 |                                 onClick={() => setBillingCart(billingCart.filter(i => i.id !== item.id))}
-> 2916 |                                 <button 
-       |                                 ^
-  2917 |                                   onClick={() => setBillingCart(billingCart.filter(i => i.id !== item.id))}
-  2918 |                                   className="text-slate-400 hover:text-red-400 rounded-lg p-1.5 transition-colors cursor-pointer shrink-0 text-sm"
-  2919 |                                 >✕</button>
+  214 |
+  215 |                 </div>
+> 216 |             </div>
+      |                   ^
+> 217 |         </section>
+      | ^^^^^^^^^
+  218 |
+  219 |
+  220 |         {/* OUR BRANDS SECTION */}
 
-Expression expected
+Expected '</', got 'jsx text (
+        )'
 
 Import traces:
   Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
 
   Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[10:47:48.155] Server  LOG      ✓ Compiled in 287ms
-[10:47:48.256] Browser ERROR   ./app/admin/page.tsx:2916:33
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[10:16:08.463] Server  ERROR    ⨯ ./app/page.tsx:216:19
 Parsing ecmascript source code failed
-  2914 |                               <button 
-  2915 |                                 onClick={() => setBillingCart(billingCart.filter(i => i.id !== item.id))}
-> 2916 |                                 <button 
-       |                                 ^
-  2917 |                                   onClick={() => setBillingCart(billingCart.filter(i => i.id !== item.id))}
-  2918 |                                   className="text-slate-400 hover:text-red-400 rounded-lg p-1.5 transition-colors cursor-pointer shrink-0 text-sm"
-  2919 |                                 >✕</button>
+  214 |
+  215 |                 </div>
+> 216 |             </div>
+      |                   ^
+> 217 |         </section>
+      | ^^^^^^^^^
+  218 |
+  219 |
+  220 |         {/* OUR BRANDS SECTION */}
 
-Expression expected
+Expected '</', got 'jsx text (
+        )'
 
 Import traces:
   Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
 
   Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[10:47:49.133] Browser ERROR   ./app/admin/page.tsx:2916:33
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+
+[10:16:08.585] Browser ERROR   ./app/page.tsx:216:19
 Parsing ecmascript source code failed
-  2914 |                               <button 
-  2915 |                                 onClick={() => setBillingCart(billingCart.filter(i => i.id !== item.id))}
-> 2916 |                                 <button 
-       |                                 ^
-  2917 |                                   onClick={() => setBillingCart(billingCart.filter(i => i.id !== item.id))}
-  2918 |                                   className="text-slate-400 hover:text-red-400 rounded-lg p-1.5 transition-colors cursor-pointer shrink-0 text-sm"
-  2919 |                                 >✕</button>
+  214 |
+  215 |                 </div>
+> 216 |             </div>
+      |                   ^
+> 217 |         </section>
+      | ^^^^^^^^^
+  218 |
+  219 |
+  220 |         {/* OUR BRANDS SECTION */}
 
-Expression expected
+Expected '</', got 'jsx text (
+        )'
 
 Import traces:
   Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
 
   Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[10:48:05.670] Server  ERROR    ⨯ ./app/admin/page.tsx:2916:33
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[10:16:09.007] Browser ERROR   ./app/page.tsx:216:19
 Parsing ecmascript source code failed
-  2914 |                               <button 
-  2915 |                                 onClick={() => setBillingCart(billingCart.filter(i => i.id !== item.id))}
-> 2916 |                                 <button 
-       |                                 ^
-  2917 |                                   onClick={() => setBillingCart(billingCart.filter(i => i.id !== item.id))}
-  2918 |                                   className="text-slate-400 hover:text-red-400 rounded-lg p-1.5 transition-colors cursor-pointer shrink-0 text-sm"
-  2919 |                                 >✕</button>
+  214 |
+  215 |                 </div>
+> 216 |             </div>
+      |                   ^
+> 217 |         </section>
+      | ^^^^^^^^^
+  218 |
+  219 |
+  220 |         {/* OUR BRANDS SECTION */}
 
-Expression expected
+Expected '</', got 'jsx text (
+        )'
 
 Import traces:
   Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
 
   Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-
-
-[10:48:06.152] Browser ERROR   uncaughtError: Error: ./app/admin/page.tsx:2916:33
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[10:16:10.028] Browser ERROR   ./app/page.tsx:216:19
 Parsing ecmascript source code failed
-  2914 |                               <button 
-  2915 |                                 onClick={() => setBillingCart(billingCart.filter(i => i.id !== item.id))}
-> 2916 |                                 <button 
-       |                                 ^
-  2917 |                                   onClick={() => setBillingCart(billingCart.filter(i => i.id !== item.id))}
-  2918 |                                   className="text-slate-400 hover:text-red-400 rounded-lg p-1.5 transition-colors cursor-pointer shrink-0 text-sm"
-  2919 |                                 >✕</button>
+  214 |
+  215 |                 </div>
+> 216 |             </div>
+      |                   ^
+> 217 |         </section>
+      | ^^^^^^^^^
+  218 |
+  219 |
+  220 |         {/* OUR BRANDS SECTION */}
 
-Expression expected
+Expected '</', got 'jsx text (
+        )'
 
 Import traces:
   Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
 
   Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-
-
-[10:48:06.156] Browser ERROR   ./app/admin/page.tsx:2916:33
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[10:16:10.028] Browser ERROR   ./app/page.tsx:216:19
 Parsing ecmascript source code failed
-  2914 |                               <button 
-  2915 |                                 onClick={() => setBillingCart(billingCart.filter(i => i.id !== item.id))}
-> 2916 |                                 <button 
-       |                                 ^
-  2917 |                                   onClick={() => setBillingCart(billingCart.filter(i => i.id !== item.id))}
-  2918 |                                   className="text-slate-400 hover:text-red-400 rounded-lg p-1.5 transition-colors cursor-pointer shrink-0 text-sm"
-  2919 |                                 >✕</button>
+  214 |
+  215 |                 </div>
+> 216 |             </div>
+      |                   ^
+> 217 |         </section>
+      | ^^^^^^^^^
+  218 |
+  219 |
+  220 |         {/* OUR BRANDS SECTION */}
 
-Expression expected
+Expected '</', got 'jsx text (
+        )'
 
 Import traces:
   Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
 
   Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[10:48:06.156] Browser ERROR   ./app/admin/page.tsx:2916:33
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[10:16:10.555] Browser ERROR   ./app/page.tsx:216:19
 Parsing ecmascript source code failed
-  2914 |                               <button 
-  2915 |                                 onClick={() => setBillingCart(billingCart.filter(i => i.id !== item.id))}
-> 2916 |                                 <button 
-       |                                 ^
-  2917 |                                   onClick={() => setBillingCart(billingCart.filter(i => i.id !== item.id))}
-  2918 |                                   className="text-slate-400 hover:text-red-400 rounded-lg p-1.5 transition-colors cursor-pointer shrink-0 text-sm"
-  2919 |                                 >✕</button>
+  214 |
+  215 |                 </div>
+> 216 |             </div>
+      |                   ^
+> 217 |         </section>
+      | ^^^^^^^^^
+  218 |
+  219 |
+  220 |         {/* OUR BRANDS SECTION */}
 
-Expression expected
+Expected '</', got 'jsx text (
+        )'
 
 Import traces:
   Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
 
   Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[10:48:06.156] Browser ERROR   ./app/admin/page.tsx:2916:33
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[10:16:10.885] Browser ERROR   uncaughtError: Error: ./app/page.tsx:216:19
 Parsing ecmascript source code failed
-  2914 |                               <button 
-  2915 |                                 onClick={() => setBillingCart(billingCart.filter(i => i.id !== item.id))}
-> 2916 |                                 <button 
-       |                                 ^
-  2917 |                                   onClick={() => setBillingCart(billingCart.filter(i => i.id !== item.id))}
-  2918 |                                   className="text-slate-400 hover:text-red-400 rounded-lg p-1.5 transition-colors cursor-pointer shrink-0 text-sm"
-  2919 |                                 >✕</button>
+  214 |
+  215 |                 </div>
+> 216 |             </div>
+      |                   ^
+> 217 |         </section>
+      | ^^^^^^^^^
+  218 |
+  219 |
+  220 |         {/* OUR BRANDS SECTION */}
 
-Expression expected
+Expected '</', got 'jsx text (
+        )'
 
 Import traces:
   Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
 
   Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[10:48:06.156] Browser ERROR   ./app/admin/page.tsx:2916:33
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+
+
+[10:16:11.009] Browser ERROR   ./app/page.tsx:216:19
 Parsing ecmascript source code failed
-  2914 |                               <button 
-  2915 |                                 onClick={() => setBillingCart(billingCart.filter(i => i.id !== item.id))}
-> 2916 |                                 <button 
-       |                                 ^
-  2917 |                                   onClick={() => setBillingCart(billingCart.filter(i => i.id !== item.id))}
-  2918 |                                   className="text-slate-400 hover:text-red-400 rounded-lg p-1.5 transition-colors cursor-pointer shrink-0 text-sm"
-  2919 |                                 >✕</button>
+  214 |
+  215 |                 </div>
+> 216 |             </div>
+      |                   ^
+> 217 |         </section>
+      | ^^^^^^^^^
+  218 |
+  219 |
+  220 |         {/* OUR BRANDS SECTION */}
 
-Expression expected
+Expected '</', got 'jsx text (
+        )'
 
 Import traces:
   Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
 
   Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[10:48:06.371] Browser ERROR   ./app/admin/page.tsx:2916:33
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[10:16:11.009] Browser ERROR   ./app/page.tsx:216:19
 Parsing ecmascript source code failed
-  2914 |                               <button 
-  2915 |                                 onClick={() => setBillingCart(billingCart.filter(i => i.id !== item.id))}
-> 2916 |                                 <button 
-       |                                 ^
-  2917 |                                   onClick={() => setBillingCart(billingCart.filter(i => i.id !== item.id))}
-  2918 |                                   className="text-slate-400 hover:text-red-400 rounded-lg p-1.5 transition-colors cursor-pointer shrink-0 text-sm"
-  2919 |                                 >✕</button>
+  214 |
+  215 |                 </div>
+> 216 |             </div>
+      |                   ^
+> 217 |         </section>
+      | ^^^^^^^^^
+  218 |
+  219 |
+  220 |         {/* OUR BRANDS SECTION */}
 
-Expression expected
+Expected '</', got 'jsx text (
+        )'
 
 Import traces:
   Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
 
   Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[10:48:06.371] Browser ERROR   ./app/admin/page.tsx:2916:33
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[10:16:11.009] Browser ERROR   ./app/page.tsx:216:19
 Parsing ecmascript source code failed
-  2914 |                               <button 
-  2915 |                                 onClick={() => setBillingCart(billingCart.filter(i => i.id !== item.id))}
-> 2916 |                                 <button 
-       |                                 ^
-  2917 |                                   onClick={() => setBillingCart(billingCart.filter(i => i.id !== item.id))}
-  2918 |                                   className="text-slate-400 hover:text-red-400 rounded-lg p-1.5 transition-colors cursor-pointer shrink-0 text-sm"
-  2919 |                                 >✕</button>
+  214 |
+  215 |                 </div>
+> 216 |             </div>
+      |                   ^
+> 217 |         </section>
+      | ^^^^^^^^^
+  218 |
+  219 |
+  220 |         {/* OUR BRANDS SECTION */}
 
-Expression expected
+Expected '</', got 'jsx text (
+        )'
 
 Import traces:
   Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
 
   Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[10:48:07.133] Browser ERROR   ./app/admin/page.tsx:2916:33
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[10:16:11.254] Browser ERROR   ./app/page.tsx:216:19
 Parsing ecmascript source code failed
-  2914 |                               <button 
-  2915 |                                 onClick={() => setBillingCart(billingCart.filter(i => i.id !== item.id))}
-> 2916 |                                 <button 
-       |                                 ^
-  2917 |                                   onClick={() => setBillingCart(billingCart.filter(i => i.id !== item.id))}
-  2918 |                                   className="text-slate-400 hover:text-red-400 rounded-lg p-1.5 transition-colors cursor-pointer shrink-0 text-sm"
-  2919 |                                 >✕</button>
+  214 |
+  215 |                 </div>
+> 216 |             </div>
+      |                   ^
+> 217 |         </section>
+      | ^^^^^^^^^
+  218 |
+  219 |
+  220 |         {/* OUR BRANDS SECTION */}
 
-Expression expected
+Expected '</', got 'jsx text (
+        )'
 
 Import traces:
   Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
 
   Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[10:48:23.278] Browser ERROR   ./app/admin/page.tsx:2984:33
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[10:16:11.330] Browser ERROR   ./app/page.tsx:216:19
 Parsing ecmascript source code failed
-  2982 |                                   </div>
-  2983 |                                 </div>
-> 2984 |                               </div>
-       |                                 ^^^
-  2985 |                               
-  2986 |                               <div className="flex justify-between items-end mb-3 bg-slate-800/40 p-3 rounded-xl border border-slate-700/60">
-  2987 |                                 <div>
+  214 |
+  215 |                 </div>
+> 216 |             </div>
+      |                   ^
+> 217 |         </section>
+      | ^^^^^^^^^
+  218 |
+  219 |
+  220 |         {/* OUR BRANDS SECTION */}
 
-Expected '</', got 'div'
+Expected '</', got 'jsx text (
+        )'
 
 Import traces:
   Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
 
   Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[10:48:24.141] Browser ERROR   ./app/admin/page.tsx:2984:33
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[10:16:12.004] Browser ERROR   ./app/page.tsx:216:19
 Parsing ecmascript source code failed
-  2982 |                                   </div>
-  2983 |                                 </div>
-> 2984 |                               </div>
-       |                                 ^^^
-  2985 |                               
-  2986 |                               <div className="flex justify-between items-end mb-3 bg-slate-800/40 p-3 rounded-xl border border-slate-700/60">
-  2987 |                                 <div>
+  214 |
+  215 |                 </div>
+> 216 |             </div>
+      |                   ^
+> 217 |         </section>
+      | ^^^^^^^^^
+  218 |
+  219 |
+  220 |         {/* OUR BRANDS SECTION */}
 
-Expected '</', got 'div'
-
-Import traces:
-  Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[10:48:44.140] Server  ERROR    ⨯ ./app/admin/page.tsx:2984:33
-Parsing ecmascript source code failed
-  2982 |                                   </div>
-  2983 |                                 </div>
-> 2984 |                               </div>
-       |                                 ^^^
-  2985 |                               
-  2986 |                               <div className="flex justify-between items-end mb-3 bg-slate-800/40 p-3 rounded-xl border border-slate-700/60">
-  2987 |                                 <div>
-
-Expected '</', got 'div'
+Expected '</', got 'jsx text (
+        )'
 
 Import traces:
   Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
+    ./app/page.tsx [Client Component Browser]
+    ./app/page.tsx [Server Component]
 
   Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-
-
-[10:48:44.538] Browser ERROR   uncaughtError: Error: ./app/admin/page.tsx:2984:33
-Parsing ecmascript source code failed
-  2982 |                                   </div>
-  2983 |                                 </div>
-> 2984 |                               </div>
-       |                                 ^^^
-  2985 |                               
-  2986 |                               <div className="flex justify-between items-end mb-3 bg-slate-800/40 p-3 rounded-xl border border-slate-700/60">
-  2987 |                                 <div>
-
-Expected '</', got 'div'
-
-Import traces:
-  Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-
-
-[10:48:44.706] Browser ERROR   ./app/admin/page.tsx:2984:33
-Parsing ecmascript source code failed
-  2982 |                                   </div>
-  2983 |                                 </div>
-> 2984 |                               </div>
-       |                                 ^^^
-  2985 |                               
-  2986 |                               <div className="flex justify-between items-end mb-3 bg-slate-800/40 p-3 rounded-xl border border-slate-700/60">
-  2987 |                                 <div>
-
-Expected '</', got 'div'
-
-Import traces:
-  Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[10:48:44.706] Browser ERROR   ./app/admin/page.tsx:2984:33
-Parsing ecmascript source code failed
-  2982 |                                   </div>
-  2983 |                                 </div>
-> 2984 |                               </div>
-       |                                 ^^^
-  2985 |                               
-  2986 |                               <div className="flex justify-between items-end mb-3 bg-slate-800/40 p-3 rounded-xl border border-slate-700/60">
-  2987 |                                 <div>
-
-Expected '</', got 'div'
-
-Import traces:
-  Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[10:48:45.132] Browser ERROR   ./app/admin/page.tsx:2984:33
-Parsing ecmascript source code failed
-  2982 |                                   </div>
-  2983 |                                 </div>
-> 2984 |                               </div>
-       |                                 ^^^
-  2985 |                               
-  2986 |                               <div className="flex justify-between items-end mb-3 bg-slate-800/40 p-3 rounded-xl border border-slate-700/60">
-  2987 |                                 <div>
-
-Expected '</', got 'div'
-
-Import traces:
-  Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[10:48:45.132] Browser ERROR   ./app/admin/page.tsx:2984:33
-Parsing ecmascript source code failed
-  2982 |                                   </div>
-  2983 |                                 </div>
-> 2984 |                               </div>
-       |                                 ^^^
-  2985 |                               
-  2986 |                               <div className="flex justify-between items-end mb-3 bg-slate-800/40 p-3 rounded-xl border border-slate-700/60">
-  2987 |                                 <div>
-
-Expected '</', got 'div'
-
-Import traces:
-  Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[10:48:45.132] Browser ERROR   ./app/admin/page.tsx:2984:33
-Parsing ecmascript source code failed
-  2982 |                                   </div>
-  2983 |                                 </div>
-> 2984 |                               </div>
-       |                                 ^^^
-  2985 |                               
-  2986 |                               <div className="flex justify-between items-end mb-3 bg-slate-800/40 p-3 rounded-xl border border-slate-700/60">
-  2987 |                                 <div>
-
-Expected '</', got 'div'
-
-Import traces:
-  Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[10:48:45.132] Browser ERROR   ./app/admin/page.tsx:2984:33
-Parsing ecmascript source code failed
-  2982 |                                   </div>
-  2983 |                                 </div>
-> 2984 |                               </div>
-       |                                 ^^^
-  2985 |                               
-  2986 |                               <div className="flex justify-between items-end mb-3 bg-slate-800/40 p-3 rounded-xl border border-slate-700/60">
-  2987 |                                 <div>
-
-Expected '</', got 'div'
-
-Import traces:
-  Client Component Browser:
-    ./app/admin/page.tsx [Client Component Browser]
-    ./app/admin/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./app/admin/page.tsx [Client Component SSR]
-    ./app/admin/page.tsx [Server Component]
-[10:50:16.413] Server  LOG      ✓ Compiled in 356ms
-[10:50:17.659] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[10:50:33.363] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[10:51:56.328] Server  LOG      ✓ Compiled in 489ms
-[10:53:28.654] Server  LOG      ✓ Compiled in 330ms
-[10:54:56.784] Server  LOG      ✓ Compiled in 435ms
-[10:55:49.051] Server  LOG      ✓ Compiled in 329ms
-[10:57:12.232] Server  LOG      ✓ Compiled in 374ms
-[10:59:28.470] Server  LOG      ✓ Compiled in 669ms
-[11:01:59.186] Server  LOG      ✓ Compiled in 511ms
-[11:04:03.805] Server  LOG      ✓ Compiled in 628ms
-[11:04:52.368] Server  LOG      ✓ Compiled in 395ms
-[11:06:43.017] Server  LOG      ✓ Compiled in 403ms
+    ./app/page.tsx [Client Component SSR]
+    ./app/page.tsx [Server Component]
+[10:16:34.488] Server  WARN    Image with src "/assets/images/brands_split/brand_1.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:34.490] Server  WARN    Image with src "/assets/images/brands_split/brand_2.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:34.491] Server  WARN    Image with src "/assets/images/brands_split/brand_3.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:34.492] Server  WARN    Image with src "/assets/images/brands_split/brand_4.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:34.492] Server  WARN    Image with src "/assets/images/brands_split/brand_5.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:34.493] Server  WARN    Image with src "/assets/images/brands_split/brand_6.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:34.494] Server  WARN    Image with src "/assets/images/brands_split/brand_7.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:34.495] Server  WARN    Image with src "/assets/images/brands_split/brand_8.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:34.496] Server  WARN    Image with src "/assets/images/brands_split/brand_9.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:34.496] Server  WARN    Image with src "/assets/images/brands_split/brand_10.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:34.497] Server  WARN    Image with src "/assets/images/brands_split/brand_11.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:34.499] Server  WARN    Image with src "/assets/images/brands_split/brand_12.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:34.503] Server  WARN    Image with src "/assets/images/brands_split/brand_13.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:34.504] Server  WARN    Image with src "/assets/images/brands_split/brand_14.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:34.504] Server  WARN    Image with src "/assets/images/brands_split/brand_15.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:34.505] Server  WARN    Image with src "/assets/images/brands_split/brand_16.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:35.013] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[10:16:35.672] Browser WARN    Image with src "/assets/images/brands_split/brand_1.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:35.672] Browser WARN    Image with src "/assets/images/brands_split/brand_2.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:35.672] Browser WARN    Image with src "/assets/images/brands_split/brand_3.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:35.672] Browser WARN    Image with src "/assets/images/brands_split/brand_4.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:35.672] Browser WARN    Image with src "/assets/images/brands_split/brand_5.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:35.672] Browser WARN    Image with src "/assets/images/brands_split/brand_6.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:35.672] Browser WARN    Image with src "/assets/images/brands_split/brand_7.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:35.672] Browser WARN    Image with src "/assets/images/brands_split/brand_8.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:35.672] Browser WARN    Image with src "/assets/images/brands_split/brand_9.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:35.672] Browser WARN    Image with src "/assets/images/brands_split/brand_10.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:35.672] Browser WARN    Image with src "/assets/images/brands_split/brand_11.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:35.672] Browser WARN    Image with src "/assets/images/brands_split/brand_12.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:35.672] Browser WARN    Image with src "/assets/images/brands_split/brand_13.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:35.672] Browser WARN    Image with src "/assets/images/brands_split/brand_14.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:35.672] Browser WARN    Image with src "/assets/images/brands_split/brand_15.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:35.672] Browser WARN    Image with src "/assets/images/brands_split/brand_16.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:35.672] Browser WARN    Image with src "/assets/images/vamsi_crackers_logo_v2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[10:16:35.672] Browser WARN    Image with src "/assets/images/gallery/firework_1.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[10:16:35.672] Browser WARN    Image with src "/assets/images/gallery/firework_2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[10:16:35.672] Browser WARN    Image with src "/assets/images/gallery/firework_3.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[10:16:35.672] Browser WARN    Image with src "/assets/images/gallery/firework_4.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[10:16:47.363] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[10:16:47.758] Browser WARN    Image with src "/assets/images/brands_split/brand_1.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:47.758] Browser WARN    Image with src "/assets/images/brands_split/brand_2.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:47.758] Browser WARN    Image with src "/assets/images/brands_split/brand_3.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:47.758] Browser WARN    Image with src "/assets/images/brands_split/brand_4.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:47.758] Browser WARN    Image with src "/assets/images/brands_split/brand_5.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:47.758] Browser WARN    Image with src "/assets/images/brands_split/brand_6.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:47.758] Browser WARN    Image with src "/assets/images/brands_split/brand_7.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:47.758] Browser WARN    Image with src "/assets/images/brands_split/brand_8.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:47.758] Browser WARN    Image with src "/assets/images/brands_split/brand_9.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:47.758] Browser WARN    Image with src "/assets/images/brands_split/brand_10.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:47.758] Browser WARN    Image with src "/assets/images/brands_split/brand_11.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:47.758] Browser WARN    Image with src "/assets/images/brands_split/brand_12.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:47.758] Browser WARN    Image with src "/assets/images/brands_split/brand_13.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:47.758] Browser WARN    Image with src "/assets/images/brands_split/brand_14.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:47.758] Browser WARN    Image with src "/assets/images/brands_split/brand_15.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:47.758] Browser WARN    Image with src "/assets/images/brands_split/brand_16.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[10:16:47.758] Browser WARN    Image with src "/assets/images/vamsi_crackers_logo_v2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[10:16:47.758] Browser WARN    Image with src "/assets/images/gallery/firework_1.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[10:16:47.758] Browser WARN    Image with src "/assets/images/gallery/firework_2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[10:16:47.758] Browser WARN    Image with src "/assets/images/gallery/firework_3.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[10:16:47.758] Browser WARN    Image with src "/assets/images/gallery/firework_4.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[10:18:11.421] Server  LOG      ✓ Compiled in 661ms
+[24:08:36.376] Server  LOG      ✓ Compiled in 447ms
+[24:08:57.582] Server  WARN    Image with src "/assets/images/brands_split/brand_1.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:57.586] Server  WARN    Image with src "/assets/images/brands_split/brand_2.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:57.587] Server  WARN    Image with src "/assets/images/brands_split/brand_3.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:57.588] Server  WARN    Image with src "/assets/images/brands_split/brand_4.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:57.589] Server  WARN    Image with src "/assets/images/brands_split/brand_5.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:57.590] Server  WARN    Image with src "/assets/images/brands_split/brand_6.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:57.590] Server  WARN    Image with src "/assets/images/brands_split/brand_7.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:57.591] Server  WARN    Image with src "/assets/images/brands_split/brand_8.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:57.592] Server  WARN    Image with src "/assets/images/brands_split/brand_9.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:57.593] Server  WARN    Image with src "/assets/images/brands_split/brand_10.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:57.593] Server  WARN    Image with src "/assets/images/brands_split/brand_11.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:57.596] Server  WARN    Image with src "/assets/images/brands_split/brand_12.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:57.597] Server  WARN    Image with src "/assets/images/brands_split/brand_13.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:57.598] Server  WARN    Image with src "/assets/images/brands_split/brand_14.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:57.598] Server  WARN    Image with src "/assets/images/brands_split/brand_15.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:57.599] Server  WARN    Image with src "/assets/images/brands_split/brand_16.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:58.371] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[24:08:59.325] Browser WARN    Image with src "/assets/images/brands_split/brand_1.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:59.325] Browser WARN    Image with src "/assets/images/brands_split/brand_2.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:59.325] Browser WARN    Image with src "/assets/images/brands_split/brand_3.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:59.325] Browser WARN    Image with src "/assets/images/brands_split/brand_4.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:59.325] Browser WARN    Image with src "/assets/images/brands_split/brand_5.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:59.325] Browser WARN    Image with src "/assets/images/brands_split/brand_6.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:59.325] Browser WARN    Image with src "/assets/images/brands_split/brand_7.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:59.325] Browser WARN    Image with src "/assets/images/brands_split/brand_8.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:59.325] Browser WARN    Image with src "/assets/images/brands_split/brand_9.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:59.325] Browser WARN    Image with src "/assets/images/brands_split/brand_10.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:59.325] Browser WARN    Image with src "/assets/images/brands_split/brand_11.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:59.325] Browser WARN    Image with src "/assets/images/brands_split/brand_12.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:59.325] Browser WARN    Image with src "/assets/images/brands_split/brand_13.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:59.325] Browser WARN    Image with src "/assets/images/brands_split/brand_14.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:59.325] Browser WARN    Image with src "/assets/images/brands_split/brand_15.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:59.325] Browser WARN    Image with src "/assets/images/brands_split/brand_16.png" is using quality "100" which is not configured in images.qualities [75]. Please update your config to [100, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[24:08:59.706] Browser WARN    Image with src "/assets/images/vamsi_crackers_logo_v2.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[24:12:33.352] Server  LOG      ✓ Compiled in 256ms

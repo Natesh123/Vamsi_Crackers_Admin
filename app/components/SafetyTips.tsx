@@ -46,30 +46,30 @@ export default function SafetyTips() {
         <section id="safety-tips" className="bg-white py-24 scroll-mt-24">
             <div className="container mx-auto px-4">
                 {/* Header */}
-                <div className="text-center mb-20">
-                    <div className="inline-block px-6 py-2 rounded-full bg-festive-red text-white font-black uppercase tracking-[0.3em] text-sm mb-6 shadow-lg animate-pulse">
+                <div className="text-center mb-12 md:mb-20">
+                    <div className="inline-block px-5 py-1.5 md:px-6 md:py-2 rounded-full bg-festive-red text-white font-black uppercase tracking-[0.3em] text-xs md:text-sm mb-4 md:mb-6 shadow-lg animate-pulse">
                         Safety First
                     </div>
-                    <h2 className="text-4xl md:text-6xl font-black text-festive-purple mb-6 uppercase tracking-tighter">
+                    <h2 className="text-3xl md:text-6xl font-black text-festive-purple mb-4 md:mb-6 uppercase tracking-tighter">
                         Important <span className="text-festive-red">Safety</span> Rules
                     </h2>
-                    <p className="text-gray-500 max-w-2xl mx-auto font-medium text-lg">
+                    <p className="text-gray-500 max-w-2xl mx-auto font-medium text-base md:text-lg">
                         Please follow these easy rules to stay safe and enjoy your crackers happily.
                     </p>
                 </div>
 
                 {/* Tips Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
                     {safetyTips.map((tip) => (
                         <div 
                             key={tip.id} 
-                            className="p-10 rounded-[2rem] bg-gray-50 border border-gray-100 transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl hover:bg-white group"
+                            className="p-6 md:p-10 rounded-3xl md:rounded-[2rem] bg-gray-50 border border-gray-100 transition-all duration-500 hover:-translate-y-2 md:hover:-translate-y-3 hover:shadow-xl hover:bg-white group"
                         >
-                            <div className="w-16 h-16 rounded-2xl bg-white shadow-lg flex items-center justify-center text-4xl mb-8 group-hover:scale-110 transition-transform">
+                            <div className="w-14 h-14 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-white shadow-md flex items-center justify-center text-3xl md:text-4xl mb-5 md:mb-8 group-hover:scale-110 transition-transform">
                                 {tip.icon}
                             </div>
-                            <h3 className="text-2xl font-black text-festive-purple mb-4 uppercase tracking-tight">{tip.title}</h3>
-                            <p className="text-gray-500 leading-relaxed font-medium">
+                            <h3 className="text-xl md:text-2xl font-black text-festive-purple mb-3 md:mb-4 uppercase tracking-tight">{tip.title}</h3>
+                            <p className="text-gray-500 leading-relaxed font-medium text-sm md:text-base">
                                 {tip.description}
                             </p>
                         </div>
@@ -77,18 +77,18 @@ export default function SafetyTips() {
                 </div>
 
                 {/* Important Warning */}
-                <div className="mt-20 p-8 md:p-12 rounded-[2.5rem] bg-festive-red text-white relative overflow-hidden shadow-2xl">
+                <div className="mt-12 md:mt-20 p-6 md:p-12 rounded-3xl md:rounded-[2.5rem] bg-festive-red text-white relative overflow-hidden shadow-xl">
                     <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-                    <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
-                        <div className="text-5xl">⚠️</div>
+                    <div className="relative z-10 flex flex-col md:flex-row items-center gap-6 md:gap-8">
+                        <div className="text-4xl md:text-5xl">⚠️</div>
                         <div className="flex-grow text-center md:text-left">
-                            <h4 className="text-2xl md:text-3xl font-black uppercase mb-2">Emergency Note</h4>
-                            <p className="text-white/80 font-medium">
+                            <h4 className="text-xl md:text-3xl font-black uppercase mb-2">Emergency Note</h4>
+                            <p className="text-white/90 font-medium text-sm md:text-base leading-relaxed">
                                 In case of any minor burns, immediately wash the area with cold water. For any serious injuries, please contact your nearest medical center immediately.
                             </p>
                         </div>
-                        <div className="flex-shrink-0">
-                             <a href="tel:108" className="px-10 py-4 rounded-full bg-white text-festive-red font-black uppercase tracking-widest hover:scale-110 transition-transform inline-block">
+                        <div className="flex-shrink-0 w-full md:w-auto mt-2 md:mt-0">
+                             <a href="tel:108" className="px-8 py-3.5 md:px-10 md:py-4 w-full md:w-auto text-center rounded-full bg-white text-festive-red font-black uppercase tracking-widest hover:scale-105 md:hover:scale-110 transition-transform block">
                                 Emergency: 108
                              </a>
                         </div>
