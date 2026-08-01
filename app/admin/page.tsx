@@ -1581,7 +1581,7 @@ export default function AdminDashboard() {
       <!DOCTYPE html>
       <html>
         <head>
-          <title>Order Invoice #${order.id.toString().padStart(4, '0')}</title>
+          <title>Order Invoice #${'26' + String(order.id).slice(-2).padStart(2, '0')}</title>
           <style>
             @page { margin: 0; }
             body { font-family: 'Helvetica', 'Arial', sans-serif; color: #333; line-height: 1.4; max-width: 210mm; margin: 0 auto; font-size: 12px; padding: 10mm; }
@@ -1622,11 +1622,11 @@ export default function AdminDashboard() {
           <div style="display: flex; border: 1px solid #94a3b8; border-top: none; text-align: center;">
             <div style="width: 33.33%; padding: 5px; border-right: 1px solid #94a3b8;">
               <div style="color: #4b5563; margin-bottom: 3px;">Order No</div>
-              <div class="bold">${order.id.toString().padStart(4, '0')}</div>
+              <div class="bold">${'26' + String(order.id).slice(-2).padStart(2, '0')}</div>
             </div>
             <div style="width: 33.33%; padding: 5px; border-right: 1px solid #94a3b8;">
               <div style="color: #4b5563; margin-bottom: 3px;">Receipt No</div>
-              <div class="bold">INV-${order.id.toString().padStart(4, '0')}</div>
+              <div class="bold">INV-${'2026' + String(order.id).slice(-2).padStart(2, '0')}</div>
             </div>
             <div style="width: 33.34%; padding: 5px;">
               <div style="color: #4b5563; margin-bottom: 3px;">Date</div>
@@ -2157,7 +2157,7 @@ export default function AdminDashboard() {
                                 🛍️
                               </div>
                               <div className="flex-1">
-                                <p className="text-sm font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">New Order #{order.id}</p>
+                                <p className="text-sm font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">New Order #{'26' + String(order.id).slice(-2).padStart(2, '0')}</p>
                                 <p className="text-xs text-slate-500 line-clamp-1">{order.customer_name || 'Customer'} • ₹{order.total_amount}</p>
                               </div>
                               <div className="w-2 h-2 rounded-full bg-indigo-500"></div>
@@ -2416,7 +2416,7 @@ export default function AdminDashboard() {
                               🏷️
                             </div>
                             <div className="flex gap-1 bg-slate-50 p-1 rounded-xl border border-slate-100">
-                               <button onClick={() => { setEditingCategory(cat); setEditCategoryName(cat.name.replace(/\\s*\\(.*\\)\\s*/g, "").trim()); const m = cat.name.match(/\\((.*?)\\)/); setEditCatTamilTranslation(m ? m[1] : ""); document.getElementById("add-category-modal")?.classList.remove("hidden"); }} className="w-8 h-8 rounded-lg flex items-center justify-center text-blue-500 hover:text-blue-700 hover:bg-blue-100 transition-colors" title="Edit">
+                               <button onClick={() => { setEditingCategory(cat); setEditCategoryName(cat.name.replace(/\s*\(.*\)\s*/g, "").trim()); const m = cat.name.match(/\((.*?)\)/); setEditCatTamilTranslation(m ? m[1] : ""); document.getElementById("add-category-modal")?.classList.remove("hidden"); }} className="w-8 h-8 rounded-lg flex items-center justify-center text-blue-500 hover:text-blue-700 hover:bg-blue-100 transition-colors" title="Edit">
                                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4"><path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" /></svg>
                                </button>
                                <button onClick={() => setCategoryToDelete({id: cat.id, name: cat.name})} className="w-8 h-8 rounded-lg flex items-center justify-center text-red-500 hover:text-red-700 hover:bg-red-100 transition-colors" title="Delete">
@@ -2740,7 +2740,7 @@ export default function AdminDashboard() {
                                     <tr key={order.id} className="hover:bg-slate-50/50 transition-colors group">
                                       <td className="px-6 py-5">
                                         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 font-black text-sm border border-slate-200 group-hover:border-slate-300 transition-colors">
-                                          #{order.id}
+                                          #{'26' + String(order.id).slice(-2).padStart(2, '0')}
                                         </div>
                                         <div className="mt-2">
                                           {(order.source || 'Website') === 'POS' ? (
@@ -3283,8 +3283,6 @@ export default function AdminDashboard() {
                   </div>
                   
                   {/* Right: Cart & Billing */}
-
-                    {/* Right: Cart & Billing */}
                     <div className="w-full lg:w-[450px] flex flex-col bg-slate-900 border border-slate-700 rounded-[2rem] p-6 shadow-2xl relative overflow-hidden min-h-0 shrink-0">
                       <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-[80px] pointer-events-none"></div>
                       <div className="absolute bottom-0 left-0 w-64 h-64 bg-amber-500/10 rounded-full blur-[80px] pointer-events-none"></div>
@@ -3719,7 +3717,7 @@ export default function AdminDashboard() {
                                     title="Remove Banner"
                                   >
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
-                                      <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                      <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                     </svg>
                                   </button>
                                 </div>
@@ -4284,7 +4282,7 @@ export default function AdminDashboard() {
               <div>
                 <h3 className="text-2xl font-black text-indigo-950 tracking-tight flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center border border-indigo-100 shadow-sm text-indigo-500 text-xl">🛍️</div>
-                  Order #{viewingOrder.id} Details
+                  Order #{'26' + String(viewingOrder.id).slice(-2).padStart(2, '0')} Details
                 </h3>
                 <p className="text-slate-500 text-base font-medium mt-2 tracking-tight flex items-center gap-2">
                   <span>Customer: <span className="text-indigo-700 font-black">{viewingOrder.customer_name}</span></span>

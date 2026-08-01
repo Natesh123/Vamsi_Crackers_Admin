@@ -25,6 +25,7 @@ export default function CartDrawer() {
   const [customerAddress, setCustomerAddress] = useState("");
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [confirmedOrderId, setConfirmedOrderId] = useState(null);
   const [errors, setErrors] = useState({ name: false, phone: false, email: false, city: false, address: false });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [minOrderValue, setMinOrderValue] = useState(0);
@@ -104,6 +105,7 @@ export default function CartDrawer() {
         console.log("%c⚠️ NOTE: Order saved, but Email was NOT sent (Check backend .env credentials)", "color: #f59e0b; font-weight: bold; font-size: 14px;");
       }
 
+      setConfirmedOrderId(responseData.orderId);
       setErrors({ name: false, phone: false, email: false, city: false, address: false });
       setShowSuccessPopup(true);
     } catch (error) {
@@ -401,7 +403,7 @@ export default function CartDrawer() {
               </div>
               <h3 className="text-2xl font-black text-slate-900 uppercase tracking-widest mb-3">Order Confirmed</h3>
               <p className="text-slate-600 leading-relaxed font-medium mb-8 text-base sm:text-base">
-                Thank you for placing your order! Our team will contact you shortly to confirm the details.
+                Your order no is <span className="font-bold text-festive-purple">{confirmedOrderId ? '26' + String(confirmedOrderId).slice(-2).padStart(2, '0') : ''}</span>. Thank you for placing your order! Our team will contact you shortly to confirm the details.
               </p>
               <button
                 onClick={() => {

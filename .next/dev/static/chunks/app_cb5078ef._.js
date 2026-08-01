@@ -4044,7 +4044,7 @@ function ContactSection() {
                                 className: "xl:col-span-7 md:col-span-2 h-[300px] md:h-[400px] xl:h-auto rounded-3xl md:rounded-[2.5rem] overflow-hidden border-[4px] md:border-[8px] border-white/80 backdrop-blur-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:-translate-y-1 hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-all duration-500 relative group",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("iframe", {
-                                        src: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15732.551608630084!2d77.7919!3d9.4533!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b06cfe40d33f789%3A0x6a256d9a466185!2sSivakasi%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1715670000000!5m2!1sen!2sin",
+                                        src: "https://maps.google.com/maps?q=9.39969,77.78284&hl=en&z=15&output=embed",
                                         className: "absolute inset-0 w-full h-full border-0 grayscale-[40%] opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000",
                                         allowFullScreen: true,
                                         loading: "lazy",
