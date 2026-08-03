@@ -19,6 +19,7 @@ interface Product {
   categoryId: number;
   category: string;
   is_active?: number | boolean;
+  sort_order?: number;
 }
 
 interface ProductCatalogProps {
@@ -66,15 +67,7 @@ export default function ProductCatalog({ priceListUrl = "" }: ProductCatalogProp
     ? activeProducts
     : activeProducts.filter(p => p.category === activeFilter);
 
-  // Group filtered products by category
-  const groupedProducts = useMemo(() => {
-    return categories
-      .map((cat) => {
-        const catProds = filteredProducts.filter((p) => p.categoryId === cat.id);
-        return { ...cat, products: catProds };
-      })
-      .filter((group) => group.products.length > 0);
-  }, [categories, filteredProducts]);
+  // Categories array for filter is already available as 'categories'
 
   const getCartQty = (productId: number) => {
     const item = cartItems.find((c) => c.id === productId);
@@ -175,43 +168,29 @@ export default function ProductCatalog({ priceListUrl = "" }: ProductCatalogProp
           </div>
         </div>
 
-        {/* ═══ Table View (Grouped by Category) ═══ */}
-        {groupedProducts.length > 0 ? (
+        {/* ═══ Flat Table View ═══ */}
+        {filteredProducts.length > 0 ? (
           <div className="space-y-10">
-            {groupedProducts.map((group) => (
-              <div key={group.id}>
-                {/* ═══ Category Banner Header ═══ */}
-                <div className="relative overflow-hidden rounded-t-2xl bg-gradient-to-r from-festive-purple via-[#3d1166] to-festive-purple px-5 md:px-8 py-4 md:py-5 flex items-center justify-between shadow-lg">
-                  <div className="absolute inset-0 opacity-10" style={{backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'20\' height=\'20\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Ccircle cx=\'10\' cy=\'10\' r=\'1.5\' fill=\'white\'/%3E%3C/svg%3E")', backgroundSize: '20px 20px'}} />
-                  <div className="relative z-10 flex items-center gap-3">
-                    <span className="text-2xl">🎇</span>
-                    <h2 className="text-lg md:text-2xl font-black uppercase tracking-wider text-white drop-shadow-sm">
-                      {group.name}
-                    </h2>
-                  </div>
-                  <span className="relative z-10 shrink-0 bg-festive-gold/20 backdrop-blur-sm text-festive-gold text-[10px] md:text-xs font-black px-3 md:px-4 py-1.5 rounded-full uppercase tracking-widest border border-festive-gold/40 whitespace-nowrap">
-                    {group.products.length} Items
-                  </span>
-                </div>
+            <div>
+              {/* ═══ Table Header (Desktop Only) ═══ */}
+              <div className="hidden md:grid md:grid-cols-[40px_80px_1fr_140px_120px_130px] lg:grid-cols-[50px_90px_1fr_150px_130px_150px] items-center gap-4 px-6 lg:px-8 py-3.5 bg-gradient-to-r from-festive-purple via-[#3d1166] to-festive-purple rounded-t-2xl text-[10.5px] font-black text-festive-gold uppercase tracking-[0.2em] shadow-md border-b-2 border-festive-gold/30">
+                <span className="text-center drop-shadow-sm">S.No</span>
+                <span className="text-center drop-shadow-sm">Image</span>
+                <span className="drop-shadow-sm">Product Name</span>
+                <span className="text-right drop-shadow-sm">MRP</span>
+                <span className="text-right drop-shadow-sm">Offer Price</span>
+                <span className="text-center drop-shadow-sm">Action</span>
+              </div>
 
-                {/* ═══ Table Header (Desktop Only) ═══ */}
-                <div className="hidden md:grid md:grid-cols-[80px_1fr_140px_120px_130px] lg:grid-cols-[90px_1fr_150px_130px_150px] items-center gap-4 px-6 lg:px-8 py-3 bg-gray-50 border-x border-gray-200 text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">
-                  <span className="text-center">Image</span>
-                  <span>Product Name</span>
-                  <span className="text-right">MRP</span>
-                  <span className="text-right">Offer Price</span>
-                  <span className="text-center">Action</span>
-                </div>
+              {/* ═══ Product Rows ═══ */}
+              <div className="border border-gray-200 md:border-t-0 rounded-b-2xl overflow-hidden bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)]">
+                {filteredProducts.map((prod, idx) => {
+                  const qty = getCartQty(prod.id);
+                  const prodDiscount = prod.discount || Math.round(((prod.originalPrice - prod.price) / prod.originalPrice) * 100);
+                  const isLast = idx === filteredProducts.length - 1;
 
-                {/* ═══ Product Rows ═══ */}
-                <div className="border border-gray-200 border-t-0 rounded-b-2xl overflow-hidden bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)]">
-                  {group.products.map((prod, idx) => {
-                    const qty = getCartQty(prod.id);
-                    const prodDiscount = prod.discount || Math.round(((prod.originalPrice - prod.price) / prod.originalPrice) * 100);
-                    const isLast = idx === group.products.length - 1;
-
-                    return (
-                      <div key={prod.id} className={`transition-all duration-300 hover:bg-amber-50/50 ${!isLast ? 'border-b border-gray-100' : ''}`}>
+                  return (
+                    <div key={prod.id} className={`transition-all duration-300 hover:bg-amber-50/50 ${!isLast ? 'border-b border-gray-100' : ''}`}>
                         
                         {/* --- MOBILE VIEW --- */}
                         <div className="md:hidden flex p-3 gap-3 relative">
@@ -225,15 +204,18 @@ export default function ProductCatalog({ priceListUrl = "" }: ProductCatalogProp
                            )}
                            
                            {/* Image */}
-                           <div className="w-[80px] h-[80px] rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center p-1 overflow-hidden shrink-0">
-                             <img src={prod.image || "/assets/images/placeholder.png"} alt={prod.name} loading="lazy" className="w-full h-full object-contain" />
+                           <div className="w-[85px] h-[85px] rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center p-1.5 overflow-hidden shrink-0 relative">
+                             <img src={prod.image || "/assets/images/placeholder.png"} alt={prod.name} loading="lazy" decoding="async" className="w-full h-full object-contain" />
                            </div>
 
                            {/* Content */}
                            <div className="flex-1 flex flex-col justify-between py-0.5">
                               <div>
-                                 <h4 className="font-black text-slate-800 text-[13px] leading-tight line-clamp-2">{prod.name}</h4>
-                                 <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-0.5 block truncate max-w-full">{group.name}</span>
+                                 <div className="flex items-start gap-1">
+                                   <span className="text-[10px] font-black text-slate-400 mt-[2px]">{idx + 1}.</span>
+                                   <h4 className="font-black text-slate-800 text-[14px] leading-tight line-clamp-2">{prod.name}</h4>
+                                 </div>
+                                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1 block truncate max-w-full">{prod.category}</span>
                               </div>
                               <div className="flex items-end justify-between mt-2">
                                  <div className="flex flex-col">
@@ -244,8 +226,8 @@ export default function ProductCatalog({ priceListUrl = "" }: ProductCatalogProp
                                  </div>
                                  <div className="shrink-0 mr-1">
                                     {qty > 0 ? (
-                                      <div className="flex items-center border-2 border-festive-purple/20 rounded-md overflow-hidden bg-white h-7 w-[75px]">
-                                        <button onClick={() => updateQuantity(prod.id, qty - 1)} className="flex-1 h-full text-slate-600 active:scale-95 font-black flex items-center justify-center">−</button>
+                                      <div className="flex items-center border-2 border-festive-purple/20 rounded-md overflow-hidden bg-white h-8 w-[85px]">
+                                        <button onClick={() => updateQuantity(prod.id, qty - 1)} className="flex-1 h-full text-slate-600 active:scale-95 font-black text-sm flex items-center justify-center">−</button>
                                         <input 
                                           type="number" 
                                           value={qty} 
@@ -253,13 +235,13 @@ export default function ProductCatalog({ priceListUrl = "" }: ProductCatalogProp
                                             const val = e.target.value === '' ? 0 : parseInt(e.target.value);
                                             if (!isNaN(val) && val >= 0) updateQuantity(prod.id, val);
                                           }}
-                                          className="w-8 h-full font-black text-slate-900 text-[11px] bg-gray-50 text-center border-x border-gray-200 outline-none focus:bg-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                          className="w-9 h-full font-black text-slate-900 text-[12px] bg-gray-50 text-center border-x border-gray-200 outline-none focus:bg-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                                         />
-                                        <button onClick={() => updateQuantity(prod.id, qty + 1)} className="flex-1 h-full text-slate-600 active:scale-95 font-black flex items-center justify-center">+</button>
+                                        <button onClick={() => updateQuantity(prod.id, qty + 1)} className="flex-1 h-full text-slate-600 active:scale-95 font-black text-sm flex items-center justify-center">+</button>
                                       </div>
                                     ) : (
-                                      <button onClick={() => addToCart({ id: prod.id, name: prod.name, price: prod.price, originalPrice: prod.originalPrice, image: prod.image, category: group.name })} className="h-7 px-4 rounded-md bg-gradient-to-r from-festive-purple to-[#3d1166] text-white font-black uppercase text-[10px] tracking-wider active:scale-95 shadow-md flex items-center justify-center gap-1">
-                                        <span className="text-[14px] leading-none mb-[1px]">+</span> Add
+                                      <button onClick={() => addToCart({ id: prod.id, name: prod.name, price: prod.price, originalPrice: prod.originalPrice, image: prod.image, category: prod.category })} className="h-8 px-5 rounded-md bg-gradient-to-r from-festive-purple to-[#3d1166] text-white font-black uppercase text-[11px] tracking-wider active:scale-95 shadow-md flex items-center justify-center gap-1.5">
+                                        <span className="text-[15px] leading-none mb-[1px]">+</span> Add
                                       </button>
                                     )}
                                  </div>
@@ -268,7 +250,12 @@ export default function ProductCatalog({ priceListUrl = "" }: ProductCatalogProp
                         </div>
 
                         {/* --- DESKTOP VIEW --- */}
-                        <div className="hidden md:grid group relative grid-cols-[80px_1fr_140px_120px_130px] lg:grid-cols-[90px_1fr_150px_130px_150px] items-center gap-4 px-6 lg:px-8 py-3.5">
+                        <div className="hidden md:grid group relative grid-cols-[40px_80px_1fr_140px_120px_130px] lg:grid-cols-[50px_90px_1fr_150px_130px_150px] items-center gap-4 px-6 lg:px-8 py-3.5">
+                          {/* S.No */}
+                          <div className="flex items-center justify-center">
+                            <span className="text-sm font-black text-slate-400 group-hover:text-festive-purple transition-colors">{idx + 1}</span>
+                          </div>
+
                           {/* Product Image */}
                           <div className="w-[80px] lg:w-[90px] h-[70px] lg:h-[75px] rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center p-1.5 overflow-hidden flex-shrink-0 group-hover:border-festive-gold/30 transition-all mx-auto">
                             <img src={prod.image || "/assets/images/placeholder.png"} alt={prod.name} loading="lazy" decoding="async" className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500" />
@@ -320,7 +307,7 @@ export default function ProductCatalog({ priceListUrl = "" }: ProductCatalogProp
                                 </button>
                               </>
                             ) : (
-                              <button onClick={() => addToCart({ id: prod.id, name: prod.name, price: prod.price, originalPrice: prod.originalPrice, image: prod.image, category: group.name })} className="w-[130px] lg:w-[140px] h-9 rounded-xl bg-gradient-to-r from-festive-purple to-[#3d1166] hover:from-festive-gold hover:to-yellow-500 text-white hover:text-festive-purple font-black uppercase text-[11px] tracking-wider hover:scale-[1.03] transition-all cursor-pointer shadow-[0_4px_15px_rgba(48,13,79,0.3)] hover:shadow-[0_4px_15px_rgba(255,215,0,0.4)] flex items-center justify-center gap-1 border border-transparent">
+                              <button onClick={() => addToCart({ id: prod.id, name: prod.name, price: prod.price, originalPrice: prod.originalPrice, image: prod.image, category: prod.category })} className="w-[130px] lg:w-[140px] h-9 rounded-xl bg-gradient-to-r from-festive-purple to-[#3d1166] hover:from-festive-gold hover:to-yellow-500 text-white hover:text-festive-purple font-black uppercase text-[11px] tracking-wider hover:scale-[1.03] transition-all cursor-pointer shadow-[0_4px_15px_rgba(48,13,79,0.3)] hover:shadow-[0_4px_15px_rgba(255,215,0,0.4)] flex items-center justify-center gap-1 border border-transparent">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-3.5 h-3.5"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
                                 <span>Add</span>
                               </button>
@@ -333,8 +320,7 @@ export default function ProductCatalog({ priceListUrl = "" }: ProductCatalogProp
                   })}
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
         ) : (
           <div className="text-center text-gray-400 py-32">
             <span className="text-6xl animate-bounce inline-block drop-shadow-md mb-4">🎆</span>

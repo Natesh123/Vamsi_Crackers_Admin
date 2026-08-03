@@ -498,6 +498,7 @@ export default function AdminDashboard() {
   const [productDiscount, setProductDiscount] = useState("");
   const [productApplyDiscount, setProductApplyDiscount] = useState(true);
   const [productIsActive, setProductIsActive] = useState(true);
+  const [productSortOrder, setProductSortOrder] = useState("");
   const [productCategoryId, setProductCategoryId] = useState("");
   const [productImage, setProductImage] = useState("");
   const [uploadingImage, setUploadingImage] = useState(false);
@@ -506,6 +507,7 @@ export default function AdminDashboard() {
   // Bulk Upload states
   const [isBulkUploading, setIsBulkUploading] = useState(false);
   const bulkUploadInputRef = useRef<HTMLInputElement>(null);
+  const [selectedProductIds, setSelectedProductIds] = useState<number[]>([]);
 
   // Price List PDF Manager states
   const [priceListUrl, setPriceListUrl] = useState("");
@@ -727,6 +729,30 @@ export default function AdminDashboard() {
       showToast(err.message || "Failed to delete order", "error");
     } finally {
       setOrderToDelete(null);
+    }
+  };
+
+  const handleBulkDeleteProducts = async () => {
+    if (selectedProductIds.length === 0) return;
+    if (!confirm(`Are you sure you want to delete ${selectedProductIds.length} selected products?`)) return;
+
+    try {
+      const res = await fetch(`${apiUrl}/api/products/bulk-delete`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ids: selectedProductIds })
+      });
+      
+      if (res.ok) {
+        showToast(`Successfully deleted ${selectedProductIds.length} products`, "success");
+        setSelectedProductIds([]);
+        fetchData();
+      } else {
+        const data = await res.json();
+        showToast(data.error || "Failed to delete products", "error");
+      }
+    } catch (err: any) {
+      showToast(err.message || "Failed to delete products", "error");
     }
   };
 
@@ -1091,6 +1117,7 @@ export default function AdminDashboard() {
     setProductDiscount("");
     setProductApplyDiscount(true);
     setProductIsActive(true);
+    setProductSortOrder("");
     setProductTamilTranslation("");
     setProductCategoryId(categories[0]?.id.toString() || "");
     setProductImage(presetImages[0].path);
@@ -1112,6 +1139,7 @@ export default function AdminDashboard() {
     setProductDiscount(product.discount !== undefined ? product.discount.toString() : "");
     setProductApplyDiscount(product.apply_discount !== undefined ? Boolean(product.apply_discount) : true);
     setProductIsActive(product.is_active !== undefined ? Boolean(product.is_active) : true);
+    setProductSortOrder(product.sort_order !== undefined ? product.sort_order.toString() : "0");
     setProductCategoryId(product.categoryId.toString());
     setProductImage(product.image);
     setIsProductModalOpen(true);
@@ -1170,7 +1198,10 @@ export default function AdminDashboard() {
         "Category": "Sparklers",
         "Original Price": 150,
         "Offer Price": 120,
-        "Global Discount": "Yes"
+        "Discount Percentage": 20,
+        "Global Discount": "Yes",
+        "Sort Order": 1,
+        "Status": "Active"
       }
     ]);
     const wb = xlsx.utils.book_new();
@@ -1237,6 +1268,7 @@ export default function AdminDashboard() {
       discount: finalDiscount,
       applyDiscount: productApplyDiscount,
       isActive: productIsActive,
+      sortOrder: parseInt(productSortOrder) || 0,
       image: productImage,
       categoryId: parseInt(productCategoryId),
     };
@@ -2290,7 +2322,7 @@ export default function AdminDashboard() {
 
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
                         <button
-                          onClick={() => { setEditingProduct(null); setProductName(""); setProductPrice(""); setProductOriginalPrice(""); setProductDiscount(""); setProductCategoryId(""); setProductImage(""); setProductTamilTranslation(""); setIsProductModalOpen(true); }}
+                          onClick={() => { setEditingProduct(null); setProductName(""); setProductPrice(""); setProductOriginalPrice(""); setProductDiscount(""); setProductCategoryId(""); setProductImage(""); setProductTamilTranslation(""); setProductSortOrder(""); setIsProductModalOpen(true); }}
                           className="flex flex-col items-center justify-center p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:border-indigo-200 hover:bg-indigo-50/50 hover:-translate-y-1 transition-all group cursor-pointer"
                         >
                           <div className="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
@@ -2494,26 +2526,20 @@ export default function AdminDashboard() {
                           <><span>📁</span> Bulk Upload</>
                         )}
                       </button>
+                      {selectedProductIds.length > 0 && (
+                        <button
+                          onClick={handleBulkDeleteProducts}
+                          className="flex-1 lg:flex-none px-6 py-4 rounded-2xl bg-red-500 text-white font-bold text-base hover:bg-red-600 hover:-translate-y-1 transition-all flex items-center justify-center gap-2 shadow-lg shadow-red-500/30"
+                        >
+                          <span className="text-white">🗑️</span> Delete Selected ({selectedProductIds.length})
+                        </button>
+                      )}
                       <button
-                        onClick={() => { setEditingProduct(null); setProductName(""); setProductPrice(""); setProductOriginalPrice(""); setProductDiscount(""); setProductCategoryId(""); setProductImage(""); setProductTamilTranslation(""); setIsProductModalOpen(true); }}
+                        onClick={() => { setEditingProduct(null); setProductName(""); setProductPrice(""); setProductOriginalPrice(""); setProductDiscount(""); setProductCategoryId(""); setProductImage(""); setProductTamilTranslation(""); setProductSortOrder(""); setIsProductModalOpen(true); }}
                         className="flex-1 lg:flex-none px-8 py-4 rounded-2xl bg-white text-slate-900 font-bold text-base hover:-translate-y-1 hover:shadow-xl transition-all flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(255,255,255,0.2)]"
                       >
                         <span className="text-blue-600">➕</span> Add Product
                       </button>
-                    </div>
-                  </div>
-                  
-                  <div className="flex flex-col sm:flex-row gap-4 mb-8 bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
-                    <div className="flex-1 relative">
-                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">🔍</span>
-                      <input type="text" placeholder="Search by product name..." value={productSearch} onChange={e => setProductSearch(e.target.value)} className="w-full bg-slate-50 border-none rounded-xl pl-12 pr-4 py-3.5 text-base font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all" />
-                    </div>
-                    <div className="sm:w-64 relative">
-                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">📁</span>
-                      <select value={productFilter} onChange={e => setProductFilter(e.target.value)} className="w-full bg-slate-50 border-none rounded-xl pl-12 pr-4 py-3.5 text-base font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all appearance-none">
-                        <option value="All">All Categories</option>
-                        {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
-                      </select>
                     </div>
                   </div>
                   
@@ -2522,10 +2548,54 @@ export default function AdminDashboard() {
                     const totalPages = Math.ceil(filteredProducts.length / itemsPerPage) || 1;
                     return (
                       <>
+                        <div className="flex flex-col sm:flex-row gap-4 mb-8 bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+                          <div className="flex items-center justify-center shrink-0">
+                            <label className="flex items-center gap-2 cursor-pointer bg-slate-50 hover:bg-slate-100 px-4 py-3.5 rounded-xl transition-colors border border-slate-100">
+                              <input 
+                                type="checkbox" 
+                                className="w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                                checked={filteredProducts.length > 0 && selectedProductIds.length === filteredProducts.length}
+                                onChange={(e) => {
+                                  if (e.target.checked) {
+                                    setSelectedProductIds(filteredProducts.map(p => p.id));
+                                  } else {
+                                    setSelectedProductIds([]);
+                                  }
+                                }}
+                              />
+                              <span className="font-bold text-slate-700 text-sm">Select All</span>
+                            </label>
+                          </div>
+                          <div className="flex-1 relative">
+                            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">🔍</span>
+                            <input type="text" placeholder="Search by product name..." value={productSearch} onChange={e => setProductSearch(e.target.value)} className="w-full bg-slate-50 border-none rounded-xl pl-12 pr-4 py-3.5 text-base font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all" />
+                          </div>
+                          <div className="sm:w-64 relative">
+                            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">📁</span>
+                            <select value={productFilter} onChange={e => setProductFilter(e.target.value)} className="w-full bg-slate-50 border-none rounded-xl pl-12 pr-4 py-3.5 text-base font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all appearance-none">
+                              <option value="All">All Categories</option>
+                              {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                            </select>
+                          </div>
+                        </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                           {filteredProducts.slice((productsPage - 1) * itemsPerPage, productsPage * itemsPerPage).map(product => (
-                            <div key={product.id} className="bg-white border border-slate-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-blue-100 transition-all duration-300 group flex flex-col">
+                            <div key={product.id} className={`bg-white border ${selectedProductIds.includes(product.id) ? 'border-blue-500 shadow-md ring-2 ring-blue-500/20' : 'border-slate-100 shadow-sm'} rounded-3xl overflow-hidden hover:shadow-xl hover:-translate-y-1 hover:border-blue-100 transition-all duration-300 group flex flex-col`}>
                               <div className="relative h-56 bg-gradient-to-b from-slate-50 to-white w-full p-6 flex items-center justify-center border-b border-slate-50 group-hover:bg-blue-50/30 transition-colors">
+                                <label className="absolute top-4 right-4 z-20 cursor-pointer">
+                                  <input 
+                                    type="checkbox" 
+                                    checked={selectedProductIds.includes(product.id)}
+                                    onChange={(e) => {
+                                      if (e.target.checked) {
+                                        setSelectedProductIds(prev => [...prev, product.id]);
+                                      } else {
+                                        setSelectedProductIds(prev => prev.filter(id => id !== product.id));
+                                      }
+                                    }}
+                                    className="w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                                  />
+                                </label>
                                 {product.image ? (
                                   <img src={product.image} alt={product.name} loading="lazy" decoding="async" className="max-h-full object-contain group-hover:scale-110 drop-shadow-md transition-transform duration-500 ease-out" />
                                 ) : (
@@ -3939,6 +4009,19 @@ export default function AdminDashboard() {
                       </div>
                     </div>
                   )}
+                </div>
+
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-blue-300">
+                    Sort Order
+                  </label>
+                  <input
+                    type="number"
+                    value={productSortOrder}
+                    onChange={(e) => setProductSortOrder(e.target.value)}
+                    placeholder="e.g. 1 (Default is 0)"
+                    className="w-full bg-slate-700/50 border border-slate-600 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 rounded-xl py-3.5 px-5 text-base font-semibold text-white outline-none transition-all placeholder-slate-500 shadow-inner"
+                  />
                 </div>
 
                 <div className="grid grid-cols-3 gap-5 col-span-1 md:col-span-2 bg-slate-700/30 p-5 rounded-2xl border border-slate-600/50">
