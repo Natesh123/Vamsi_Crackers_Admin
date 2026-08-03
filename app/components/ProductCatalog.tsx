@@ -37,7 +37,7 @@ export default function ProductCatalog({ priceListUrl = "" }: ProductCatalogProp
   useEffect(() => {
     async function loadData() {
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
         const [catsRes, prodsRes] = await Promise.all([
           fetch(`${apiUrl}/api/categories`),
           fetch(`${apiUrl}/api/products`)

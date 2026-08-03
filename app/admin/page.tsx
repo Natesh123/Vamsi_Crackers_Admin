@@ -32,7 +32,7 @@ interface Toast {
 }
 
 export default function AdminDashboard() {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
   const [categories, setCategories] = useState<Category[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [orders, setOrders] = useState<any[]>([]);
@@ -133,7 +133,7 @@ export default function AdminDashboard() {
   }, []);
 
   useEffect(() => {
-    const socket = io(apiUrl || "http://localhost:5000");
+    const socket = io(apiUrl || "http://localhost:5001");
     
     socket.on("new-order", (order) => {
       setOrders(prev => [order, ...prev]);

@@ -34,7 +34,7 @@ export default function CartDrawer() {
     if (isCartOpen) {
       const fetchMinOrderValue = async () => {
         try {
-          const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
           const res = await fetch(`${apiUrl}/api/settings/min-order-value/get`);
           if (res.ok) {
             const data = await res.json();
@@ -83,7 +83,7 @@ export default function CartDrawer() {
         }))
       };
 
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
       const response = await fetch(`${apiUrl}/api/orders`, {
         method: 'POST',
         headers: {

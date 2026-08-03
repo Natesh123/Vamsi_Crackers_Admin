@@ -258,7 +258,7 @@ function CartDrawer() {
         if (isCartOpen) {
             const fetchMinOrderValue = async ()=>{
                 try {
-                    const apiUrl = ("TURBOPACK compile-time value", "http://localhost:5001") || "http://localhost:5000";
+                    const apiUrl = ("TURBOPACK compile-time value", "http://104.254.245.96") || "http://localhost:5001";
                     const res = await fetch(`${apiUrl}/api/settings/min-order-value/get`);
                     if (res.ok) {
                         const data = await res.json();
@@ -304,7 +304,7 @@ function CartDrawer() {
                         quantity: item.quantity
                     }))
             };
-            const apiUrl = ("TURBOPACK compile-time value", "http://localhost:5001") || "http://localhost:5000";
+            const apiUrl = ("TURBOPACK compile-time value", "http://104.254.245.96") || "http://localhost:5001";
             const response = await fetch(`${apiUrl}/api/orders`, {
                 method: 'POST',
                 headers: {

@@ -31,7 +31,7 @@ function ProductsPageInner() {
   const [priceListUrl, setPriceListUrl] = useState("");
   const hasScrolledRef = useRef(false);
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
 
   useEffect(() => {
     async function loadData() {

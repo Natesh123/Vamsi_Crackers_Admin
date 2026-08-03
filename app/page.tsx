@@ -19,11 +19,16 @@ export default function Home() {
   useEffect(() => {
     const fetchPriceList = async () => {
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
         const res = await fetch(`${apiUrl}/api/settings/price-list`);
         if (res.ok) {
           const data = await res.json();
-          setPriceListUrl(data.url || "");
+          let fetchedUrl = data.url || "";
+          // Replace hardcoded port 5000 from database to 5001
+          if (fetchedUrl.includes('localhost:5000')) {
+            fetchedUrl = fetchedUrl.replace('localhost:5000', 'localhost:5001');
+          }
+          setPriceListUrl(fetchedUrl);
         }
       } catch (e) {
         console.error("Error fetching price list:", e);
@@ -31,7 +36,7 @@ export default function Home() {
     };
     const fetchBannerText = async () => {
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
         const res = await fetch(`${apiUrl}/api/settings/banner-text/get`);
         if (res.ok) {
           const data = await res.json();
@@ -43,7 +48,7 @@ export default function Home() {
     };
     const fetchMinOrderValue = async () => {
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
         const res = await fetch(`${apiUrl}/api/settings/min-order-value/get`);
         if (res.ok) {
           const data = await res.json();

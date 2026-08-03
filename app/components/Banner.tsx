@@ -20,7 +20,7 @@ export default function Banner({ priceListUrl = "" }: BannerProps) {
     useEffect(() => {
         const fetchBanners = async () => {
             try {
-                const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+                const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
                 const res = await fetch(`${apiUrl}/api/settings/banner-images/get`);
                 if (res.ok) {
                     const data = await res.json();

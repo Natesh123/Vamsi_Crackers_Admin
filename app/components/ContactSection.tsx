@@ -33,7 +33,7 @@ export default function ContactSection() {
         setToast(null);
 
         try {
-            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
             const res = await fetch(`${apiUrl}/api/contacts`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
