@@ -1642,10 +1642,6 @@
     width: 55px;
   }
 
-  .w-\[75px\] {
-    width: 75px;
-  }
-
   .w-\[80\%\] {
     width: 80%;
   }
@@ -2064,10 +2060,6 @@
 
   .grid-cols-\[55px_1fr_45px_55px_85px\] {
     grid-template-columns: 55px 1fr 45px 55px 85px;
-  }
-
-  .grid-cols-\[80px_1fr_140px_120px_130px\] {
-    grid-template-columns: 80px 1fr 140px 120px 130px;
   }
 
   .flex-col {
