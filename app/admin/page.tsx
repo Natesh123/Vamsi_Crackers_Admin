@@ -1614,7 +1614,7 @@ export default function AdminDashboard() {
       <!DOCTYPE html>
       <html>
         <head>
-          <title>Order Invoice #${'26' + String(order.id).slice(-2).padStart(2, '0')}</title>
+          <title>Order Invoice #{String(order.id).padStart(4, '0')}</title>
           <style>
             @page { margin: 0; }
             body { font-family: 'Helvetica', 'Arial', sans-serif; color: #333; line-height: 1.4; max-width: 210mm; margin: 0 auto; font-size: 12px; padding: 10mm; }
@@ -1655,11 +1655,11 @@ export default function AdminDashboard() {
           <div style="display: flex; border: 1px solid #94a3b8; border-top: none; text-align: center;">
             <div style="width: 33.33%; padding: 5px; border-right: 1px solid #94a3b8;">
               <div style="color: #4b5563; margin-bottom: 3px;">Order No</div>
-              <div class="bold">${'26' + String(order.id).slice(-2).padStart(2, '0')}</div>
+              <div class="bold">{String(order.id).padStart(4, '0')}</div>
             </div>
             <div style="width: 33.33%; padding: 5px; border-right: 1px solid #94a3b8;">
               <div style="color: #4b5563; margin-bottom: 3px;">Receipt No</div>
-              <div class="bold">INV-${'2026' + String(order.id).slice(-2).padStart(2, '0')}</div>
+              <div class="bold">INV-{String(order.id).padStart(4, '0')}</div>
             </div>
             <div style="width: 33.34%; padding: 5px;">
               <div style="color: #4b5563; margin-bottom: 3px;">Date</div>
@@ -2055,7 +2055,7 @@ export default function AdminDashboard() {
           <div className="px-6 py-2 text-sm font-bold tracking-widest uppercase text-slate-500 mb-2 mt-2">
             Dashboards
           </div>
-          <nav className="flex-1 px-4 space-y-4">
+          <nav className="flex-1 px-4 space-y-4 overflow-y-auto custom-scrollbar">
             {[
               { id: "overview", label: "Overview", icon: "📊" },
               { id: "categories", label: "Categories", icon: "🏷️" },
@@ -2190,7 +2190,7 @@ export default function AdminDashboard() {
                                 🛍️
                               </div>
                               <div className="flex-1">
-                                <p className="text-sm font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">New Order #{'26' + String(order.id).slice(-2).padStart(2, '0')}</p>
+                                <p className="text-sm font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">New Order #{String(order.id).padStart(4, '0')}</p>
                                 <p className="text-xs text-slate-500 line-clamp-1">{order.customer_name || 'Customer'} • ₹{order.total_amount}</p>
                               </div>
                               <div className="w-2 h-2 rounded-full bg-indigo-500"></div>
@@ -2811,7 +2811,7 @@ export default function AdminDashboard() {
                                     <tr key={order.id} className="hover:bg-slate-50/50 transition-colors group">
                                       <td className="px-6 py-5">
                                         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 font-black text-sm border border-slate-200 group-hover:border-slate-300 transition-colors">
-                                          #{'26' + String(order.id).slice(-2).padStart(2, '0')}
+                                          #{String(order.id).padStart(4, '0')}
                                         </div>
                                         <div className="mt-2">
                                           {(order.source || 'Website') === 'POS' ? (
@@ -4366,7 +4366,7 @@ export default function AdminDashboard() {
               <div>
                 <h3 className="text-2xl font-black text-indigo-950 tracking-tight flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center border border-indigo-100 shadow-sm text-indigo-500 text-xl">🛍️</div>
-                  Order #{'26' + String(viewingOrder.id).slice(-2).padStart(2, '0')} Details
+                  Order #{String(viewingOrder.id).padStart(4, '0')} Details
                 </h3>
                 <p className="text-slate-500 text-base font-medium mt-2 tracking-tight flex items-center gap-2">
                   <span>Customer: <span className="text-indigo-700 font-black">{viewingOrder.customer_name}</span></span>

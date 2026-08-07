@@ -411,7 +411,7 @@ export default function CartDrawer() {
               </div>
               <h3 className="text-2xl font-black text-slate-900 uppercase tracking-widest mb-3">Order Confirmed</h3>
               <p className="text-slate-600 leading-relaxed font-medium mb-8 text-base sm:text-base">
-                Your order no is <span className="font-bold text-festive-purple">{confirmedOrderId ? '26' + String(confirmedOrderId).slice(-2).padStart(2, '0') : ''}</span>. Thank you for placing your order! Our team will contact you shortly to confirm the details.
+                Your order no is <span className="font-bold text-festive-purple">{confirmedOrderId ? String(confirmedOrderId).padStart(4, '0') : ''}</span>. Thank you for placing your order! Our team will contact you shortly to confirm the details.
               </p>
               <button
                 onClick={() => {

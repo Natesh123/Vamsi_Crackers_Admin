@@ -20,7 +20,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$xlsx$2f$xlsx
 ;
 ;
 function AdminDashboard() {
-    const apiUrl = ("TURBOPACK compile-time value", "http://localhost:5001") || "http://localhost:5001";
+    const apiUrl = ("TURBOPACK compile-time value", "http://api.vamsicrackers.in") || "http://localhost:5001";
     const [categories, setCategories] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
     const [products, setProducts] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
     const [orders, setOrders] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
@@ -1638,7 +1638,7 @@ function AdminDashboard() {
       <!DOCTYPE html>
       <html>
         <head>
-          <title>Order Invoice #${'26' + String(order.id).slice(-2).padStart(2, '0')}</title>
+          <title>Order Invoice #{String(order.id).padStart(4, '0')}</title>
           <style>
             @page { margin: 0; }
             body { font-family: 'Helvetica', 'Arial', sans-serif; color: #333; line-height: 1.4; max-width: 210mm; margin: 0 auto; font-size: 12px; padding: 10mm; }
@@ -1679,11 +1679,11 @@ function AdminDashboard() {
           <div style="display: flex; border: 1px solid #94a3b8; border-top: none; text-align: center;">
             <div style="width: 33.33%; padding: 5px; border-right: 1px solid #94a3b8;">
               <div style="color: #4b5563; margin-bottom: 3px;">Order No</div>
-              <div class="bold">${'26' + String(order.id).slice(-2).padStart(2, '0')}</div>
+              <div class="bold">{String(order.id).padStart(4, '0')}</div>
             </div>
             <div style="width: 33.33%; padding: 5px; border-right: 1px solid #94a3b8;">
               <div style="color: #4b5563; margin-bottom: 3px;">Receipt No</div>
-              <div class="bold">INV-${'2026' + String(order.id).slice(-2).padStart(2, '0')}</div>
+              <div class="bold">INV-{String(order.id).padStart(4, '0')}</div>
             </div>
             <div style="width: 33.34%; padding: 5px;">
               <div style="color: #4b5563; margin-bottom: 3px;">Date</div>
@@ -2421,7 +2421,7 @@ function AdminDashboard() {
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
-                                className: "flex-1 px-4 space-y-4",
+                                className: "flex-1 px-4 space-y-4 overflow-y-auto custom-scrollbar",
                                 children: [
                                     {
                                         id: "overview",
@@ -2843,7 +2843,7 @@ function AdminDashboard() {
                                                                                         className: "text-sm font-bold text-slate-900 group-hover:text-indigo-600 transition-colors",
                                                                                         children: [
                                                                                             "New Order #",
-                                                                                            '26' + String(order.id).slice(-2).padStart(2, '0')
+                                                                                            String(order.id).padStart(4, '0')
                                                                                         ]
                                                                                     }, void 0, true, {
                                                                                         fileName: "[project]/app/admin/page.tsx",
@@ -5229,7 +5229,7 @@ function AdminDashboard() {
                                                                                                         className: "inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 font-black text-sm border border-slate-200 group-hover:border-slate-300 transition-colors",
                                                                                                         children: [
                                                                                                             "#",
-                                                                                                            '26' + String(order.id).slice(-2).padStart(2, '0')
+                                                                                                            String(order.id).padStart(4, '0')
                                                                                                         ]
                                                                                                     }, void 0, true, {
                                                                                                         fileName: "[project]/app/admin/page.tsx",
@@ -10357,7 +10357,7 @@ function AdminDashboard() {
                                                             columnNumber: 19
                                                         }, this),
                                                         "Order #",
-                                                        '26' + String(viewingOrder.id).slice(-2).padStart(2, '0'),
+                                                        String(viewingOrder.id).padStart(4, '0'),
                                                         " Details"
                                                     ]
                                                 }, void 0, true, {

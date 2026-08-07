@@ -5276,10 +5276,6 @@
     padding-bottom: calc(var(--spacing) * 20);
   }
 
-  .pb-28 {
-    padding-bottom: calc(var(--spacing) * 28);
-  }
-
   .pb-32 {
     padding-bottom: calc(var(--spacing) * 32);
   }
@@ -10823,18 +10819,6 @@
   }
 
   @media (min-width: 80rem) {
-    .xl\:flex {
-      display: flex;
-    }
-  }
-
-  @media (min-width: 80rem) {
-    .xl\:hidden {
-      display: none;
-    }
-  }
-
-  @media (min-width: 80rem) {
     .xl\:h-auto {
       height: auto;
     }
@@ -11194,6 +11178,23 @@ html, body {
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: none;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #ffffff26;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #ffffff40;
 }
 
 @keyframes shake {
