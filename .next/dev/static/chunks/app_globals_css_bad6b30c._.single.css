@@ -5131,8 +5131,16 @@
     padding-bottom: calc(var(--spacing) * 14);
   }
 
+  .pb-16 {
+    padding-bottom: calc(var(--spacing) * 16);
+  }
+
   .pb-20 {
     padding-bottom: calc(var(--spacing) * 20);
+  }
+
+  .pb-28 {
+    padding-bottom: calc(var(--spacing) * 28);
   }
 
   .pb-32 {
@@ -5380,6 +5388,11 @@
   .tracking-\[0\.4em\] {
     --tw-tracking: .4em;
     letter-spacing: .4em;
+  }
+
+  .tracking-\[0\.05em\] {
+    --tw-tracking: .05em;
+    letter-spacing: .05em;
   }
 
   .tracking-\[0\.5em\] {
@@ -9352,6 +9365,12 @@
   }
 
   @media (min-width: 40rem) {
+    .sm\:pb-4 {
+      padding-bottom: calc(var(--spacing) * 4);
+    }
+  }
+
+  @media (min-width: 40rem) {
     .sm\:text-2xl {
       font-size: var(--text-2xl);
       line-height: var(--tw-leading, var(--text-2xl--line-height));
@@ -10394,6 +10413,12 @@
   }
 
   @media (min-width: 64rem) {
+    .lg\:flex {
+      display: flex;
+    }
+  }
+
+  @media (min-width: 64rem) {
     .lg\:hidden {
       display: none;
     }
@@ -10629,6 +10654,19 @@
     }
   }
 
+  @media (min-width: 64rem) {
+    .lg\:text-\[12px\] {
+      font-size: 12px;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .lg\:tracking-\[0\.1em\] {
+      --tw-tracking: .1em;
+      letter-spacing: .1em;
+    }
+  }
+
   @media (min-width: 80rem) {
     .xl\:col-span-4 {
       grid-column: span 4 / span 4;
@@ -10708,8 +10746,82 @@
   }
 
   @media (min-width: 80rem) {
+    .xl\:gap-2 {
+      gap: calc(var(--spacing) * 2);
+    }
+  }
+
+  @media (min-width: 80rem) {
+    .xl\:gap-3 {
+      gap: calc(var(--spacing) * 3);
+    }
+  }
+
+  @media (min-width: 80rem) {
+    .xl\:gap-4 {
+      gap: calc(var(--spacing) * 4);
+    }
+  }
+
+  @media (min-width: 80rem) {
+    .xl\:gap-6 {
+      gap: calc(var(--spacing) * 6);
+    }
+  }
+
+  @media (min-width: 80rem) {
+    .xl\:px-4 {
+      padding-inline: calc(var(--spacing) * 4);
+    }
+  }
+
+  @media (min-width: 80rem) {
+    .xl\:px-5 {
+      padding-inline: calc(var(--spacing) * 5);
+    }
+  }
+
+  @media (min-width: 80rem) {
+    .xl\:px-6 {
+      padding-inline: calc(var(--spacing) * 6);
+    }
+  }
+
+  @media (min-width: 80rem) {
     .xl\:px-12 {
       padding-inline: calc(var(--spacing) * 12);
+    }
+  }
+
+  @media (min-width: 80rem) {
+    .xl\:py-2 {
+      padding-block: calc(var(--spacing) * 2);
+    }
+  }
+
+  @media (min-width: 80rem) {
+    .xl\:py-2\.5 {
+      padding-block: calc(var(--spacing) * 2.5);
+    }
+  }
+
+  @media (min-width: 80rem) {
+    .xl\:text-xs {
+      font-size: var(--text-xs);
+      line-height: var(--tw-leading, var(--text-xs--line-height));
+    }
+  }
+
+  @media (min-width: 80rem) {
+    .xl\:text-\[14px\] {
+      font-size: 14px;
+    }
+  }
+
+  @media (min-width: 80rem) {
+    .xl\:tracking-\[0\.15em\] {
+      --tw-tracking: .15em;
+      letter-spacing: .15em;
     }
   }
 

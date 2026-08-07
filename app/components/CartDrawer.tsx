@@ -149,12 +149,26 @@ export default function CartDrawer() {
               </span>
             </h2>
           </div>
-          <button
-            onClick={() => setCartOpen(false)}
-            className="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center text-slate-400 hover:text-festive-red hover:bg-red-50 hover:border-red-200 transition-all cursor-pointer shadow-sm"
-          >
-            ✕
-          </button>
+          <div className="flex items-center gap-3">
+            {cartItems.length > 0 && (
+              <button
+                onClick={clearCart}
+                title="Clear all cart items"
+                className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 px-3 py-1.5 rounded-full transition-colors flex items-center gap-1.5 cursor-pointer shadow-sm"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                </svg>
+                <span className="hidden sm:inline">Clear All</span>
+              </button>
+            )}
+            <button
+              onClick={() => setCartOpen(false)}
+              className="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center text-slate-400 hover:text-festive-red hover:bg-red-50 hover:border-red-200 transition-all cursor-pointer shadow-sm flex-shrink-0"
+            >
+              ✕
+            </button>
+          </div>
         </div>
 
         {/* Cart Contents */}
@@ -368,13 +382,7 @@ export default function CartDrawer() {
             </div>
 
             <div className="w-full sm:w-auto flex gap-3">
-              <button
-                onClick={clearCart}
-                title="Clear all cart items"
-                className="w-14 h-14 rounded-xl border border-gray-200 bg-white text-slate-400 hover:text-festive-red hover:bg-red-50 hover:border-red-200 active:scale-95 transition-all flex items-center justify-center cursor-pointer flex-shrink-0 shadow-sm"
-              >
-                <span className="text-xl">🗑️</span>
-              </button>
+
               
               {minOrderValue > 0 && cartTotal < minOrderValue ? (
                 <div className="flex-1 sm:px-6 h-14 rounded-xl bg-orange-50 text-orange-800 font-bold text-sm sm:text-base border border-orange-200 flex flex-col items-center justify-center text-center shadow-inner leading-tight">

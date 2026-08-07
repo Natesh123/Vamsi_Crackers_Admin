@@ -196,10 +196,46 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$CartDra
 ;
 ;
 const metadata = {
-    title: "Vamsi Crackers",
-    description: "Crackers shop website",
+    metadataBase: new URL('https://vamsicrackers.in'),
+    title: "Vamsi Crackers | Premium Sivakasi Fireworks Online",
+    description: "Buy premium quality Sivakasi crackers online at wholesale prices. Safe, reliable, and authentic fireworks delivered across India from Vamsi Crackers.",
+    keywords: "Sivakasi crackers, buy fireworks online, wholesale crackers, Diwali fireworks, Vamsi crackers, safe firecrackers online, Sivakasi fireworks delivery, online crackers shopping",
+    authors: [
+        {
+            name: "Vamsi Crackers",
+            url: "https://vamsicrackers.in"
+        }
+    ],
+    creator: "Vamsi Crackers",
+    publisher: "Vamsi Crackers",
+    robots: "index, follow",
+    openGraph: {
+        type: "website",
+        locale: "en_IN",
+        url: "https://vamsicrackers.in",
+        title: "Vamsi Crackers | Premium Sivakasi Fireworks Online",
+        description: "Buy premium quality Sivakasi crackers online at wholesale prices. Safe, reliable, and authentic fireworks delivered across India.",
+        siteName: "Vamsi Crackers",
+        images: [
+            {
+                url: "/assets/images/vamsi_crackers_logo_v2.png",
+                width: 1200,
+                height: 630,
+                alt: "Vamsi Crackers - Premium Sivakasi Fireworks"
+            }
+        ]
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "Vamsi Crackers | Premium Sivakasi Fireworks",
+        description: "Buy premium quality Sivakasi crackers online at wholesale prices. Authentic fireworks delivered across India.",
+        images: [
+            "/assets/images/vamsi_crackers_logo_v2.png"
+        ]
+    },
     icons: {
-        icon: "/assets/images/vamsi_crackers_logo_v2.png"
+        icon: "/assets/images/vamsi_crackers_logo_v2.png",
+        apple: "/assets/images/vamsi_crackers_logo_v2.png"
     }
 };
 function RootLayout({ children }) {
@@ -210,32 +246,72 @@ function RootLayout({ children }) {
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$Loader$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                     fileName: "[project]/app/layout.tsx",
-                    lineNumber: 37,
+                    lineNumber: 66,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$context$2f$CartContext$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["CartProvider"], {
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$CartDrawer$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                             fileName: "[project]/app/layout.tsx",
-                            lineNumber: 41,
+                            lineNumber: 70,
                             columnNumber: 11
                         }, this),
                         children
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/layout.tsx",
-                    lineNumber: 40,
+                    lineNumber: 69,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("script", {
+                    type: "application/ld+json",
+                    dangerouslySetInnerHTML: {
+                        __html: JSON.stringify({
+                            "@context": "https://schema.org",
+                            "@type": "LocalBusiness",
+                            "name": "Vamsi Crackers",
+                            "image": "https://vamsicrackers.in/assets/images/vamsi_crackers_logo_v2.png",
+                            "@id": "https://vamsicrackers.in",
+                            "url": "https://vamsicrackers.in",
+                            "telephone": "+919080019031",
+                            "address": {
+                                "@type": "PostalAddress",
+                                "streetAddress": "D.NO. 177/5/18, Pernaickenpatti, Sithurajapuram",
+                                "addressLocality": "Virudhunagar",
+                                "addressRegion": "TN",
+                                "postalCode": "626189",
+                                "addressCountry": "IN"
+                            },
+                            "openingHoursSpecification": {
+                                "@type": "OpeningHoursSpecification",
+                                "dayOfWeek": [
+                                    "Monday",
+                                    "Tuesday",
+                                    "Wednesday",
+                                    "Thursday",
+                                    "Friday",
+                                    "Saturday",
+                                    "Sunday"
+                                ],
+                                "opens": "09:00",
+                                "closes": "22:00"
+                            }
+                        })
+                    }
+                }, void 0, false, {
+                    fileName: "[project]/app/layout.tsx",
+                    lineNumber: 75,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/layout.tsx",
-            lineNumber: 33,
+            lineNumber: 62,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/layout.tsx",
-        lineNumber: 32,
+        lineNumber: 61,
         columnNumber: 5
     }, this);
 }

@@ -24,10 +24,20 @@ export default function Home() {
         if (res.ok) {
           const data = await res.json();
           let fetchedUrl = data.url || "";
-          // Replace hardcoded port 5000 from database to 5001
-          if (fetchedUrl.includes('localhost:5000')) {
-            fetchedUrl = fetchedUrl.replace('localhost:5000', 'localhost:5001');
+          
+          if (fetchedUrl.includes('localhost:5000') || fetchedUrl.includes('localhost:5001')) {
+            try {
+              const path = new URL(fetchedUrl).pathname;
+              fetchedUrl = `${apiUrl}${path}`;
+            } catch (e) {
+              // ignore
+            }
           }
+          // Handle Mixed Content (http -> https)
+          if (typeof window !== 'undefined' && window.location.protocol === 'https:' && fetchedUrl.startsWith('http://')) {
+              fetchedUrl = fetchedUrl.replace('http://', 'https://');
+          }
+          
           setPriceListUrl(fetchedUrl);
         }
       } catch (e) {

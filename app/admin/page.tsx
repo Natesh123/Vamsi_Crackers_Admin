@@ -24,6 +24,7 @@ interface Product {
   categoryId: number;
   category?: string;
   is_active?: number | boolean;
+  sort_order?: number;
 }
 
 interface Toast {
@@ -37,7 +38,7 @@ export default function AdminDashboard() {
   const [products, setProducts] = useState<Product[]>([]);
   const [orders, setOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<"overview" | "products" | "categories" | "orders" | "customers" | "reports" | "billing" | "contacts">("overview");
+  const [activeTab, setActiveTab] = useState<"overview" | "products" | "categories" | "orders" | "customers" | "reports" | "billing" | "contacts" | "banner" | "inventory" | "offers" | "settings">("overview");
   const [contacts, setContacts] = useState<any[]>([]);
   const [unreadContacts, setUnreadContacts] = useState<any[]>([]);
   const [contactsSearch, setContactsSearch] = useState("");
@@ -1784,9 +1785,9 @@ export default function AdminDashboard() {
       const opt = {
         margin:       0,
         filename:     `Estimate_${order.id}.pdf`,
-        image:        { type: 'jpeg', quality: 0.98 },
+        image:        { type: 'jpeg' as const, quality: 0.98 },
         html2canvas:  { scale: 2 },
-        jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+        jsPDF:        { unit: 'in' as const, format: 'a4' as const, orientation: 'portrait' as const }
       };
 
       const pdfBlob = await html2pdf().set(opt).from(container).output('blob');
@@ -2289,7 +2290,7 @@ export default function AdminDashboard() {
                         tab: "customers"
                       },
                     ].map((stat, i) => (
-                      <div key={i} onClick={() => setActiveTab(stat.tab)} className={`cursor-pointer rounded-3xl p-6 border border-white/10 hover:-translate-y-1 transition-all duration-300 group flex flex-col justify-between ${stat.color}`}>
+                      <div key={i} onClick={() => setActiveTab(stat.tab as any)} className={`cursor-pointer rounded-3xl p-6 border border-white/10 hover:-translate-y-1 transition-all duration-300 group flex flex-col justify-between ${stat.color}`}>
                         <div className="flex justify-between items-start mb-6">
                           <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-xl bg-white/20 text-white transform group-hover:scale-110 transition-transform duration-300">
                             {stat.icon}

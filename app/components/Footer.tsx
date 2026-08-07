@@ -6,19 +6,22 @@ import Link from 'next/link';
 
 export default function Footer() {
     const [isVisible, setIsVisible] = useState(false);
+    const footerRef = React.useRef<HTMLElement>(null);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
                     setIsVisible(true);
+                    observer.disconnect();
                 }
             },
-            { threshold: 0.1 }
+            { threshold: 0.05 }
         );
 
-        const footer = document.getElementById('premium-footer');
-        if (footer) observer.observe(footer);
+        if (footerRef.current) {
+            observer.observe(footerRef.current);
+        }
 
         return () => observer.disconnect();
     }, []);
@@ -39,7 +42,7 @@ export default function Footer() {
     ];
 
     return (
-        <footer id="premium-footer" className="relative bg-gradient-to-br from-[#2a0845] via-[#4a1c6a] to-[#2a0845] text-white overflow-hidden">
+        <footer ref={footerRef} id="premium-footer" className="relative bg-gradient-to-br from-[#2a0845] via-[#4a1c6a] to-[#2a0845] text-white overflow-hidden">
             {/* ═══════════════════════════════════════════════════════════════ */}
             {/* Animated Background Layers */}
             {/* ═══════════════════════════════════════════════════════════════ */}
@@ -352,7 +355,7 @@ export default function Footer() {
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 text-gray-300 flex-shrink-0">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
-                                <span className="text-base sm:text-lg font-bold text-white tracking-wide">Mon - Sun: 8:00 AM – 9:00 PM</span>
+                                <span className="text-base sm:text-lg font-bold text-white tracking-wide">Mon - Sun: 9:00 AM – 10:00 PM</span>
                             </div>
                         </div>
                     </div>
@@ -367,10 +370,10 @@ export default function Footer() {
                         <div className="h-[1px] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
                     </div>
 
-                    <div className="flex justify-center items-center mt-6">
-                        <p className="text-gray-400 text-sm font-semibold tracking-wider text-center">
-                            © 2026{' '}
-                            <span className="text-gray-300">Vamsi Crackers</span>. All rights reserved.
+                    <div className="flex justify-center items-center mt-6 pb-16 sm:pb-4">
+                        <p className="text-gray-400 text-sm font-semibold tracking-wider text-center flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2">
+                            <span>&copy; {new Date().getFullYear()} Powered By</span>
+                            <span className="text-festive-gold font-bold text-base sm:text-sm">Dhakshina Tech Solutions</span>
                         </p>
                     </div>
                 </div>
@@ -381,7 +384,7 @@ export default function Footer() {
             {/* ═══════════════════════════════════════════════════════════════ */}
             <button
                 onClick={scrollToTop}
-                className="absolute bottom-8 right-8 w-12 h-12 bg-gradient-to-br from-festive-gold via-yellow-400 to-festive-gold text-festive-purple rounded-xl flex items-center justify-center shadow-[0_8px_30px_rgba(255,215,0,0.25)] hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(255,215,0,0.4)] transition-all duration-500 group z-20 border border-yellow-300/30"
+                className="hidden sm:flex absolute bottom-8 right-8 w-12 h-12 bg-gradient-to-br from-festive-gold via-yellow-400 to-festive-gold text-festive-purple rounded-xl items-center justify-center shadow-[0_8px_30px_rgba(255,215,0,0.25)] hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(255,215,0,0.4)] transition-all duration-500 group z-20 border border-yellow-300/30"
             >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-5 h-5 group-hover:-translate-y-0.5 transition-transform duration-300">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />

@@ -25,7 +25,22 @@ export default function Banner({ priceListUrl = "" }: BannerProps) {
                 if (res.ok) {
                     const data = await res.json();
                     if (data.images && data.images.length > 0) {
-                        setDynamicBanners(data.images);
+                        const fixedImages = data.images.map((imgUrl: string) => {
+                            if (imgUrl.includes('localhost:5000') || imgUrl.includes('localhost:5001')) {
+                                try {
+                                    const path = new URL(imgUrl).pathname;
+                                    return `${apiUrl}${path}`;
+                                } catch (e) {
+                                    return imgUrl;
+                                }
+                            }
+                            // Handle Mixed Content (http -> https) if the frontend is secure
+                            if (typeof window !== 'undefined' && window.location.protocol === 'https:' && imgUrl.startsWith('http://')) {
+                                return imgUrl.replace('http://', 'https://');
+                            }
+                            return imgUrl;
+                        });
+                        setDynamicBanners(fixedImages);
                     }
                 }
             } catch (e) {

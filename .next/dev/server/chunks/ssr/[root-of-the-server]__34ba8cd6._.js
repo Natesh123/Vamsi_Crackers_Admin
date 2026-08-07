@@ -587,16 +587,19 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 ;
 function Footer() {
     const [isVisible, setIsVisible] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    const footerRef = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].useRef(null);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         const observer = new IntersectionObserver(([entry])=>{
             if (entry.isIntersecting) {
                 setIsVisible(true);
+                observer.disconnect();
             }
         }, {
-            threshold: 0.1
+            threshold: 0.05
         });
-        const footer = document.getElementById('premium-footer');
-        if (footer) observer.observe(footer);
+        if (footerRef.current) {
+            observer.observe(footerRef.current);
+        }
         return ()=>observer.disconnect();
     }, []);
     const scrollToTop = ()=>{
@@ -633,6 +636,7 @@ function Footer() {
         }
     ];
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("footer", {
+        ref: footerRef,
         id: "premium-footer",
         className: "relative bg-gradient-to-br from-[#2a0845] via-[#4a1c6a] to-[#2a0845] text-white overflow-hidden",
         children: [
@@ -643,21 +647,21 @@ function Footer() {
                         className: "absolute -top-40 -left-40 w-[600px] h-[600px] bg-festive-purple/25 rounded-full blur-[180px] animate-pulse"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Footer.tsx",
-                        lineNumber: 48,
+                        lineNumber: 51,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "absolute -bottom-60 -right-40 w-[500px] h-[500px] bg-festive-gold/8 rounded-full blur-[150px]"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Footer.tsx",
-                        lineNumber: 49,
+                        lineNumber: 52,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "absolute top-1/2 left-1/3 w-[350px] h-[350px] bg-festive-red/6 rounded-full blur-[130px]"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Footer.tsx",
-                        lineNumber: 50,
+                        lineNumber: 53,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -667,7 +671,7 @@ function Footer() {
                         }
                     }, void 0, false, {
                         fileName: "[project]/app/components/Footer.tsx",
-                        lineNumber: 51,
+                        lineNumber: 54,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -678,7 +682,7 @@ function Footer() {
                         }
                     }, void 0, false, {
                         fileName: "[project]/app/components/Footer.tsx",
-                        lineNumber: 54,
+                        lineNumber: 57,
                         columnNumber: 17
                     }, this),
                     [
@@ -693,13 +697,13 @@ function Footer() {
                             }
                         }, i, false, {
                             fileName: "[project]/app/components/Footer.tsx",
-                            lineNumber: 64,
+                            lineNumber: 67,
                             columnNumber: 21
                         }, this))
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/components/Footer.tsx",
-                lineNumber: 46,
+                lineNumber: 49,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -709,27 +713,27 @@ function Footer() {
                         className: "h-[1px] bg-gradient-to-r from-transparent via-festive-gold/50 to-transparent"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Footer.tsx",
-                        lineNumber: 81,
+                        lineNumber: 84,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "h-[2px] bg-gradient-to-r from-transparent via-festive-gold/80 to-transparent shadow-[0_0_30px_rgba(255,215,0,0.5)]"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Footer.tsx",
-                        lineNumber: 82,
+                        lineNumber: 85,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "h-[1px] bg-gradient-to-r from-transparent via-festive-gold/30 to-transparent"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Footer.tsx",
-                        lineNumber: 83,
+                        lineNumber: 86,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/components/Footer.tsx",
-                lineNumber: 80,
+                lineNumber: 83,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -743,21 +747,21 @@ function Footer() {
                                 className: "absolute inset-0 bg-gradient-to-r from-festive-purple via-[#1a0a35] to-festive-purple"
                             }, void 0, false, {
                                 fileName: "[project]/app/components/Footer.tsx",
-                                lineNumber: 93,
+                                lineNumber: 96,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "absolute inset-0 bg-gradient-to-b from-festive-gold/5 to-transparent"
                             }, void 0, false, {
                                 fileName: "[project]/app/components/Footer.tsx",
-                                lineNumber: 94,
+                                lineNumber: 97,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "absolute inset-[1px] rounded-3xl border border-festive-gold/20"
                             }, void 0, false, {
                                 fileName: "[project]/app/components/Footer.tsx",
-                                lineNumber: 95,
+                                lineNumber: 98,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -770,12 +774,12 @@ function Footer() {
                                     }
                                 }, void 0, false, {
                                     fileName: "[project]/app/components/Footer.tsx",
-                                    lineNumber: 99,
+                                    lineNumber: 102,
                                     columnNumber: 29
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/components/Footer.tsx",
-                                lineNumber: 98,
+                                lineNumber: 101,
                                 columnNumber: 25
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -791,7 +795,7 @@ function Footer() {
                                                         className: "w-2 h-2 bg-festive-gold rounded-full animate-pulse"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/components/Footer.tsx",
-                                                        lineNumber: 112,
+                                                        lineNumber: 115,
                                                         columnNumber: 37
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -799,13 +803,13 @@ function Footer() {
                                                         children: "Diwali Season Open"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/components/Footer.tsx",
-                                                        lineNumber: 113,
+                                                        lineNumber: 116,
                                                         columnNumber: 37
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/components/Footer.tsx",
-                                                lineNumber: 111,
+                                                lineNumber: 114,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -818,13 +822,13 @@ function Footer() {
                                                         children: "Celebrations?"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/components/Footer.tsx",
-                                                        lineNumber: 117,
+                                                        lineNumber: 120,
                                                         columnNumber: 37
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/components/Footer.tsx",
-                                                lineNumber: 115,
+                                                lineNumber: 118,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -832,13 +836,13 @@ function Footer() {
                                                 children: "Get the best Sivakasi crackers at wholesale prices. Direct from factory to your doorstep!"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/components/Footer.tsx",
-                                                lineNumber: 121,
+                                                lineNumber: 124,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/components/Footer.tsx",
-                                        lineNumber: 110,
+                                        lineNumber: 113,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -854,7 +858,7 @@ function Footer() {
                                                         className: "absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/components/Footer.tsx",
-                                                        lineNumber: 134,
+                                                        lineNumber: 137,
                                                         columnNumber: 37
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
@@ -866,12 +870,12 @@ function Footer() {
                                                             d: "M11.99 2.01c-5.52 0-9.99 4.47-9.99 9.99 0 1.98.58 3.82 1.58 5.37l-1.57 4.6 4.77-1.22c1.51.91 3.28 1.44 5.17 1.44 5.52 0 9.99-4.47 9.99-9.99s-4.47-9.99-9.99-9.99zm0 18.27c-1.63 0-3.17-.42-4.51-1.16l-.32-.18-3.04.78 1.01-2.92-.2-.33c-.78-1.29-1.24-2.82-1.24-4.45 0-4.58 3.73-8.31 8.31-8.31s8.31 3.73 8.31 8.31-3.73 8.31-8.31 8.31zm4.56-6.19c-.25-.13-1.48-.73-1.71-.81-.23-.08-.4-.13-.57.13-.17.25-.65.81-.8.98-.15.17-.3.19-.55.06-1.5-.78-2.67-1.5-3.69-2.93-.11-.16.02-.24.14-.36.11-.11.25-.29.37-.44.08-.1.13-.17.21-.33.1-.21.05-.39-.02-.52-.16-.27-.57-1.38-.78-1.89-.21-.5-.42-.43-.57-.44H7.2c-.2 0-.52.08-.79.37s-1.04 1.02-1.04 2.48 1.07 2.89 1.22 3.09c.15.2 2.1 3.2 5.09 4.49 2.21.96 2.92 1.04 3.96.88.94-.15 2.53-1.04 2.89-2.04.36-1.01.36-1.87.25-2.04-.11-.18-.4-.28-.65-.4z"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/components/Footer.tsx",
-                                                            lineNumber: 136,
+                                                            lineNumber: 139,
                                                             columnNumber: 41
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/components/Footer.tsx",
-                                                        lineNumber: 135,
+                                                        lineNumber: 138,
                                                         columnNumber: 37
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -879,13 +883,13 @@ function Footer() {
                                                         children: "Order on WhatsApp"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/components/Footer.tsx",
-                                                        lineNumber: 138,
+                                                        lineNumber: 141,
                                                         columnNumber: 37
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/components/Footer.tsx",
-                                                lineNumber: 128,
+                                                lineNumber: 131,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
@@ -903,53 +907,53 @@ function Footer() {
                                                             clipRule: "evenodd"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/components/Footer.tsx",
-                                                            lineNumber: 145,
+                                                            lineNumber: 148,
                                                             columnNumber: 41
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/components/Footer.tsx",
-                                                        lineNumber: 144,
+                                                        lineNumber: 147,
                                                         columnNumber: 37
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                         children: "Call Now"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/components/Footer.tsx",
-                                                        lineNumber: 147,
+                                                        lineNumber: 150,
                                                         columnNumber: 37
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/components/Footer.tsx",
-                                                lineNumber: 140,
+                                                lineNumber: 143,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/components/Footer.tsx",
-                                        lineNumber: 127,
+                                        lineNumber: 130,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/components/Footer.tsx",
-                                lineNumber: 108,
+                                lineNumber: 111,
                                 columnNumber: 25
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/components/Footer.tsx",
-                        lineNumber: 91,
+                        lineNumber: 94,
                         columnNumber: 21
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/components/Footer.tsx",
-                    lineNumber: 90,
+                    lineNumber: 93,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/components/Footer.tsx",
-                lineNumber: 89,
+                lineNumber: 92,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -970,12 +974,12 @@ function Footer() {
                                             className: "object-contain group-hover:scale-105 transition-transform duration-700"
                                         }, void 0, false, {
                                             fileName: "[project]/app/components/Footer.tsx",
-                                            lineNumber: 165,
+                                            lineNumber: 168,
                                             columnNumber: 29
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/components/Footer.tsx",
-                                        lineNumber: 164,
+                                        lineNumber: 167,
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -990,13 +994,13 @@ function Footer() {
                                                         children: "CRACKERS"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/components/Footer.tsx",
-                                                        lineNumber: 174,
+                                                        lineNumber: 177,
                                                         columnNumber: 39
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/components/Footer.tsx",
-                                                lineNumber: 173,
+                                                lineNumber: 176,
                                                 columnNumber: 29
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1004,19 +1008,19 @@ function Footer() {
                                                 children: "Sivakasi"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/components/Footer.tsx",
-                                                lineNumber: 176,
+                                                lineNumber: 179,
                                                 columnNumber: 29
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/components/Footer.tsx",
-                                        lineNumber: 172,
+                                        lineNumber: 175,
                                         columnNumber: 25
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/components/Footer.tsx",
-                                lineNumber: 163,
+                                lineNumber: 166,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1027,7 +1031,7 @@ function Footer() {
                                         children: "Follow Us"
                                     }, void 0, false, {
                                         fileName: "[project]/app/components/Footer.tsx",
-                                        lineNumber: 184,
+                                        lineNumber: 187,
                                         columnNumber: 25
                                     }, this),
                                     [
@@ -1040,7 +1044,7 @@ function Footer() {
                                                 d: "M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.546 12 3.546 12 3.546s-7.505 0-9.377.504A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.504 9.376.504 9.376.504s7.505 0 9.377-.504a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/components/Footer.tsx",
-                                                lineNumber: 193,
+                                                lineNumber: 196,
                                                 columnNumber: 39
                                             }, this)
                                         },
@@ -1053,7 +1057,7 @@ function Footer() {
                                                 d: "M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/components/Footer.tsx",
-                                                lineNumber: 200,
+                                                lineNumber: 203,
                                                 columnNumber: 39
                                             }, this)
                                         },
@@ -1066,7 +1070,7 @@ function Footer() {
                                                 d: "M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/components/Footer.tsx",
-                                                lineNumber: 207,
+                                                lineNumber: 210,
                                                 columnNumber: 39
                                             }, this)
                                         },
@@ -1079,7 +1083,7 @@ function Footer() {
                                                 d: "M11.99 2.01c-5.52 0-9.99 4.47-9.99 9.99 0 1.98.58 3.82 1.58 5.37l-1.57 4.6 4.77-1.22c1.51.91 3.28 1.44 5.17 1.44 5.52 0 9.99-4.47 9.99-9.99s-4.47-9.99-9.99-9.99zm0 18.27c-1.63 0-3.17-.42-4.51-1.16l-.32-.18-3.04.78 1.01-2.92-.2-.33c-.78-1.29-1.24-2.82-1.24-4.45 0-4.58 3.73-8.31 8.31-8.31s8.31 3.73 8.31 8.31-3.73 8.31-8.31 8.31zm4.56-6.19c-.25-.13-1.48-.73-1.71-.81-.23-.08-.4-.13-.57.13-.17.25-.65.81-.8.98-.15.17-.3.19-.55.06-1.5-.78-2.67-1.5-3.69-2.93-.11-.16.02-.24.14-.36.11-.11.25-.29.37-.44.08-.1.13-.17.21-.33.1-.21.05-.39-.02-.52-.16-.27-.57-1.38-.78-1.89-.21-.5-.42-.43-.57-.44H7.2c-.2 0-.52.08-.79.37s-1.04 1.02-1.04 2.48 1.07 2.89 1.22 3.09c.15.2 2.1 3.2 5.09 4.49 2.21.96 2.92 1.04 3.96.88.94-.15 2.53-1.04 2.89-2.04.36-1.01.36-1.87.25-2.04-.11-.18-.4-.28-.65-.4z"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/components/Footer.tsx",
-                                                lineNumber: 214,
+                                                lineNumber: 217,
                                                 columnNumber: 39
                                             }, this)
                                         }
@@ -1100,24 +1104,24 @@ function Footer() {
                                                 children: social.icon
                                             }, void 0, false, {
                                                 fileName: "[project]/app/components/Footer.tsx",
-                                                lineNumber: 226,
+                                                lineNumber: 229,
                                                 columnNumber: 33
                                             }, this)
                                         }, social.title, false, {
                                             fileName: "[project]/app/components/Footer.tsx",
-                                            lineNumber: 217,
+                                            lineNumber: 220,
                                             columnNumber: 29
                                         }, this))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/components/Footer.tsx",
-                                lineNumber: 183,
+                                lineNumber: 186,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/components/Footer.tsx",
-                        lineNumber: 161,
+                        lineNumber: 164,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1133,21 +1137,21 @@ function Footer() {
                                                 className: "w-8 h-[2px] bg-gradient-to-r from-festive-gold to-transparent rounded-full"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/components/Footer.tsx",
-                                                lineNumber: 242,
+                                                lineNumber: 245,
                                                 columnNumber: 29
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 className: "w-1.5 h-1.5 bg-festive-gold rounded-full"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/components/Footer.tsx",
-                                                lineNumber: 243,
+                                                lineNumber: 246,
                                                 columnNumber: 29
                                             }, this),
                                             "About Us"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/components/Footer.tsx",
-                                        lineNumber: 241,
+                                        lineNumber: 244,
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1163,13 +1167,13 @@ function Footer() {
                                                         className: "absolute bottom-0 left-0 w-full h-[2px] bg-festive-gold/40"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/components/Footer.tsx",
-                                                        lineNumber: 250,
+                                                        lineNumber: 253,
                                                         columnNumber: 33
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/components/Footer.tsx",
-                                                lineNumber: 248,
+                                                lineNumber: 251,
                                                 columnNumber: 29
                                             }, this),
                                             ' ',
@@ -1177,7 +1181,7 @@ function Footer() {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/components/Footer.tsx",
-                                        lineNumber: 246,
+                                        lineNumber: 249,
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1203,25 +1207,25 @@ function Footer() {
                                                         children: badge.icon
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/components/Footer.tsx",
-                                                        lineNumber: 265,
+                                                        lineNumber: 268,
                                                         columnNumber: 37
                                                     }, this),
                                                     badge.text
                                                 ]
                                             }, badge.text, true, {
                                                 fileName: "[project]/app/components/Footer.tsx",
-                                                lineNumber: 261,
+                                                lineNumber: 264,
                                                 columnNumber: 33
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/app/components/Footer.tsx",
-                                        lineNumber: 255,
+                                        lineNumber: 258,
                                         columnNumber: 25
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/components/Footer.tsx",
-                                lineNumber: 240,
+                                lineNumber: 243,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1234,21 +1238,21 @@ function Footer() {
                                                 className: "w-8 h-[2px] bg-gradient-to-r from-festive-gold to-transparent rounded-full"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/components/Footer.tsx",
-                                                lineNumber: 275,
+                                                lineNumber: 278,
                                                 columnNumber: 29
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 className: "w-1.5 h-1.5 bg-festive-gold rounded-full"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/components/Footer.tsx",
-                                                lineNumber: 276,
+                                                lineNumber: 279,
                                                 columnNumber: 29
                                             }, this),
                                             "Quick Links"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/components/Footer.tsx",
-                                        lineNumber: 274,
+                                        lineNumber: 277,
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -1262,7 +1266,7 @@ function Footer() {
                                                             className: "w-0 group-hover:w-6 h-[3px] bg-gradient-to-r from-festive-gold to-transparent transition-all duration-300 rounded-full"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/components/Footer.tsx",
-                                                            lineNumber: 287,
+                                                            lineNumber: 290,
                                                             columnNumber: 45
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1270,13 +1274,13 @@ function Footer() {
                                                             children: item.name
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/components/Footer.tsx",
-                                                            lineNumber: 288,
+                                                            lineNumber: 291,
                                                             columnNumber: 45
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/components/Footer.tsx",
-                                                    lineNumber: 283,
+                                                    lineNumber: 286,
                                                     columnNumber: 41
                                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                                                     href: item.href,
@@ -1286,7 +1290,7 @@ function Footer() {
                                                             className: "w-0 group-hover:w-6 h-[3px] bg-gradient-to-r from-festive-gold to-transparent transition-all duration-300 rounded-full"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/components/Footer.tsx",
-                                                            lineNumber: 297,
+                                                            lineNumber: 300,
                                                             columnNumber: 45
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1294,29 +1298,29 @@ function Footer() {
                                                             children: item.name
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/components/Footer.tsx",
-                                                            lineNumber: 298,
+                                                            lineNumber: 301,
                                                             columnNumber: 45
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/components/Footer.tsx",
-                                                    lineNumber: 293,
+                                                    lineNumber: 296,
                                                     columnNumber: 41
                                                 }, this)
                                             }, item.name, false, {
                                                 fileName: "[project]/app/components/Footer.tsx",
-                                                lineNumber: 281,
+                                                lineNumber: 284,
                                                 columnNumber: 33
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/app/components/Footer.tsx",
-                                        lineNumber: 279,
+                                        lineNumber: 282,
                                         columnNumber: 25
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/components/Footer.tsx",
-                                lineNumber: 273,
+                                lineNumber: 276,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1329,21 +1333,21 @@ function Footer() {
                                                 className: "w-8 h-[2px] bg-gradient-to-r from-festive-gold to-transparent rounded-full"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/components/Footer.tsx",
-                                                lineNumber: 311,
+                                                lineNumber: 314,
                                                 columnNumber: 29
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 className: "w-1.5 h-1.5 bg-festive-gold rounded-full"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/components/Footer.tsx",
-                                                lineNumber: 312,
+                                                lineNumber: 315,
                                                 columnNumber: 29
                                             }, this),
                                             "Showroom"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/components/Footer.tsx",
-                                        lineNumber: 310,
+                                        lineNumber: 313,
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1368,7 +1372,7 @@ function Footer() {
                                                                     d: "M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/components/Footer.tsx",
-                                                                    lineNumber: 320,
+                                                                    lineNumber: 323,
                                                                     columnNumber: 41
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
@@ -1377,18 +1381,18 @@ function Footer() {
                                                                     d: "M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/components/Footer.tsx",
-                                                                    lineNumber: 321,
+                                                                    lineNumber: 324,
                                                                     columnNumber: 41
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/components/Footer.tsx",
-                                                            lineNumber: 319,
+                                                            lineNumber: 322,
                                                             columnNumber: 37
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/components/Footer.tsx",
-                                                        lineNumber: 318,
+                                                        lineNumber: 321,
                                                         columnNumber: 33
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1399,14 +1403,14 @@ function Footer() {
                                                                     "D.NO. 177/5/18, Pernaickenpatti,",
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                                                                         fileName: "[project]/app/components/Footer.tsx",
-                                                                        lineNumber: 326,
+                                                                        lineNumber: 329,
                                                                         columnNumber: 73
                                                                     }, this),
                                                                     "Sithurajapuram, Virudhunagar"
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/components/Footer.tsx",
-                                                                lineNumber: 325,
+                                                                lineNumber: 328,
                                                                 columnNumber: 37
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1414,19 +1418,19 @@ function Footer() {
                                                                 children: "Tamil Nadu, 626 189"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/components/Footer.tsx",
-                                                                lineNumber: 328,
+                                                                lineNumber: 331,
                                                                 columnNumber: 37
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/components/Footer.tsx",
-                                                        lineNumber: 324,
+                                                        lineNumber: 327,
                                                         columnNumber: 33
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/components/Footer.tsx",
-                                                lineNumber: 317,
+                                                lineNumber: 320,
                                                 columnNumber: 29
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1435,12 +1439,12 @@ function Footer() {
                                                     className: "absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.15] to-transparent"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/components/Footer.tsx",
-                                                    lineNumber: 334,
+                                                    lineNumber: 337,
                                                     columnNumber: 33
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/components/Footer.tsx",
-                                                lineNumber: 333,
+                                                lineNumber: 336,
                                                 columnNumber: 29
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1455,20 +1459,20 @@ function Footer() {
                                                                     className: "animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/components/Footer.tsx",
-                                                                    lineNumber: 341,
+                                                                    lineNumber: 344,
                                                                     columnNumber: 41
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                     className: "relative inline-flex rounded-full h-3 w-3 bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.6)]"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/components/Footer.tsx",
-                                                                    lineNumber: 342,
+                                                                    lineNumber: 345,
                                                                     columnNumber: 41
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/components/Footer.tsx",
-                                                            lineNumber: 340,
+                                                            lineNumber: 343,
                                                             columnNumber: 37
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1476,18 +1480,18 @@ function Footer() {
                                                             children: "Open for Diwali Season"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/components/Footer.tsx",
-                                                            lineNumber: 344,
+                                                            lineNumber: 347,
                                                             columnNumber: 37
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/components/Footer.tsx",
-                                                    lineNumber: 339,
+                                                    lineNumber: 342,
                                                     columnNumber: 33
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/components/Footer.tsx",
-                                                lineNumber: 338,
+                                                lineNumber: 341,
                                                 columnNumber: 29
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1506,12 +1510,12 @@ function Footer() {
                                                             d: "M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/components/Footer.tsx",
-                                                            lineNumber: 353,
+                                                            lineNumber: 356,
                                                             columnNumber: 37
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/components/Footer.tsx",
-                                                        lineNumber: 352,
+                                                        lineNumber: 355,
                                                         columnNumber: 33
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1519,31 +1523,31 @@ function Footer() {
                                                         children: "Mon - Sun: 8:00 AM – 9:00 PM"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/components/Footer.tsx",
-                                                        lineNumber: 355,
+                                                        lineNumber: 358,
                                                         columnNumber: 33
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/components/Footer.tsx",
-                                                lineNumber: 351,
+                                                lineNumber: 354,
                                                 columnNumber: 29
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/components/Footer.tsx",
-                                        lineNumber: 315,
+                                        lineNumber: 318,
                                         columnNumber: 25
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/components/Footer.tsx",
-                                lineNumber: 309,
+                                lineNumber: 312,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/components/Footer.tsx",
-                        lineNumber: 237,
+                        lineNumber: 240,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1555,12 +1559,12 @@ function Footer() {
                                     className: "h-[1px] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent"
                                 }, void 0, false, {
                                     fileName: "[project]/app/components/Footer.tsx",
-                                    lineNumber: 367,
+                                    lineNumber: 370,
                                     columnNumber: 25
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/components/Footer.tsx",
-                                lineNumber: 366,
+                                lineNumber: 369,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1575,31 +1579,31 @@ function Footer() {
                                             children: "Vamsi Crackers"
                                         }, void 0, false, {
                                             fileName: "[project]/app/components/Footer.tsx",
-                                            lineNumber: 373,
+                                            lineNumber: 376,
                                             columnNumber: 29
                                         }, this),
                                         ". All rights reserved."
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/components/Footer.tsx",
-                                    lineNumber: 371,
+                                    lineNumber: 374,
                                     columnNumber: 25
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/components/Footer.tsx",
-                                lineNumber: 370,
+                                lineNumber: 373,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/components/Footer.tsx",
-                        lineNumber: 364,
+                        lineNumber: 367,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/components/Footer.tsx",
-                lineNumber: 158,
+                lineNumber: 161,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1618,23 +1622,23 @@ function Footer() {
                         d: "M4.5 15.75l7.5-7.5 7.5 7.5"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Footer.tsx",
-                        lineNumber: 387,
+                        lineNumber: 390,
                         columnNumber: 21
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/components/Footer.tsx",
-                    lineNumber: 386,
+                    lineNumber: 389,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/components/Footer.tsx",
-                lineNumber: 382,
+                lineNumber: 385,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/components/Footer.tsx",
-        lineNumber: 42,
+        lineNumber: 45,
         columnNumber: 9
     }, this);
 }
@@ -1759,7 +1763,7 @@ function ProductsPageInner() {
     const [searchQuery, setSearchQuery] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("");
     const [priceListUrl, setPriceListUrl] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("");
     const hasScrolledRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(false);
-    const apiUrl = ("TURBOPACK compile-time value", "http://104.254.245.96:5001") || "http://localhost:5001";
+    const apiUrl = ("TURBOPACK compile-time value", "http://api.vamsicrackers.in") || "http://localhost:5001";
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         async function loadData() {
             try {

@@ -67,7 +67,7 @@ export default function Navbar({ priceListUrl = "" }: NavbarProps) {
                     </div>
 
                     {/* Center: Desktop Menu */}
-                    <ul className="hidden xl:flex items-center gap-6 2xl:gap-10">
+                    <ul className="hidden lg:flex items-center gap-4 xl:gap-6 2xl:gap-10">
                         {[
                             { name: "Home", link: "/" },
                             { name: "Products", link: "/products" },
@@ -80,7 +80,7 @@ export default function Navbar({ priceListUrl = "" }: NavbarProps) {
                                     href={item.name === "Pricelist" && priceListUrl ? priceListUrl : item.link}
                                     target={item.name === "Pricelist" && priceListUrl ? "_blank" : undefined}
                                     rel={item.name === "Pricelist" && priceListUrl ? "noreferrer" : undefined}
-                                    className="whitespace-nowrap text-[14px] 2xl:text-[15px] font-black uppercase tracking-[0.1em] transition-all duration-300 text-white hover:text-festive-gold drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] hover:drop-shadow-[0_0_12px_rgba(255,215,0,0.6)]"
+                                    className="whitespace-nowrap text-[11px] lg:text-[12px] xl:text-[14px] 2xl:text-[15px] font-black uppercase tracking-[0.05em] lg:tracking-[0.1em] transition-all duration-300 text-white hover:text-festive-gold drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] hover:drop-shadow-[0_0_12px_rgba(255,215,0,0.6)]"
                                 >
                                     {item.name}
                                 </a>
@@ -91,11 +91,11 @@ export default function Navbar({ priceListUrl = "" }: NavbarProps) {
                     </ul>
 
                     {/* Right: Actions */}
-                    <div className="hidden xl:flex items-center gap-4 2xl:gap-6">
+                    <div className="hidden lg:flex items-center gap-2 xl:gap-4 2xl:gap-6">
                         {/* Premium Cart Button */}
                         <button
                             onClick={() => setCartOpen(true)}
-                            className="whitespace-nowrap relative flex items-center gap-2 px-5 py-2 rounded-full border border-festive-gold/50 bg-festive-gold/10 hover:bg-festive-gold/20 text-festive-gold transition-all duration-500 backdrop-blur-md shadow-[0_0_20px_rgba(255,215,0,0.15)] hover:shadow-[0_0_30px_rgba(255,215,0,0.3)] group cursor-pointer hover:scale-105"
+                            className="whitespace-nowrap relative flex items-center gap-1.5 xl:gap-2 px-3 xl:px-5 py-1.5 xl:py-2 rounded-full border border-festive-gold/50 bg-festive-gold/10 hover:bg-festive-gold/20 text-festive-gold transition-all duration-500 backdrop-blur-md shadow-[0_0_20px_rgba(255,215,0,0.15)] hover:shadow-[0_0_30px_rgba(255,215,0,0.3)] group cursor-pointer hover:scale-105"
                         >
                             <span className="text-lg group-hover:scale-110 group-hover:-rotate-12 transition-transform duration-300">🛒</span>
                             <span className="font-black text-xs uppercase tracking-widest text-white group-hover:text-festive-gold transition-colors">Cart</span>
@@ -107,7 +107,7 @@ export default function Navbar({ priceListUrl = "" }: NavbarProps) {
                         </button>
 
                         {/* Sleek Contact Box with 2 Numbers */}
-                        <div className="flex items-center gap-3 bg-white/5 border border-white/10 px-4 py-2 rounded-2xl backdrop-blur-sm hover:bg-white/10 hover:border-festive-gold/30 transition-all duration-300 shadow-inner group">
+                        <div className="flex items-center gap-2 xl:gap-3 bg-white/5 border border-white/10 px-2 xl:px-4 py-1.5 xl:py-2 rounded-2xl backdrop-blur-sm hover:bg-white/10 hover:border-festive-gold/30 transition-all duration-300 shadow-inner group">
                             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-festive-gold/30 to-festive-gold/10 flex items-center justify-center text-festive-gold group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(255,215,0,0.2)] group-hover:shadow-[0_0_20px_rgba(255,215,0,0.4)]">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M1.5 4.5a3 3 0 013-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 01-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 006.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 011.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 01-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5z" clipRule="evenodd" /></svg>
                             </div>
@@ -123,7 +123,7 @@ export default function Navbar({ priceListUrl = "" }: NavbarProps) {
                             href={priceListUrl || "#"}
                             target={priceListUrl ? "_blank" : undefined}
                             rel={priceListUrl ? "noreferrer" : undefined}
-                            className="whitespace-nowrap relative overflow-hidden group px-6 py-2.5 rounded-full font-black text-xs uppercase tracking-[0.15em] text-festive-purple bg-gradient-to-r from-festive-gold via-yellow-200 to-festive-gold bg-[length:200%_auto] hover:bg-[position:right_center] transition-all duration-500 shadow-[0_0_25px_rgba(255,215,0,0.5)] hover:shadow-[0_0_40px_rgba(255,215,0,0.8)] flex items-center gap-2 hover:scale-105"
+                            className="whitespace-nowrap relative overflow-hidden group px-4 xl:px-6 py-1.5 xl:py-2.5 rounded-full font-black text-[10px] xl:text-xs uppercase tracking-[0.1em] xl:tracking-[0.15em] text-festive-purple bg-gradient-to-r from-festive-gold via-yellow-200 to-festive-gold bg-[length:200%_auto] hover:bg-[position:right_center] transition-all duration-500 shadow-[0_0_25px_rgba(255,215,0,0.5)] hover:shadow-[0_0_40px_rgba(255,215,0,0.8)] flex items-center gap-1.5 xl:gap-2 hover:scale-105"
                         >
                             <span className="relative z-10 flex items-center gap-2">
                                 <span className="text-lg group-hover:-translate-y-1 transition-transform duration-300 drop-shadow-sm">📥</span>
@@ -133,7 +133,7 @@ export default function Navbar({ priceListUrl = "" }: NavbarProps) {
                     </div>
 
                     {/* Right Actions (Mobile) */}
-                    <div className="flex items-center gap-4 xl:hidden">
+                    <div className="flex items-center gap-4 lg:hidden">
                         {/* Mobile Cart Button */}
                         <button
                             onClick={() => setCartOpen(true)}
@@ -161,7 +161,7 @@ export default function Navbar({ priceListUrl = "" }: NavbarProps) {
 
             {/* Mobile Menu Overlay */}
             <div
-                className={`fixed inset-0 bg-[#120822]/98 backdrop-blur-md z-40 xl:hidden transition-all duration-500 ease-in-out ${isOpen ? "opacity-100 visible" : "opacity-0 invisible"
+                className={`fixed inset-0 bg-[#120822]/98 backdrop-blur-md z-40 lg:hidden transition-all duration-500 ease-in-out ${isOpen ? "opacity-100 visible" : "opacity-0 invisible"
                     }`}
             >
                 {/* Close Button Inside Overlay */}
