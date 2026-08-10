@@ -43,10 +43,10 @@ export default function Navbar({ priceListUrl = "" }: NavbarProps) {
                 {/* Ultra-premium glowing bottom border */}
                 <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-festive-gold/60 to-transparent shadow-[0_0_15px_rgba(255,215,0,0.3)]"></div>
                 
-                <div className="w-full max-w-[1920px] mx-auto flex items-center justify-between px-3 sm:px-4 lg:px-8 xl:px-12 2xl:px-16 relative z-10">
+                <div className="w-full max-w-[1920px] mx-auto flex items-center justify-between px-3 sm:px-4 lg:px-6 xl:px-8 2xl:px-12 relative z-10">
                     {/* Logo Section */}
-                    <div className="flex items-center gap-3 sm:gap-4 group cursor-pointer w-auto">
-                        <div className="relative w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 shrink-0 rounded-full overflow-visible border-2 border-festive-gold bg-gradient-to-br from-white/20 to-white/5 shadow-[0_0_20px_rgba(255,215,0,0.4)] backdrop-blur-md transition-all duration-500 group-hover:scale-105 group-hover:shadow-[0_0_40px_rgba(255,215,0,0.7)] p-[2px] ring-2 ring-festive-gold/20 group-hover:ring-festive-gold/40">
+                    <div className="flex items-center gap-2 sm:gap-3 lg:gap-4 group cursor-pointer shrink-0">
+                        <div className="relative w-14 h-14 sm:w-16 sm:h-16 lg:w-16 lg:h-16 xl:w-20 xl:h-20 shrink-0 rounded-full overflow-visible border-2 border-festive-gold bg-gradient-to-br from-white/20 to-white/5 shadow-[0_0_20px_rgba(255,215,0,0.4)] backdrop-blur-md transition-all duration-500 group-hover:scale-105 group-hover:shadow-[0_0_40px_rgba(255,215,0,0.7)] p-[2px] ring-2 ring-festive-gold/20 group-hover:ring-festive-gold/40">
                             <div className="relative w-full h-full rounded-full overflow-hidden bg-[#0A021A] shadow-inner">
                                 <Image 
                                     src="/assets/images/vamsi_crackers_logo_v2.png" 
@@ -57,17 +57,17 @@ export default function Navbar({ priceListUrl = "" }: NavbarProps) {
                             </div>
                         </div>
                         <div className="flex flex-col">
-                            <h1 className="text-lg sm:text-2xl md:text-3xl font-black text-white tracking-tight uppercase leading-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                            <h1 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-black text-white tracking-tight uppercase leading-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                                 VAMSI <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-orange-500">CRACKERS</span>
                             </h1>
-                            <p className="hidden sm:block text-[9px] md:text-[11px] font-bold text-indigo-200 tracking-[0.2em] uppercase mt-1 drop-shadow-md">
+                            <p className="hidden sm:block text-[8px] lg:text-[9px] xl:text-[11px] font-bold text-indigo-200 tracking-[0.2em] uppercase mt-1 drop-shadow-md">
                                 Champions of Celebration
                             </p>
                         </div>
                     </div>
 
                     {/* Center: Desktop Menu */}
-                    <ul className="hidden lg:flex items-center gap-4 xl:gap-6 2xl:gap-10">
+                    <ul className="hidden lg:flex items-center lg:gap-3 xl:gap-5 2xl:gap-8 shrink-1">
                         {[
                             { name: "Home", link: "/" },
                             { name: "Products", link: "/products" },
@@ -80,7 +80,7 @@ export default function Navbar({ priceListUrl = "" }: NavbarProps) {
                                     href={item.name === "Pricelist" && priceListUrl ? priceListUrl : item.link}
                                     target={item.name === "Pricelist" && priceListUrl ? "_blank" : undefined}
                                     rel={item.name === "Pricelist" && priceListUrl ? "noreferrer" : undefined}
-                                    className="whitespace-nowrap text-[11px] lg:text-[12px] xl:text-[14px] 2xl:text-[15px] font-black uppercase tracking-[0.05em] lg:tracking-[0.1em] transition-all duration-300 text-white hover:text-festive-gold drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] hover:drop-shadow-[0_0_12px_rgba(255,215,0,0.6)]"
+                                    className="whitespace-nowrap text-[11px] xl:text-[13px] 2xl:text-[15px] font-black uppercase tracking-[0.05em] lg:tracking-[0.1em] transition-all duration-300 text-white hover:text-festive-gold drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] hover:drop-shadow-[0_0_12px_rgba(255,215,0,0.6)]"
                                 >
                                     {item.name}
                                 </a>
@@ -91,23 +91,23 @@ export default function Navbar({ priceListUrl = "" }: NavbarProps) {
                     </ul>
 
                     {/* Right: Actions */}
-                    <div className="hidden lg:flex items-center gap-2 xl:gap-4 2xl:gap-6">
+                    <div className="hidden lg:flex items-center gap-2 xl:gap-3 2xl:gap-6 shrink-0">
                         {/* Premium Cart Button */}
                         <button
                             onClick={() => setCartOpen(true)}
-                            className="whitespace-nowrap relative flex items-center gap-1.5 xl:gap-2 px-3 xl:px-5 py-1.5 xl:py-2 rounded-full border border-festive-gold/50 bg-festive-gold/10 hover:bg-festive-gold/20 text-festive-gold transition-all duration-500 backdrop-blur-md shadow-[0_0_20px_rgba(255,215,0,0.15)] hover:shadow-[0_0_30px_rgba(255,215,0,0.3)] group cursor-pointer hover:scale-105"
+                            className="whitespace-nowrap relative flex items-center gap-1.5 px-3 py-1.5 xl:px-4 xl:py-2 rounded-full border border-festive-gold/50 bg-festive-gold/10 hover:bg-festive-gold/20 text-festive-gold transition-all duration-500 backdrop-blur-md shadow-[0_0_20px_rgba(255,215,0,0.15)] hover:shadow-[0_0_30px_rgba(255,215,0,0.3)] group cursor-pointer hover:scale-105"
                         >
-                            <span className="text-lg group-hover:scale-110 group-hover:-rotate-12 transition-transform duration-300">🛒</span>
-                            <span className="font-black text-xs uppercase tracking-widest text-white group-hover:text-festive-gold transition-colors">Cart</span>
+                            <span className="text-sm xl:text-lg group-hover:scale-110 group-hover:-rotate-12 transition-transform duration-300">🛒</span>
+                            <span className="font-black text-[10px] xl:text-xs uppercase tracking-widest text-white group-hover:text-festive-gold transition-colors">Cart</span>
                             {cartCount > 0 && (
-                                <span className="absolute -top-1.5 -right-1.5 bg-gradient-to-br from-red-500 to-red-700 text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(220,38,38,0.8)] border border-[#16052b] animate-bounce">
+                                <span className="absolute -top-1.5 -right-1.5 bg-gradient-to-br from-red-500 to-red-700 text-white text-[9px] xl:text-[10px] font-black w-4.5 h-4.5 xl:w-5 xl:h-5 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(220,38,38,0.8)] border border-[#16052b] animate-bounce">
                                     {cartCount}
                                 </span>
                             )}
                         </button>
 
-                        {/* Sleek Contact Box with 2 Numbers */}
-                        <div className="flex items-center gap-2 xl:gap-3 bg-white/5 border border-white/10 px-2 xl:px-4 py-1.5 xl:py-2 rounded-2xl backdrop-blur-sm hover:bg-white/10 hover:border-festive-gold/30 transition-all duration-300 shadow-inner group">
+                        {/* Sleek Contact Box with 2 Numbers - Hidden on lg, xl to save space, visible on 2xl+ */}
+                        <div className="hidden 2xl:flex items-center gap-3 bg-white/5 border border-white/10 px-4 py-2 rounded-2xl backdrop-blur-sm hover:bg-white/10 hover:border-festive-gold/30 transition-all duration-300 shadow-inner group">
                             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-festive-gold/30 to-festive-gold/10 flex items-center justify-center text-festive-gold group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(255,215,0,0.2)] group-hover:shadow-[0_0_20px_rgba(255,215,0,0.4)]">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M1.5 4.5a3 3 0 013-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 01-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 006.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 011.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 01-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5z" clipRule="evenodd" /></svg>
                             </div>
@@ -123,10 +123,10 @@ export default function Navbar({ priceListUrl = "" }: NavbarProps) {
                             href={priceListUrl || "#"}
                             target={priceListUrl ? "_blank" : undefined}
                             rel={priceListUrl ? "noreferrer" : undefined}
-                            className="whitespace-nowrap relative overflow-hidden group px-4 xl:px-6 py-1.5 xl:py-2.5 rounded-full font-black text-[10px] xl:text-xs uppercase tracking-[0.1em] xl:tracking-[0.15em] text-festive-purple bg-gradient-to-r from-festive-gold via-yellow-200 to-festive-gold bg-[length:200%_auto] hover:bg-[position:right_center] transition-all duration-500 shadow-[0_0_25px_rgba(255,215,0,0.5)] hover:shadow-[0_0_40px_rgba(255,215,0,0.8)] flex items-center gap-1.5 xl:gap-2 hover:scale-105"
+                            className="whitespace-nowrap relative overflow-hidden group px-3 py-1.5 xl:px-5 xl:py-2 2xl:px-6 2xl:py-2.5 rounded-full font-black text-[9px] xl:text-[10px] 2xl:text-xs uppercase tracking-[0.1em] xl:tracking-[0.15em] text-festive-purple bg-gradient-to-r from-festive-gold via-yellow-200 to-festive-gold bg-[length:200%_auto] hover:bg-[position:right_center] transition-all duration-500 shadow-[0_0_25px_rgba(255,215,0,0.5)] hover:shadow-[0_0_40px_rgba(255,215,0,0.8)] flex items-center gap-1 xl:gap-1.5 hover:scale-105"
                         >
-                            <span className="relative z-10 flex items-center gap-2">
-                                <span className="text-lg group-hover:-translate-y-1 transition-transform duration-300 drop-shadow-sm">📥</span>
+                            <span className="relative z-10 flex items-center gap-1 xl:gap-2">
+                                <span className="text-sm xl:text-lg group-hover:-translate-y-1 transition-transform duration-300 drop-shadow-sm">📥</span>
                                 Price List
                             </span>
                         </a>

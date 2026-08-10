@@ -1,19 +1,21 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Outfit } from "next/font/google";
 import "./globals.css";
 import Loader from "./components/Loader";
 import { CartProvider } from "./context/CartContext";
 import CartDrawer from "./components/CartDrawer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const outfit = Outfit({
   subsets: ["latin"],
+  variable: "--font-outfit",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://vamsicrackers.in'),
@@ -60,7 +62,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black`}
+        className={`${outfit.variable} font-sans antialiased bg-black`}
       >
         {/* Loading animation */}
         <Loader />

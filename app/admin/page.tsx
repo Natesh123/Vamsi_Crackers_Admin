@@ -181,7 +181,21 @@ export default function AdminDashboard() {
         const res = await fetch(`${apiUrl}/api/settings/banner-images/get`);
         if (res.ok) {
           const data = await res.json();
-          setBannerImages(data.images || []);
+          const images = (data.images || []).filter(Boolean).map((imgUrl: string) => {
+              if (imgUrl.includes('localhost:5000') || imgUrl.includes('localhost:5001')) {
+                  try {
+                      const path = new URL(imgUrl).pathname;
+                      return `${apiUrl}${path}`;
+                  } catch (e) {
+                      return imgUrl;
+                  }
+              }
+              if (typeof window !== 'undefined' && window.location.protocol === 'https:' && imgUrl.startsWith('http://')) {
+                  return imgUrl.replace('http://', 'https://');
+              }
+              return imgUrl;
+          });
+          setBannerImages(images);
         }
       } catch(e) {}
     };
@@ -270,7 +284,20 @@ export default function AdminDashboard() {
       if (!res.ok) throw new Error("Upload failed");
 
       const data = await res.json();
-      const newImages = [...bannerImages, data.fileUrl];
+      let rawUrl = data.url || data.fileUrl;
+      if (!rawUrl) throw new Error("No URL returned from server");
+      
+      if (rawUrl.includes('localhost:5000') || rawUrl.includes('localhost:5001')) {
+          try {
+              const path = new URL(rawUrl).pathname;
+              rawUrl = `${apiUrl}${path}`;
+          } catch (e) {}
+      }
+      if (typeof window !== 'undefined' && window.location.protocol === 'https:' && rawUrl.startsWith('http://')) {
+          rawUrl = rawUrl.replace('http://', 'https://');
+      }
+
+      const newImages = [...bannerImages, rawUrl];
       setBannerImages(newImages);
       await handleSaveBannerImages(newImages);
       showToast("Banner image uploaded successfully!");

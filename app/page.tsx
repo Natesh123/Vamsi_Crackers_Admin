@@ -181,10 +181,7 @@ export default function Home() {
                             className="w-full h-full object-contain transition-transform duration-1000 group-hover:scale-110 drop-shadow-sm"
                         />
                         <div className="absolute inset-0 border-2 border-festive-gold/10 rounded-3xl md:rounded-[2.5rem] pointer-events-none"></div>
-                        {/* Festive Badge */}
-                        <div className="absolute top-4 right-4 md:top-6 md:right-6 bg-gradient-to-r from-festive-red to-red-600 text-white text-[10px] md:text-xs font-black px-3 py-1.5 md:px-4 md:py-2 rounded-full shadow-lg shadow-red-500/30 animate-bounce tracking-widest">
-                            EST. 2024
-                        </div>
+
                     </div>
                 </div>
                 

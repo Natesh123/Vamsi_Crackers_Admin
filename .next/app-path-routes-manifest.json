@@ -8,5 +8,7 @@
   "/api/products/route": "/api/products",
   "/api/upload/route": "/api/upload",
   "/page": "/",
-  "/products/page": "/products"
+  "/products/page": "/products",
+  "/robots.txt/route": "/robots.txt",
+  "/sitemap.xml/route": "/sitemap.xml"
 }

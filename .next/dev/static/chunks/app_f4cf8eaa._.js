@@ -285,7 +285,7 @@ function CartDrawer() {
                 const fetchMinOrderValue = {
                     "CartDrawer.useEffect.fetchMinOrderValue": async ()=>{
                         try {
-                            const apiUrl = ("TURBOPACK compile-time value", "http://api.vamsicrackers.in") || "http://localhost:5001";
+                            const apiUrl = ("TURBOPACK compile-time value", "https://api.vamsicrackers.in") || "http://localhost:5001";
                             const res = await fetch(`${apiUrl}/api/settings/min-order-value/get`);
                             if (res.ok) {
                                 const data = await res.json();
@@ -333,7 +333,7 @@ function CartDrawer() {
                         quantity: item.quantity
                     }))
             };
-            const apiUrl = ("TURBOPACK compile-time value", "http://api.vamsicrackers.in") || "http://localhost:5001";
+            const apiUrl = ("TURBOPACK compile-time value", "https://api.vamsicrackers.in") || "http://localhost:5001";
             const response = await fetch(`${apiUrl}/api/orders`, {
                 method: 'POST',
                 headers: {

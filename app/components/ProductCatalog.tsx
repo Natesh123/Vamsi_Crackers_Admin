@@ -173,8 +173,7 @@ export default function ProductCatalog({ priceListUrl = "" }: ProductCatalogProp
           <div className="space-y-10">
             <div>
               {/* ═══ Table Header (Desktop Only) ═══ */}
-              <div className="hidden md:grid md:grid-cols-[40px_80px_1fr_140px_120px_130px] lg:grid-cols-[50px_90px_1fr_150px_130px_150px] items-center gap-4 px-6 lg:px-8 py-3.5 bg-gradient-to-r from-festive-purple via-[#3d1166] to-festive-purple rounded-t-2xl text-[10.5px] font-black text-festive-gold uppercase tracking-[0.2em] shadow-md border-b-2 border-festive-gold/30">
-                <span className="text-center drop-shadow-sm">S.No</span>
+              <div className="hidden md:grid md:grid-cols-[80px_1fr_140px_120px_130px] lg:grid-cols-[90px_1fr_150px_130px_150px] items-center gap-4 px-6 lg:px-8 py-3.5 bg-gradient-to-r from-festive-purple via-[#3d1166] to-festive-purple rounded-t-2xl text-[10.5px] font-black text-festive-gold uppercase tracking-[0.2em] shadow-md border-b-2 border-festive-gold/30">
                 <span className="text-center drop-shadow-sm">Image</span>
                 <span className="drop-shadow-sm">Product Name</span>
                 <span className="text-right drop-shadow-sm">MRP</span>
@@ -188,6 +187,7 @@ export default function ProductCatalog({ priceListUrl = "" }: ProductCatalogProp
                   const qty = getCartQty(prod.id);
                   const prodDiscount = prod.discount || Math.round(((prod.originalPrice - prod.price) / prod.originalPrice) * 100);
                   const isLast = idx === filteredProducts.length - 1;
+                  const cleanName = prod.name.replace(/\s*\([^)]*[\u0B80-\u0BFF]+[^)]*\)/g, '').trim();
 
                   return (
                     <div key={prod.id} className={`transition-all duration-300 hover:bg-amber-50/50 ${!isLast ? 'border-b border-gray-100' : ''}`}>
@@ -205,16 +205,15 @@ export default function ProductCatalog({ priceListUrl = "" }: ProductCatalogProp
                            
                            {/* Image */}
                            <div className="w-[85px] h-[85px] rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center p-1.5 overflow-hidden shrink-0 relative">
-                             <img src={prod.image || "/assets/images/placeholder.png"} alt={prod.name} loading="lazy" decoding="async" className="w-full h-full object-contain" />
+                             <img src={prod.image || "/assets/images/placeholder.png"} alt={cleanName} loading="lazy" decoding="async" className="w-full h-full object-contain" />
                            </div>
 
                            {/* Content */}
                            <div className="flex-1 flex flex-col justify-between py-0.5">
                               <div>
                                  <div className="flex items-start gap-1">
-                                   <span className="text-[10px] font-black text-slate-400 mt-[2px]">{idx + 1}.</span>
-                                   <h4 className="font-black text-slate-800 text-[14px] leading-tight line-clamp-2">{prod.name}</h4>
-                                 </div>
+                                 <h4 className="font-black text-slate-800 text-[14px] leading-tight line-clamp-2">{cleanName}</h4>
+                               </div>
                                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1 block truncate max-w-full">{prod.category}</span>
                               </div>
                               <div className="flex items-end justify-between mt-2">
@@ -240,7 +239,7 @@ export default function ProductCatalog({ priceListUrl = "" }: ProductCatalogProp
                                         <button onClick={() => updateQuantity(prod.id, qty + 1)} className="flex-1 h-full text-slate-600 active:scale-95 font-black text-sm flex items-center justify-center">+</button>
                                       </div>
                                     ) : (
-                                      <button onClick={() => addToCart({ id: prod.id, name: prod.name, price: prod.price, originalPrice: prod.originalPrice, image: prod.image, category: prod.category })} className="h-8 px-5 rounded-md bg-gradient-to-r from-festive-purple to-[#3d1166] text-white font-black uppercase text-[11px] tracking-wider active:scale-95 shadow-md flex items-center justify-center gap-1.5">
+                                      <button onClick={() => addToCart({ id: prod.id, name: cleanName, price: prod.price, originalPrice: prod.originalPrice, image: prod.image, category: prod.category })} className="h-8 px-5 rounded-md bg-gradient-to-r from-festive-purple to-[#3d1166] text-white font-black uppercase text-[11px] tracking-wider active:scale-95 shadow-md flex items-center justify-center gap-1.5">
                                         <span className="text-[15px] leading-none mb-[1px]">+</span> Add
                                       </button>
                                     )}
@@ -250,20 +249,15 @@ export default function ProductCatalog({ priceListUrl = "" }: ProductCatalogProp
                         </div>
 
                         {/* --- DESKTOP VIEW --- */}
-                        <div className="hidden md:grid group relative grid-cols-[40px_80px_1fr_140px_120px_130px] lg:grid-cols-[50px_90px_1fr_150px_130px_150px] items-center gap-4 px-6 lg:px-8 py-3.5">
-                          {/* S.No */}
-                          <div className="flex items-center justify-center">
-                            <span className="text-sm font-black text-slate-400 group-hover:text-festive-purple transition-colors">{idx + 1}</span>
-                          </div>
-
+                        <div className="hidden md:grid group relative grid-cols-[80px_1fr_140px_120px_130px] lg:grid-cols-[90px_1fr_150px_130px_150px] items-center gap-4 px-6 lg:px-8 py-3.5">
                           {/* Product Image */}
                           <div className="w-[80px] lg:w-[90px] h-[70px] lg:h-[75px] rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center p-1.5 overflow-hidden flex-shrink-0 group-hover:border-festive-gold/30 transition-all mx-auto">
-                            <img src={prod.image || "/assets/images/placeholder.png"} alt={prod.name} loading="lazy" decoding="async" className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500" />
+                            <img src={prod.image || "/assets/images/placeholder.png"} alt={cleanName} loading="lazy" decoding="async" className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500" />
                           </div>
 
                           {/* Product Info */}
                           <div className="flex flex-col items-start justify-center gap-0.5">
-                            <h4 className="font-black text-slate-800 text-[15px] leading-tight group-hover:text-festive-purple transition-colors line-clamp-2">{prod.name}</h4>
+                            <h4 className="font-black text-slate-800 text-[15px] leading-tight group-hover:text-festive-purple transition-colors line-clamp-2">{cleanName}</h4>
                             {prod.originalPrice > prod.price && (
                               <span className="inline-flex items-center gap-1 bg-festive-red/10 text-festive-red text-[9px] font-black px-2 py-0.5 rounded-md uppercase tracking-wider mt-0.5">
                                 🔥 {prodDiscount}% OFF
@@ -307,7 +301,7 @@ export default function ProductCatalog({ priceListUrl = "" }: ProductCatalogProp
                                 </button>
                               </>
                             ) : (
-                              <button onClick={() => addToCart({ id: prod.id, name: prod.name, price: prod.price, originalPrice: prod.originalPrice, image: prod.image, category: prod.category })} className="w-[130px] lg:w-[140px] h-9 rounded-xl bg-gradient-to-r from-festive-purple to-[#3d1166] hover:from-festive-gold hover:to-yellow-500 text-white hover:text-festive-purple font-black uppercase text-[11px] tracking-wider hover:scale-[1.03] transition-all cursor-pointer shadow-[0_4px_15px_rgba(48,13,79,0.3)] hover:shadow-[0_4px_15px_rgba(255,215,0,0.4)] flex items-center justify-center gap-1 border border-transparent">
+                              <button onClick={() => addToCart({ id: prod.id, name: cleanName, price: prod.price, originalPrice: prod.originalPrice, image: prod.image, category: prod.category })} className="w-[130px] lg:w-[140px] h-9 rounded-xl bg-gradient-to-r from-festive-purple to-[#3d1166] hover:from-festive-gold hover:to-yellow-500 text-white hover:text-festive-purple font-black uppercase text-[11px] tracking-wider hover:scale-[1.03] transition-all cursor-pointer shadow-[0_4px_15px_rgba(48,13,79,0.3)] hover:shadow-[0_4px_15px_rgba(255,215,0,0.4)] flex items-center justify-center gap-1 border border-transparent">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-3.5 h-3.5"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
                                 <span>Add</span>
                               </button>
