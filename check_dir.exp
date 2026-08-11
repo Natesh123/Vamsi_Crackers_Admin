@@ -1,0 +1,13 @@
+#!/usr/bin/expect -f
+set timeout -1
+set password "MZ5OlAifTqHx7W"
+set ip "104.254.245.96"
+
+spawn ssh -o StrictHostKeyChecking=no root@$ip "ls -la /var/www/Vamsi_Crackers/"
+expect {
+    "password:" {
+        send "$password\r"
+        exp_continue
+    }
+    eof
+}

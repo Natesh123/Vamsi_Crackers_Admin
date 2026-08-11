@@ -1279,8 +1279,8 @@ export default function AdminDashboard() {
 
   const handleProductSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!productName.trim() || !productPrice || !productOriginalPrice || !productCategoryId || !productImage) {
-      showToast("Please fill all fields", "error");
+    if (!productName.trim() || !productPrice || !productOriginalPrice || !productCategoryId) {
+      showToast("Please fill Product Name, Category, Original Price and Offer Price", "error");
       return;
     }
 

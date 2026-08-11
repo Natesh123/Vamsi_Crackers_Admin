@@ -1,0 +1,13 @@
+#!/usr/bin/expect -f
+set timeout -1
+set password "MZ5OlAifTqHx7W"
+set ip "104.254.245.96"
+
+spawn ssh -o StrictHostKeyChecking=no root@$ip "source ~/.bashrc; source ~/.nvm/nvm.sh; cd /var/www/Vamsi_Crackers/frontend && npm run build && pm2 restart all"
+expect {
+    "password:" {
+        send "$password\r"
+        exp_continue
+    }
+    eof
+}

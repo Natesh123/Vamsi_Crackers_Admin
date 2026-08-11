@@ -1,0 +1,26 @@
+#!/usr/bin/expect -f
+set timeout -1
+set password "MZ5OlAifTqHx7W"
+set ip "104.254.245.96"
+
+puts "Deploying productController.js to server..."
+spawn scp -o StrictHostKeyChecking=no "/Users/balaji/Documents/Natesh/Vamsi Crackers/Vamsi_Crackers_Backend/controllers/productController.js" root@$ip:/var/www/Vamsi_Crackers/backend/controllers/productController.js
+expect {
+    "password:" {
+        send "$password\r"
+        exp_continue
+    }
+    eof
+}
+
+puts "Restarting backend pm2 on server..."
+spawn ssh -o StrictHostKeyChecking=no root@$ip "source ~/.bashrc; source ~/.nvm/nvm.sh; pm2 restart backend"
+expect {
+    "password:" {
+        send "$password\r"
+        exp_continue
+    }
+    eof
+}
+
+puts "Backend deployment complete."
