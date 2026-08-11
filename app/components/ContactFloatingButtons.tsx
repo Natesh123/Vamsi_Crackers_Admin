@@ -1,9 +1,13 @@
 "use client";
 import React from 'react';
+import { useCart } from '../context/CartContext';
 
 export default function ContactFloatingButtons() {
+    const { cartCount } = useCart();
+    const bottomClass = cartCount > 0 ? "bottom-24 sm:bottom-6" : "bottom-4 sm:bottom-6";
+
     return (
-        <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[100] flex flex-col gap-3 sm:gap-4 animate-slideDown">
+        <div className={`fixed ${bottomClass} right-4 sm:right-6 z-[90] flex flex-col gap-3 sm:gap-4 transition-all duration-500 animate-slideDown`}>
             {/* WhatsApp Button */}
             <a 
                 href="https://wa.me/919080019031" 

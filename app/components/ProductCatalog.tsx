@@ -65,7 +65,9 @@ export default function ProductCatalog({ priceListUrl = "" }: ProductCatalogProp
   const uniqueCleanFilters = Array.from(new Set(rawFilters.map(cleanStr)));
   const filters = ["All", ...uniqueCleanFilters];
 
-  const activeProducts = products.filter(p => p.is_active === 1 || p.is_active === true || p.is_active === undefined);
+  const activeProducts = products
+    .filter(p => p.is_active === 1 || p.is_active === true || p.is_active === undefined)
+    .sort((a, b) => (a.sort_order ?? 9999) - (b.sort_order ?? 9999));
 
   const filteredProducts = activeFilter === "All"
     ? activeProducts
@@ -75,6 +77,24 @@ export default function ProductCatalog({ priceListUrl = "" }: ProductCatalogProp
     const item = cartItems.find((c) => c.id === productId);
     return item ? item.quantity : 0;
   };
+
+  // Group products by category
+  const groupedFilteredProducts = useMemo(() => {
+    const groups: { category: string; products: Product[] }[] = [];
+    
+    // Group based on globally sorted filteredProducts
+    filteredProducts.forEach(prod => {
+      const cat = cleanStr(prod.category);
+      const existingGroup = groups.find(g => g.category === cat);
+      if (existingGroup) {
+        existingGroup.products.push(prod);
+      } else {
+        groups.push({ category: cat, products: [prod] });
+      }
+    });
+    
+    return groups;
+  }, [filteredProducts]);
 
   if (loading) {
     return (
@@ -171,151 +191,166 @@ export default function ProductCatalog({ priceListUrl = "" }: ProductCatalogProp
         </div>
 
         {/* ═══ Flat Table View ═══ */}
-        {filteredProducts.length > 0 ? (
+        {groupedFilteredProducts.length > 0 ? (
           <div className="space-y-10">
-            <div>
-              {/* ═══ Table Header (Desktop Only) ═══ */}
-              <div className="hidden md:grid md:grid-cols-[80px_1fr_140px_120px_130px] lg:grid-cols-[90px_1fr_150px_130px_150px] items-center gap-4 px-6 lg:px-8 py-3.5 bg-gradient-to-r from-festive-purple via-[#3d1166] to-festive-purple rounded-t-2xl text-[10.5px] font-black text-festive-gold uppercase tracking-[0.2em] shadow-md border-b-2 border-festive-gold/30">
-                <span className="text-center drop-shadow-sm">Image</span>
-                <span className="drop-shadow-sm">Product Name</span>
-                <span className="text-right drop-shadow-sm">MRP</span>
-                <span className="text-right drop-shadow-sm">Offer Price</span>
-                <span className="text-center drop-shadow-sm">Action</span>
-              </div>
-
-              {/* ═══ Product Rows ═══ */}
-              <div className="border border-gray-200 md:border-t-0 rounded-b-2xl overflow-hidden bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)]">
-                {filteredProducts.map((prod, idx) => {
-                  const qty = getCartQty(prod.id);
-                  const prodDiscount = prod.discount || Math.round(((prod.originalPrice - prod.price) / prod.originalPrice) * 100);
-                  const isLast = idx === filteredProducts.length - 1;
-                  const cleanName = prod.name.replace(/\s*\([^)]*[\u0B80-\u0BFF]+[^)]*\)/g, '').trim();
-
-                  return (
-                    <div key={prod.id} className={`transition-all duration-300 hover:bg-amber-50/50 ${!isLast ? 'border-b border-gray-100' : ''}`}>
-                        
-                        {/* --- MOBILE VIEW --- */}
-                        <div className="md:hidden flex p-3 gap-3 relative">
-                           {/* Discount Badge */}
-                           {prod.originalPrice > prod.price && (
-                             <div className="absolute top-2 left-2 z-10 scale-75 origin-top-left">
-                               <span className="bg-gradient-to-r from-festive-red to-red-500 text-white font-black px-2 py-0.5 rounded-md text-[10px] tracking-wider shadow-sm">
-                                 {prodDiscount}% OFF
-                               </span>
-                             </div>
-                           )}
-                           
-                           {/* Image */}
-                           <div className="w-[85px] h-[85px] rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center p-1.5 overflow-hidden shrink-0 relative">
-                             <img src={prod.image || "/assets/images/placeholder.png"} alt={cleanName} loading="lazy" decoding="async" className="w-full h-full object-contain" />
-                           </div>
-
-                           {/* Content */}
-                           <div className="flex-1 flex flex-col justify-between py-0.5">
-                              <div>
-                                 <div className="flex items-start gap-1">
-                                 <h4 className="font-black text-slate-800 text-[14px] leading-tight line-clamp-2">{cleanName}</h4>
-                               </div>
-                                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1 block truncate max-w-full">{prod.category}</span>
-                              </div>
-                              <div className="flex items-end justify-between mt-2">
-                                 <div className="flex flex-col">
-                                    {prod.originalPrice > prod.price && (
-                                      <span className="text-[10px] text-slate-400 line-through font-bold">₹{prod.originalPrice.toLocaleString('en-IN')}</span>
-                                    )}
-                                    <span className="text-[14px] font-black text-festive-purple">₹{prod.price.toLocaleString('en-IN')}</span>
-                                 </div>
-                                 <div className="shrink-0 mr-1">
-                                    {qty > 0 ? (
-                                      <div className="flex items-center border-2 border-festive-purple/20 rounded-md overflow-hidden bg-white h-8 w-[85px]">
-                                        <button onClick={() => updateQuantity(prod.id, qty - 1)} className="flex-1 h-full text-slate-600 active:scale-95 font-black text-sm flex items-center justify-center">−</button>
-                                        <input 
-                                          type="number" 
-                                          value={qty} 
-                                          onChange={(e) => {
-                                            const val = e.target.value === '' ? 0 : parseInt(e.target.value);
-                                            if (!isNaN(val) && val >= 0) updateQuantity(prod.id, val);
-                                          }}
-                                          className="w-9 h-full font-black text-slate-900 text-[12px] bg-gray-50 text-center border-x border-gray-200 outline-none focus:bg-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                                        />
-                                        <button onClick={() => updateQuantity(prod.id, qty + 1)} className="flex-1 h-full text-slate-600 active:scale-95 font-black text-sm flex items-center justify-center">+</button>
-                                      </div>
-                                    ) : (
-                                      <button onClick={() => addToCart({ id: prod.id, name: cleanName, price: prod.price, originalPrice: prod.originalPrice, image: prod.image, category: prod.category })} className="h-8 px-5 rounded-md bg-gradient-to-r from-festive-purple to-[#3d1166] text-white font-black uppercase text-[11px] tracking-wider active:scale-95 shadow-md flex items-center justify-center gap-1.5">
-                                        <span className="text-[15px] leading-none mb-[1px]">+</span> Add
-                                      </button>
-                                    )}
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-
-                        {/* --- DESKTOP VIEW --- */}
-                        <div className="hidden md:grid group relative grid-cols-[80px_1fr_140px_120px_130px] lg:grid-cols-[90px_1fr_150px_130px_150px] items-center gap-4 px-6 lg:px-8 py-3.5">
-                          {/* Product Image */}
-                          <div className="w-[80px] lg:w-[90px] h-[70px] lg:h-[75px] rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center p-1.5 overflow-hidden flex-shrink-0 group-hover:border-festive-gold/30 transition-all mx-auto">
-                            <img src={prod.image || "/assets/images/placeholder.png"} alt={cleanName} loading="lazy" decoding="async" className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500" />
-                          </div>
-
-                          {/* Product Info */}
-                          <div className="flex flex-col items-start justify-center gap-0.5">
-                            <h4 className="font-black text-slate-800 text-[15px] leading-tight group-hover:text-festive-purple transition-colors line-clamp-2">{cleanName}</h4>
-                            {prod.originalPrice > prod.price && (
-                              <span className="inline-flex items-center gap-1 bg-festive-red/10 text-festive-red text-[9px] font-black px-2 py-0.5 rounded-md uppercase tracking-wider mt-0.5">
-                                🔥 {prodDiscount}% OFF
-                              </span>
-                            )}
-                          </div>
-
-                          {/* Original Price */}
-                          <div className="flex flex-col items-end justify-center">
-                            {prod.originalPrice > prod.price ? (
-                              <span className="text-base text-slate-400 line-through font-bold text-right">₹{prod.originalPrice.toLocaleString('en-IN')}</span>
-                            ) : (
-                              <span className="text-base text-slate-400 font-bold text-right">—</span>
-                            )}
-                          </div>
-
-                          {/* Sale Price */}
-                          <div className="flex flex-col items-end justify-center">
-                            <span className="text-xl font-black text-festive-purple text-right">₹{prod.price.toLocaleString('en-IN')}</span>
-                          </div>
-
-                          {/* Cart Actions */}
-                          <div className="flex justify-center items-center gap-2">
-                            {qty > 0 ? (
-                              <>
-                                <div className="flex items-center border-2 border-festive-purple/20 rounded-xl overflow-hidden bg-white shadow-sm flex-1 w-[110px] lg:w-[120px] h-9">
-                                  <button onClick={() => updateQuantity(prod.id, qty - 1)} className="flex-1 w-8 h-full text-slate-600 hover:bg-red-50 hover:text-festive-red transition-all cursor-pointer font-black text-lg flex items-center justify-center">−</button>
-                                  <input 
-                                    type="number" 
-                                    value={qty} 
-                                    onChange={(e) => {
-                                      const val = e.target.value === '' ? 0 : parseInt(e.target.value);
-                                      if (!isNaN(val) && val >= 0) updateQuantity(prod.id, val);
-                                    }}
-                                    className="w-10 h-full font-black text-slate-900 text-base bg-gray-50 text-center border-x border-gray-200 outline-none focus:bg-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                                  />
-                                  <button onClick={() => updateQuantity(prod.id, qty + 1)} className="flex-1 w-8 h-full text-slate-600 hover:bg-purple-50 hover:text-festive-purple transition-all cursor-pointer font-black text-lg flex items-center justify-center">+</button>
-                                </div>
-                                <button onClick={() => removeFromCart(prod.id)} title="Remove from cart" className="w-9 h-9 rounded-xl bg-festive-red border border-festive-red text-white flex items-center justify-center transition-all duration-300 cursor-pointer hover:scale-105 active:scale-95 flex-shrink-0 shadow-sm">
-                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4"><path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" /></svg>
-                                </button>
-                              </>
-                            ) : (
-                              <button onClick={() => addToCart({ id: prod.id, name: cleanName, price: prod.price, originalPrice: prod.originalPrice, image: prod.image, category: prod.category })} className="w-[130px] lg:w-[140px] h-9 rounded-xl bg-gradient-to-r from-festive-purple to-[#3d1166] hover:from-festive-gold hover:to-yellow-500 text-white hover:text-festive-purple font-black uppercase text-[11px] tracking-wider hover:scale-[1.03] transition-all cursor-pointer shadow-[0_4px_15px_rgba(48,13,79,0.3)] hover:shadow-[0_4px_15px_rgba(255,215,0,0.4)] flex items-center justify-center gap-1 border border-transparent">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-3.5 h-3.5"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
-                                <span>Add</span>
-                              </button>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-
-                    );
-                  })}
+            {groupedFilteredProducts.map((group) => (
+              <div key={group.category} className="scroll-mt-32">
+                {/* Category Header */}
+                <div className="relative overflow-hidden bg-gradient-to-r from-[#1a0826] via-[#3d1166] to-[#1a0826] py-4 px-6 rounded-t-xl border-b-[3px] border-festive-gold shadow-[0_4px_20px_-5px_rgba(61,17,102,0.5)] flex items-center justify-center group">
+                  <div className="absolute inset-0 opacity-20 bg-[url('/assets/images/pattern.png')] bg-repeat mix-blend-overlay pointer-events-none" />
+                  
+                  <div className="relative z-10 flex items-center gap-3">
+                    <span className="text-lg md:text-xl opacity-80 group-hover:animate-ping">✨</span>
+                    <h2 className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-festive-gold to-yellow-400 font-black text-[18px] md:text-[22px] uppercase tracking-[0.2em] drop-shadow-lg text-center">
+                      {group.category}
+                    </h2>
+                    <span className="text-lg md:text-xl opacity-80 group-hover:animate-ping">✨</span>
+                  </div>
                 </div>
-              </div>
+
+                {/* ═══ Table Header (Desktop Only) ═══ */}
+                <div className="hidden md:grid md:grid-cols-[80px_1fr_140px_120px_130px] lg:grid-cols-[90px_1fr_150px_130px_150px] items-center gap-4 px-6 lg:px-8 py-3.5 bg-gradient-to-r from-festive-purple via-[#3d1166] to-festive-purple text-[10.5px] font-black text-festive-gold uppercase tracking-[0.2em] shadow-md border-b-2 border-festive-gold/30">
+                  <span className="text-center drop-shadow-sm">Image</span>
+                  <span className="drop-shadow-sm">Product Name</span>
+                  <span className="text-right drop-shadow-sm">MRP</span>
+                  <span className="text-right drop-shadow-sm">Offer Price</span>
+                  <span className="text-center drop-shadow-sm">Action</span>
+                </div>
+
+                {/* ═══ Product Rows ═══ */}
+                <div className="border border-gray-200 md:border-t-0 rounded-b-xl overflow-hidden bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)]">
+                  {group.products.map((prod, idx) => {
+                    const qty = getCartQty(prod.id);
+                    const prodDiscount = prod.discount || Math.round(((prod.originalPrice - prod.price) / prod.originalPrice) * 100);
+                    const isLast = idx === group.products.length - 1;
+                    const cleanName = prod.name.replace(/\s*\([^)]*[\u0B80-\u0BFF]+[^)]*\)/g, '').trim();
+
+                    return (
+                      <div key={prod.id} className={`transition-all duration-300 hover:bg-amber-50/50 ${!isLast ? 'border-b border-gray-100' : ''}`}>
+                          
+                          {/* --- MOBILE VIEW --- */}
+                          <div className="md:hidden flex p-3 gap-3 relative">
+                             {/* Discount Badge */}
+                             {prod.originalPrice > prod.price && (
+                               <div className="absolute top-2 left-2 z-10 scale-75 origin-top-left">
+                                 <span className="bg-gradient-to-r from-festive-red to-red-500 text-white font-black px-2 py-0.5 rounded-md text-[10px] tracking-wider shadow-sm">
+                                   {prodDiscount}% OFF
+                                 </span>
+                               </div>
+                             )}
+                             
+                             {/* Image */}
+                             <div className="w-[85px] h-[85px] rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center p-1.5 overflow-hidden shrink-0 relative">
+                               <img src={prod.image || "/assets/images/placeholder.png"} alt={cleanName} loading="lazy" decoding="async" className="w-full h-full object-contain" />
+                             </div>
+
+                             {/* Content */}
+                             <div className="flex-1 flex flex-col justify-between py-0.5">
+                                <div>
+                                   <div className="flex items-start gap-1">
+                                   <h4 className="font-black text-slate-800 text-[14px] leading-tight line-clamp-2">{cleanName}</h4>
+                                 </div>
+                                   <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1 block truncate max-w-full">{prod.category}</span>
+                                </div>
+                                <div className="flex items-end justify-between mt-2">
+                                   <div className="flex flex-col">
+                                      {prod.originalPrice > prod.price && (
+                                        <span className="text-[10px] text-slate-400 line-through font-bold">₹{prod.originalPrice.toLocaleString('en-IN')}</span>
+                                      )}
+                                      <span className="text-[14px] font-black text-festive-purple">₹{prod.price.toLocaleString('en-IN')}</span>
+                                   </div>
+                                   <div className="shrink-0 mr-1">
+                                      {qty > 0 ? (
+                                        <div className="flex items-center border-2 border-festive-purple/20 rounded-md overflow-hidden bg-white h-8 w-[85px]">
+                                          <button onClick={() => updateQuantity(prod.id, qty - 1)} className="flex-1 h-full text-slate-600 active:scale-95 font-black text-sm flex items-center justify-center">−</button>
+                                          <input 
+                                            type="number" 
+                                            value={qty} 
+                                            onChange={(e) => {
+                                              const val = e.target.value === '' ? 0 : parseInt(e.target.value);
+                                              if (!isNaN(val) && val >= 0) updateQuantity(prod.id, val);
+                                            }}
+                                            className="w-9 h-full font-black text-slate-900 text-[12px] bg-gray-50 text-center border-x border-gray-200 outline-none focus:bg-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                          />
+                                          <button onClick={() => updateQuantity(prod.id, qty + 1)} className="flex-1 h-full text-slate-600 active:scale-95 font-black text-sm flex items-center justify-center">+</button>
+                                        </div>
+                                      ) : (
+                                        <button onClick={() => addToCart({ id: prod.id, name: cleanName, price: prod.price, originalPrice: prod.originalPrice, image: prod.image, category: prod.category })} className="h-8 px-5 rounded-md bg-gradient-to-r from-festive-purple to-[#3d1166] text-white font-black uppercase text-[11px] tracking-wider active:scale-95 shadow-md flex items-center justify-center gap-1.5">
+                                          <span className="text-[15px] leading-none mb-[1px]">+</span> Add
+                                        </button>
+                                      )}
+                                   </div>
+                                </div>
+                             </div>
+                          </div>
+
+                          {/* --- DESKTOP VIEW --- */}
+                          <div className="hidden md:grid group relative grid-cols-[80px_1fr_140px_120px_130px] lg:grid-cols-[90px_1fr_150px_130px_150px] items-center gap-4 px-6 lg:px-8 py-3.5">
+                            {/* Product Image */}
+                            <div className="w-[80px] lg:w-[90px] h-[70px] lg:h-[75px] rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center p-1.5 overflow-hidden flex-shrink-0 group-hover:border-festive-gold/30 transition-all mx-auto">
+                              <img src={prod.image || "/assets/images/placeholder.png"} alt={cleanName} loading="lazy" decoding="async" className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500" />
+                            </div>
+
+                            {/* Product Info */}
+                            <div className="flex flex-col items-start justify-center gap-0.5">
+                              <h4 className="font-black text-slate-800 text-[15px] leading-tight group-hover:text-festive-purple transition-colors line-clamp-2">{cleanName}</h4>
+                              {prod.originalPrice > prod.price && (
+                                <span className="inline-flex items-center gap-1 bg-festive-red/10 text-festive-red text-[9px] font-black px-2 py-0.5 rounded-md uppercase tracking-wider mt-0.5">
+                                  🔥 {prodDiscount}% OFF
+                                </span>
+                              )}
+                            </div>
+
+                            {/* Original Price */}
+                            <div className="flex flex-col items-end justify-center">
+                              {prod.originalPrice > prod.price ? (
+                                <span className="text-base text-slate-400 line-through font-bold text-right">₹{prod.originalPrice.toLocaleString('en-IN')}</span>
+                              ) : (
+                                <span className="text-base text-slate-400 font-bold text-right">—</span>
+                              )}
+                            </div>
+
+                            {/* Sale Price */}
+                            <div className="flex flex-col items-end justify-center">
+                              <span className="text-xl font-black text-festive-purple text-right">₹{prod.price.toLocaleString('en-IN')}</span>
+                            </div>
+
+                            {/* Cart Actions */}
+                            <div className="flex justify-center items-center gap-2">
+                              {qty > 0 ? (
+                                <>
+                                  <div className="flex items-center border-2 border-festive-purple/20 rounded-xl overflow-hidden bg-white shadow-sm flex-1 w-[110px] lg:w-[120px] h-9">
+                                    <button onClick={() => updateQuantity(prod.id, qty - 1)} className="flex-1 w-8 h-full text-slate-600 hover:bg-red-50 hover:text-festive-red transition-all cursor-pointer font-black text-lg flex items-center justify-center">−</button>
+                                    <input 
+                                      type="number" 
+                                      value={qty} 
+                                      onChange={(e) => {
+                                        const val = e.target.value === '' ? 0 : parseInt(e.target.value);
+                                        if (!isNaN(val) && val >= 0) updateQuantity(prod.id, val);
+                                      }}
+                                      className="w-10 h-full font-black text-slate-900 text-base bg-gray-50 text-center border-x border-gray-200 outline-none focus:bg-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                    />
+                                    <button onClick={() => updateQuantity(prod.id, qty + 1)} className="flex-1 w-8 h-full text-slate-600 hover:bg-purple-50 hover:text-festive-purple transition-all cursor-pointer font-black text-lg flex items-center justify-center">+</button>
+                                  </div>
+                                  <button onClick={() => removeFromCart(prod.id)} title="Remove from cart" className="w-9 h-9 rounded-xl bg-festive-red border border-festive-red text-white flex items-center justify-center transition-all duration-300 cursor-pointer hover:scale-105 active:scale-95 flex-shrink-0 shadow-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4"><path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" /></svg>
+                                  </button>
+                                </>
+                              ) : (
+                                <button onClick={() => addToCart({ id: prod.id, name: cleanName, price: prod.price, originalPrice: prod.originalPrice, image: prod.image, category: prod.category })} className="w-[130px] lg:w-[140px] h-9 rounded-xl bg-gradient-to-r from-festive-purple to-[#3d1166] hover:from-festive-gold hover:to-yellow-500 text-white hover:text-festive-purple font-black uppercase text-[11px] tracking-wider hover:scale-[1.03] transition-all cursor-pointer shadow-[0_4px_15px_rgba(48,13,79,0.3)] hover:shadow-[0_4px_15px_rgba(255,215,0,0.4)] flex items-center justify-center gap-1 border border-transparent">
+                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-3.5 h-3.5"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                                  <span>Add</span>
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
             </div>
         ) : (
           <div className="text-center text-gray-400 py-32">

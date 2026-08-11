@@ -139,22 +139,22 @@ export default function CartDrawer() {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1/2 bg-festive-gold/5 blur-[80px] pointer-events-none rounded-full"></div>
 
         {/* Header */}
-        <div className="px-6 py-5 border-b border-gray-100 flex items-center justify-between relative z-10 bg-gray-50/50">
-          <div className="flex items-center gap-3">
-            <span className="text-2xl drop-shadow-sm">🛒</span>
-            <h2 className="text-xl font-black uppercase tracking-widest text-festive-purple">
-              Your <span className="bg-clip-text text-transparent bg-gradient-to-r from-festive-red to-orange-500">Cart</span>
-              <span className="ml-3 text-xs bg-festive-gold/15 text-festive-purple border border-festive-gold/30 px-2.5 py-1 rounded-full relative -top-0.5 shadow-sm">
-                {cartCount} ITEMS
+        <div className="px-4 sm:px-6 py-4 sm:py-5 border-b border-gray-100 flex items-center justify-between relative z-10 bg-gray-50/50">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <span className="text-xl sm:text-2xl drop-shadow-sm">🛒</span>
+            <h2 className="text-lg sm:text-xl font-black uppercase tracking-widest text-festive-purple flex items-center flex-wrap gap-2 sm:gap-3">
+              <span>Your <span className="bg-clip-text text-transparent bg-gradient-to-r from-festive-red to-orange-500">Cart</span></span>
+              <span className="text-[10px] sm:text-xs bg-festive-gold/15 text-festive-purple border border-festive-gold/30 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full shadow-sm leading-none flex items-center mt-0.5 sm:mt-0">
+                {cartCount} {cartCount === 1 ? "ITEM" : "ITEMS"}
               </span>
             </h2>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             {cartItems.length > 0 && (
               <button
                 onClick={clearCart}
                 title="Clear all cart items"
-                className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 px-3 py-1.5 rounded-full transition-colors flex items-center gap-1.5 cursor-pointer shadow-sm"
+                className="w-8 h-8 sm:w-auto sm:h-auto sm:px-3 sm:py-1.5 rounded-full font-black uppercase tracking-widest text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 transition-colors flex items-center justify-center sm:gap-1.5 cursor-pointer shadow-sm flex-shrink-0"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
@@ -381,8 +381,15 @@ export default function CartDrawer() {
               </div>
             </div>
 
-            <div className="w-full sm:w-auto flex gap-3">
-
+            <div className="w-full sm:w-auto flex flex-col sm:flex-row gap-2.5 sm:gap-3">
+              <button
+                onClick={() => setCartOpen(false)}
+                className="w-full sm:flex-1 h-12 sm:h-14 rounded-xl bg-white text-[#3d1166] font-black text-sm sm:text-base uppercase tracking-[0.1em] transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 shadow-[0_4px_12px_rgba(61,17,102,0.1)] hover:shadow-[0_8px_25px_rgba(61,17,102,0.25)] active:scale-95 group overflow-hidden border-[2.5px] border-[#3d1166] relative"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-[#2d0a4c] to-[#3d1166] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <span className="text-xl relative z-10 text-[#3d1166] group-hover:text-festive-gold transition-colors duration-300 group-hover:rotate-90">➕</span>
+                <span className="relative z-10 group-hover:text-white transition-colors duration-300 drop-shadow-sm">Add More Items</span>
+              </button>
               
               {minOrderValue > 0 && cartTotal < minOrderValue ? (
                 <div className="flex-1 sm:px-6 h-14 rounded-xl bg-orange-50 text-orange-800 font-bold text-sm sm:text-base border border-orange-200 flex flex-col items-center justify-center text-center shadow-inner leading-tight">

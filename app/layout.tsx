@@ -4,6 +4,7 @@ import "./globals.css";
 import Loader from "./components/Loader";
 import { CartProvider } from "./context/CartContext";
 import CartDrawer from "./components/CartDrawer";
+import FloatingCart from "./components/FloatingCart";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -70,6 +71,7 @@ export default function RootLayout({
         {/* Main Application */}
         <CartProvider>
           <CartDrawer />
+          <FloatingCart />
           {children}
         </CartProvider>
         

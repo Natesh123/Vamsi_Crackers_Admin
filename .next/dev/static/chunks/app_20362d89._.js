@@ -97,13 +97,13 @@ function Navbar({ priceListUrl = "" }) {
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "w-full max-w-[1920px] mx-auto flex items-center justify-between px-3 sm:px-4 lg:px-8 xl:px-12 2xl:px-16 relative z-10",
+                        className: "w-full max-w-[1920px] mx-auto flex items-center justify-between px-3 sm:px-4 lg:px-6 xl:px-8 2xl:px-12 relative z-10",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "flex items-center gap-3 sm:gap-4 group cursor-pointer w-auto",
+                                className: "flex items-center gap-2 sm:gap-3 lg:gap-4 group cursor-pointer shrink-0",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "relative w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 shrink-0 rounded-full overflow-visible border-2 border-festive-gold bg-gradient-to-br from-white/20 to-white/5 shadow-[0_0_20px_rgba(255,215,0,0.4)] backdrop-blur-md transition-all duration-500 group-hover:scale-105 group-hover:shadow-[0_0_40px_rgba(255,215,0,0.7)] p-[2px] ring-2 ring-festive-gold/20 group-hover:ring-festive-gold/40",
+                                        className: "relative w-14 h-14 sm:w-16 sm:h-16 lg:w-16 lg:h-16 xl:w-20 xl:h-20 shrink-0 rounded-full overflow-visible border-2 border-festive-gold bg-gradient-to-br from-white/20 to-white/5 shadow-[0_0_20px_rgba(255,215,0,0.4)] backdrop-blur-md transition-all duration-500 group-hover:scale-105 group-hover:shadow-[0_0_40px_rgba(255,215,0,0.7)] p-[2px] ring-2 ring-festive-gold/20 group-hover:ring-festive-gold/40",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "relative w-full h-full rounded-full overflow-hidden bg-[#0A021A] shadow-inner",
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -130,7 +130,7 @@ function Navbar({ priceListUrl = "" }) {
                                         className: "flex flex-col",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                                                className: "text-lg sm:text-2xl md:text-3xl font-black text-white tracking-tight uppercase leading-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]",
+                                                className: "text-lg sm:text-xl lg:text-2xl xl:text-3xl font-black text-white tracking-tight uppercase leading-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]",
                                                 children: [
                                                     "VAMSI ",
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -148,7 +148,7 @@ function Navbar({ priceListUrl = "" }) {
                                                 columnNumber: 29
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                className: "hidden sm:block text-[9px] md:text-[11px] font-bold text-indigo-200 tracking-[0.2em] uppercase mt-1 drop-shadow-md",
+                                                className: "hidden sm:block text-[8px] lg:text-[9px] xl:text-[11px] font-bold text-indigo-200 tracking-[0.2em] uppercase mt-1 drop-shadow-md",
                                                 children: "Champions of Celebration"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/components/Navbar.tsx",
@@ -168,7 +168,7 @@ function Navbar({ priceListUrl = "" }) {
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
-                                className: "hidden xl:flex items-center gap-6 2xl:gap-10",
+                                className: "hidden lg:flex items-center lg:gap-3 xl:gap-5 2xl:gap-8 shrink-1",
                                 children: [
                                     {
                                         name: "Home",
@@ -197,7 +197,7 @@ function Navbar({ priceListUrl = "" }) {
                                                 href: item.name === "Pricelist" && priceListUrl ? priceListUrl : item.link,
                                                 target: item.name === "Pricelist" && priceListUrl ? "_blank" : undefined,
                                                 rel: item.name === "Pricelist" && priceListUrl ? "noreferrer" : undefined,
-                                                className: "whitespace-nowrap text-[14px] 2xl:text-[15px] font-black uppercase tracking-[0.1em] transition-all duration-300 text-white hover:text-festive-gold drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] hover:drop-shadow-[0_0_12px_rgba(255,215,0,0.6)]",
+                                                className: "whitespace-nowrap text-[11px] xl:text-[13px] 2xl:text-[15px] font-black uppercase tracking-[0.05em] lg:tracking-[0.1em] transition-all duration-300 text-white hover:text-festive-gold drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] hover:drop-shadow-[0_0_12px_rgba(255,215,0,0.6)]",
                                                 children: item.name
                                             }, void 0, false, {
                                                 fileName: "[project]/app/components/Navbar.tsx",
@@ -223,14 +223,14 @@ function Navbar({ priceListUrl = "" }) {
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "hidden xl:flex items-center gap-4 2xl:gap-6",
+                                className: "hidden lg:flex items-center gap-2 xl:gap-3 2xl:gap-6 shrink-0",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                         onClick: ()=>setCartOpen(true),
-                                        className: "whitespace-nowrap relative flex items-center gap-2 px-5 py-2 rounded-full border border-festive-gold/50 bg-festive-gold/10 hover:bg-festive-gold/20 text-festive-gold transition-all duration-500 backdrop-blur-md shadow-[0_0_20px_rgba(255,215,0,0.15)] hover:shadow-[0_0_30px_rgba(255,215,0,0.3)] group cursor-pointer hover:scale-105",
+                                        className: "whitespace-nowrap relative flex items-center gap-1.5 px-3 py-1.5 xl:px-4 xl:py-2 rounded-full border border-festive-gold/50 bg-festive-gold/10 hover:bg-festive-gold/20 text-festive-gold transition-all duration-500 backdrop-blur-md shadow-[0_0_20px_rgba(255,215,0,0.15)] hover:shadow-[0_0_30px_rgba(255,215,0,0.3)] group cursor-pointer hover:scale-105",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "text-lg group-hover:scale-110 group-hover:-rotate-12 transition-transform duration-300",
+                                                className: "text-sm xl:text-lg group-hover:scale-110 group-hover:-rotate-12 transition-transform duration-300",
                                                 children: "🛒"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/components/Navbar.tsx",
@@ -238,7 +238,7 @@ function Navbar({ priceListUrl = "" }) {
                                                 columnNumber: 29
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "font-black text-xs uppercase tracking-widest text-white group-hover:text-festive-gold transition-colors",
+                                                className: "font-black text-[10px] xl:text-xs uppercase tracking-widest text-white group-hover:text-festive-gold transition-colors",
                                                 children: "Cart"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/components/Navbar.tsx",
@@ -246,7 +246,7 @@ function Navbar({ priceListUrl = "" }) {
                                                 columnNumber: 29
                                             }, this),
                                             cartCount > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "absolute -top-1.5 -right-1.5 bg-gradient-to-br from-red-500 to-red-700 text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(220,38,38,0.8)] border border-[#16052b] animate-bounce",
+                                                className: "absolute -top-1.5 -right-1.5 bg-gradient-to-br from-red-500 to-red-700 text-white text-[9px] xl:text-[10px] font-black w-4.5 h-4.5 xl:w-5 xl:h-5 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(220,38,38,0.8)] border border-[#16052b] animate-bounce",
                                                 children: cartCount
                                             }, void 0, false, {
                                                 fileName: "[project]/app/components/Navbar.tsx",
@@ -260,7 +260,7 @@ function Navbar({ priceListUrl = "" }) {
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "flex items-center gap-3 bg-white/5 border border-white/10 px-4 py-2 rounded-2xl backdrop-blur-sm hover:bg-white/10 hover:border-festive-gold/30 transition-all duration-300 shadow-inner group",
+                                        className: "hidden 2xl:flex items-center gap-3 bg-white/5 border border-white/10 px-4 py-2 rounded-2xl backdrop-blur-sm hover:bg-white/10 hover:border-festive-gold/30 transition-all duration-300 shadow-inner group",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 className: "w-8 h-8 rounded-full bg-gradient-to-br from-festive-gold/30 to-festive-gold/10 flex items-center justify-center text-festive-gold group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(255,215,0,0.2)] group-hover:shadow-[0_0_20px_rgba(255,215,0,0.4)]",
@@ -323,12 +323,12 @@ function Navbar({ priceListUrl = "" }) {
                                         href: priceListUrl || "#",
                                         target: priceListUrl ? "_blank" : undefined,
                                         rel: priceListUrl ? "noreferrer" : undefined,
-                                        className: "whitespace-nowrap relative overflow-hidden group px-6 py-2.5 rounded-full font-black text-xs uppercase tracking-[0.15em] text-festive-purple bg-gradient-to-r from-festive-gold via-yellow-200 to-festive-gold bg-[length:200%_auto] hover:bg-[position:right_center] transition-all duration-500 shadow-[0_0_25px_rgba(255,215,0,0.5)] hover:shadow-[0_0_40px_rgba(255,215,0,0.8)] flex items-center gap-2 hover:scale-105",
+                                        className: "whitespace-nowrap relative overflow-hidden group px-3 py-1.5 xl:px-5 xl:py-2 2xl:px-6 2xl:py-2.5 rounded-full font-black text-[9px] xl:text-[10px] 2xl:text-xs uppercase tracking-[0.1em] xl:tracking-[0.15em] text-festive-purple bg-gradient-to-r from-festive-gold via-yellow-200 to-festive-gold bg-[length:200%_auto] hover:bg-[position:right_center] transition-all duration-500 shadow-[0_0_25px_rgba(255,215,0,0.5)] hover:shadow-[0_0_40px_rgba(255,215,0,0.8)] flex items-center gap-1 xl:gap-1.5 hover:scale-105",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: "relative z-10 flex items-center gap-2",
+                                            className: "relative z-10 flex items-center gap-1 xl:gap-2",
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                    className: "text-lg group-hover:-translate-y-1 transition-transform duration-300 drop-shadow-sm",
+                                                    className: "text-sm xl:text-lg group-hover:-translate-y-1 transition-transform duration-300 drop-shadow-sm",
                                                     children: "📥"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/components/Navbar.tsx",
@@ -354,7 +354,7 @@ function Navbar({ priceListUrl = "" }) {
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "flex items-center gap-4 xl:hidden",
+                                className: "flex items-center gap-4 lg:hidden",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                         onClick: ()=>setCartOpen(true),
@@ -417,7 +417,7 @@ function Navbar({ priceListUrl = "" }) {
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: `fixed inset-0 bg-[#120822]/98 backdrop-blur-md z-40 xl:hidden transition-all duration-500 ease-in-out ${isOpen ? "opacity-100 visible" : "opacity-0 invisible"}`,
+                className: `fixed inset-0 bg-[#120822]/98 backdrop-blur-md z-40 lg:hidden transition-all duration-500 ease-in-out ${isOpen ? "opacity-100 visible" : "opacity-0 invisible"}`,
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                         onClick: ()=>setIsOpen(false),
@@ -1529,7 +1529,7 @@ function Footer() {
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                         className: "text-base sm:text-lg font-bold text-white tracking-wide",
-                                                        children: "Mon - Sun: 8:00 AM – 9:00 PM"
+                                                        children: "Mon - Sun: 9:00 AM – 10:00 PM"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/components/Footer.tsx",
                                                         lineNumber: 358,
@@ -1577,21 +1577,29 @@ function Footer() {
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "flex justify-center items-center mt-6",
+                                className: "flex justify-center items-center mt-6 pb-16 sm:pb-4",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                    className: "text-gray-400 text-sm font-semibold tracking-wider text-center",
+                                    className: "text-gray-400 text-sm font-semibold tracking-wider text-center flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2",
                                     children: [
-                                        "© 2026",
-                                        ' ',
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: "text-gray-300",
-                                            children: "Vamsi Crackers"
+                                            children: [
+                                                "© ",
+                                                new Date().getFullYear(),
+                                                " Powered By"
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/app/components/Footer.tsx",
+                                            lineNumber: 375,
+                                            columnNumber: 29
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                            className: "text-festive-gold font-bold text-base sm:text-sm",
+                                            children: "Dhakshina Tech Solutions"
                                         }, void 0, false, {
                                             fileName: "[project]/app/components/Footer.tsx",
                                             lineNumber: 376,
                                             columnNumber: 29
-                                        }, this),
-                                        ". All rights reserved."
+                                        }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/components/Footer.tsx",
@@ -1617,7 +1625,7 @@ function Footer() {
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                 onClick: scrollToTop,
-                className: "absolute bottom-8 right-8 w-12 h-12 bg-gradient-to-br from-festive-gold via-yellow-400 to-festive-gold text-festive-purple rounded-xl flex items-center justify-center shadow-[0_8px_30px_rgba(255,215,0,0.25)] hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(255,215,0,0.4)] transition-all duration-500 group z-20 border border-yellow-300/30",
+                className: "hidden sm:flex absolute bottom-8 right-8 w-12 h-12 bg-gradient-to-br from-festive-gold via-yellow-400 to-festive-gold text-festive-purple rounded-xl items-center justify-center shadow-[0_8px_30px_rgba(255,215,0,0.25)] hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(255,215,0,0.4)] transition-all duration-500 group z-20 border border-yellow-300/30",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
                     xmlns: "http://www.w3.org/2000/svg",
                     fill: "none",
@@ -1786,9 +1794,10 @@ function ProductsPageInner() {
     const [products, setProducts] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
     const [searchQuery, setSearchQuery] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
+    const [activeFilter, setActiveFilter] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("All");
     const [priceListUrl, setPriceListUrl] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
     const hasScrolledRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(false);
-    const apiUrl = ("TURBOPACK compile-time value", "http://api.vamsicrackers.in") || "http://localhost:5001";
+    const apiUrl = ("TURBOPACK compile-time value", "https://api.vamsicrackers.in") || "http://localhost:5001";
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "ProductsPageInner.useEffect": ()=>{
             async function loadData() {
@@ -1866,37 +1875,79 @@ function ProductsPageInner() {
             });
         }
     };
-    // Filter products by search query
+    // Filter products by search query, active filter, and sort by sort_order
     const filteredProducts = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useMemo({
         "ProductsPageInner.useMemo[filteredProducts]": ()=>{
-            if (!searchQuery) return products;
-            return products.filter({
-                "ProductsPageInner.useMemo[filteredProducts]": (p)=>p.name.toLowerCase().includes(searchQuery.toLowerCase())
+            let prods = products.filter({
+                "ProductsPageInner.useMemo[filteredProducts].prods": (p)=>p.is_active === 1 || p.is_active === true || p.is_active === undefined
+            }["ProductsPageInner.useMemo[filteredProducts].prods"]);
+            if (activeFilter !== "All") {
+                prods = prods.filter({
+                    "ProductsPageInner.useMemo[filteredProducts]": (p)=>{
+                        const catName = p.categoryName || p.category || '';
+                        return catName === activeFilter;
+                    }
+                }["ProductsPageInner.useMemo[filteredProducts]"]);
+            }
+            if (searchQuery) {
+                prods = prods.filter({
+                    "ProductsPageInner.useMemo[filteredProducts]": (p)=>p.name.toLowerCase().includes(searchQuery.toLowerCase())
+                }["ProductsPageInner.useMemo[filteredProducts]"]);
+            }
+            return prods.sort({
+                "ProductsPageInner.useMemo[filteredProducts]": (a, b)=>(a.sort_order ?? 9999) - (b.sort_order ?? 9999)
             }["ProductsPageInner.useMemo[filteredProducts]"]);
         }
     }["ProductsPageInner.useMemo[filteredProducts]"], [
         products,
-        searchQuery
+        searchQuery,
+        activeFilter
     ]);
-    // Group filtered products by category
+    const cleanStr = (str)=>str ? str.replace(/\s*\([^)]*[\u0B80-\u0BFF]+[^)]*\)/g, '').trim() : '';
+    // Deduplicate categories based on cleaned name
+    const uniqueCategories = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useMemo({
+        "ProductsPageInner.useMemo[uniqueCategories]": ()=>{
+            const seen = new Set();
+            return categories.filter({
+                "ProductsPageInner.useMemo[uniqueCategories]": (cat)=>{
+                    const cleanName = cleanStr(cat.name);
+                    if (seen.has(cleanName)) return false;
+                    seen.add(cleanName);
+                    return true;
+                }
+            }["ProductsPageInner.useMemo[uniqueCategories]"]);
+        }
+    }["ProductsPageInner.useMemo[uniqueCategories]"], [
+        categories
+    ]);
+    // Group filtered products by category sequentially
     const groupedProducts = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].useMemo({
         "ProductsPageInner.useMemo[groupedProducts]": ()=>{
-            return categories.map({
-                "ProductsPageInner.useMemo[groupedProducts]": (cat)=>{
-                    const catProds = filteredProducts.filter({
-                        "ProductsPageInner.useMemo[groupedProducts].catProds": (p)=>p.categoryId === cat.id
-                    }["ProductsPageInner.useMemo[groupedProducts].catProds"]);
-                    return {
-                        ...cat,
-                        products: catProds
-                    };
+            const groups = [];
+            filteredProducts.forEach({
+                "ProductsPageInner.useMemo[groupedProducts]": (prod)=>{
+                    // In app/products/page.tsx, category might be called categoryName
+                    const catName = prod.categoryName || prod.category || '';
+                    const catId = prod.categoryId || catName;
+                    const existingGroup = groups.find({
+                        "ProductsPageInner.useMemo[groupedProducts].existingGroup": (g)=>g.name === catName
+                    }["ProductsPageInner.useMemo[groupedProducts].existingGroup"]);
+                    if (existingGroup) {
+                        existingGroup.products.push(prod);
+                    } else {
+                        groups.push({
+                            id: catId,
+                            name: catName,
+                            products: [
+                                prod
+                            ]
+                        });
+                    }
                 }
-            }["ProductsPageInner.useMemo[groupedProducts]"]).filter({
-                "ProductsPageInner.useMemo[groupedProducts]": (group)=>group.products.length > 0
             }["ProductsPageInner.useMemo[groupedProducts]"]);
+            return groups;
         }
     }["ProductsPageInner.useMemo[groupedProducts]"], [
-        categories,
         filteredProducts
     ]);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1906,7 +1957,7 @@ function ProductsPageInner() {
                 priceListUrl: priceListUrl
             }, void 0, false, {
                 fileName: "[project]/app/products/page.tsx",
-                lineNumber: 126,
+                lineNumber: 156,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
@@ -1919,21 +1970,21 @@ function ProductsPageInner() {
                                 className: "absolute inset-0 bg-[url('/assets/images/pattern.png')] bg-repeat opacity-[0.03] pointer-events-none mix-blend-multiply"
                             }, void 0, false, {
                                 fileName: "[project]/app/products/page.tsx",
-                                lineNumber: 132,
+                                lineNumber: 162,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "absolute -top-[100px] -left-[100px] w-96 h-96 bg-festive-gold/10 rounded-full blur-3xl pointer-events-none"
                             }, void 0, false, {
                                 fileName: "[project]/app/products/page.tsx",
-                                lineNumber: 133,
+                                lineNumber: 163,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "absolute -bottom-[100px] -right-[100px] w-96 h-96 bg-festive-red/5 rounded-full blur-3xl pointer-events-none"
                             }, void 0, false, {
                                 fileName: "[project]/app/products/page.tsx",
-                                lineNumber: 134,
+                                lineNumber: 164,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1944,7 +1995,7 @@ function ProductsPageInner() {
                                         children: "✨ Sivakasi Direct Wholesale Shop ✨"
                                     }, void 0, false, {
                                         fileName: "[project]/app/products/page.tsx",
-                                        lineNumber: 137,
+                                        lineNumber: 167,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -1956,13 +2007,13 @@ function ProductsPageInner() {
                                                 children: "Price List"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/products/page.tsx",
-                                                lineNumber: 141,
+                                                lineNumber: 171,
                                                 columnNumber: 32
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/products/page.tsx",
-                                        lineNumber: 140,
+                                        lineNumber: 170,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1970,7 +2021,7 @@ function ProductsPageInner() {
                                         children: "Purchase premium quality crackers directly from Sivakasi at factory wholesale rates. Simply select your items, adjust order quantities, and click checkout to securely submit your order."
                                     }, void 0, false, {
                                         fileName: "[project]/app/products/page.tsx",
-                                        lineNumber: 143,
+                                        lineNumber: 173,
                                         columnNumber: 13
                                     }, this),
                                     products.length > 0 && Math.max(...products.map((p)=>p.discount || 0)) > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1982,589 +2033,828 @@ function ProductsPageInner() {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/products/page.tsx",
-                                        lineNumber: 147,
+                                        lineNumber: 177,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/products/page.tsx",
-                                lineNumber: 136,
+                                lineNumber: 166,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/products/page.tsx",
-                        lineNumber: 130,
+                        lineNumber: 160,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
                         className: "sticky top-16 md:top-[72px] z-30 py-4 px-4 bg-[#fdfbf7]/80 backdrop-blur-md",
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "w-full max-w-[95%] mx-auto bg-white/95 border border-gray-200 backdrop-blur-2xl rounded-2xl md:rounded-full py-3.5 px-4 md:px-6 flex flex-col md:flex-row items-center justify-between gap-4 shadow-[0_8px_30px_rgb(0,0,0,0.06)]",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "relative w-full md:w-80 group",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: "absolute inset-y-0 left-0 pl-3.5 flex items-center text-festive-gold text-sm",
-                                            children: "🔍"
-                                        }, void 0, false, {
-                                            fileName: "[project]/app/products/page.tsx",
-                                            lineNumber: 159,
-                                            columnNumber: 15
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                            type: "text",
-                                            placeholder: "Search crackers by name...",
-                                            value: searchQuery,
-                                            onChange: (e)=>setSearchQuery(e.target.value),
-                                            className: "w-full pl-9 pr-9 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-xl md:rounded-full text-slate-800 placeholder-gray-400 focus:outline-none focus:border-festive-gold focus:ring-2 focus:ring-festive-gold/20 transition-all font-semibold shadow-inner group-hover:border-gray-300"
-                                        }, void 0, false, {
-                                            fileName: "[project]/app/products/page.tsx",
-                                            lineNumber: 162,
-                                            columnNumber: 15
-                                        }, this),
-                                        searchQuery && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                            onClick: ()=>setSearchQuery(""),
-                                            className: "absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-400 hover:text-festive-red text-sm cursor-pointer transition-colors",
-                                            children: "✕"
-                                        }, void 0, false, {
-                                            fileName: "[project]/app/products/page.tsx",
-                                            lineNumber: 170,
-                                            columnNumber: 17
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/app/products/page.tsx",
-                                    lineNumber: 158,
-                                    columnNumber: 13
-                                }, this),
-                                categories.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "w-full md:w-auto flex items-center gap-3 overflow-x-auto pb-2 md:pb-0 scrollbar-hide",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: "text-[9px] font-black uppercase tracking-widest text-slate-500 bg-gray-50 border border-gray-200 px-2.5 py-1.5 rounded-lg flex-shrink-0",
-                                            children: "📂 QUICK NAV:"
-                                        }, void 0, false, {
-                                            fileName: "[project]/app/products/page.tsx",
-                                            lineNumber: 182,
-                                            columnNumber: 17
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "flex items-center gap-2",
-                                            children: categories.map((cat)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                                    onClick: ()=>handleScrollToCategory(cat.id),
-                                                    className: "px-4 py-2 rounded-xl md:rounded-full bg-white border border-gray-200 text-slate-600 text-xs font-black uppercase tracking-wider hover:bg-gradient-to-r hover:from-festive-gold hover:to-yellow-500 hover:text-white hover:border-transparent hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-festive-gold/30 transition-all cursor-pointer flex-shrink-0",
-                                                    children: cat.name
-                                                }, cat.id, false, {
-                                                    fileName: "[project]/app/products/page.tsx",
-                                                    lineNumber: 187,
-                                                    columnNumber: 22
-                                                }, this))
-                                        }, void 0, false, {
-                                            fileName: "[project]/app/products/page.tsx",
-                                            lineNumber: 185,
-                                            columnNumber: 17
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/app/products/page.tsx",
-                                    lineNumber: 181,
-                                    columnNumber: 15
-                                }, this)
-                            ]
-                        }, void 0, true, {
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "relative w-full group",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                        className: "absolute inset-y-0 left-0 pl-3.5 flex items-center text-festive-gold text-sm",
+                                        children: "🔍"
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/products/page.tsx",
+                                        lineNumber: 189,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                        type: "text",
+                                        placeholder: "Search crackers by name...",
+                                        value: searchQuery,
+                                        onChange: (e)=>setSearchQuery(e.target.value),
+                                        className: "w-full pl-9 pr-9 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-xl md:rounded-full text-slate-800 placeholder-gray-400 focus:outline-none focus:border-festive-gold focus:ring-2 focus:ring-festive-gold/20 transition-all font-semibold shadow-inner group-hover:border-gray-300"
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/products/page.tsx",
+                                        lineNumber: 192,
+                                        columnNumber: 15
+                                    }, this),
+                                    searchQuery && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                        onClick: ()=>setSearchQuery(""),
+                                        className: "absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-400 hover:text-festive-red text-sm cursor-pointer transition-colors",
+                                        children: "✕"
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/products/page.tsx",
+                                        lineNumber: 200,
+                                        columnNumber: 17
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/app/products/page.tsx",
+                                lineNumber: 188,
+                                columnNumber: 13
+                            }, this)
+                        }, void 0, false, {
                             fileName: "[project]/app/products/page.tsx",
-                            lineNumber: 156,
+                            lineNumber: 186,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/products/page.tsx",
-                        lineNumber: 155,
+                        lineNumber: 185,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
                         className: "w-full max-w-[95%] mx-auto px-4 lg:px-6 mt-6",
-                        children: loading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "flex flex-col items-center justify-center py-28 gap-4",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "w-9 h-9 border-4 border-festive-gold border-t-transparent rounded-full animate-spin"
-                                }, void 0, false, {
-                                    fileName: "[project]/app/products/page.tsx",
-                                    lineNumber: 205,
-                                    columnNumber: 15
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "text-sm font-black uppercase tracking-widest text-festive-gold animate-pulse",
-                                    children: "Loading products database..."
-                                }, void 0, false, {
-                                    fileName: "[project]/app/products/page.tsx",
-                                    lineNumber: 206,
-                                    columnNumber: 15
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/app/products/page.tsx",
-                            lineNumber: 204,
-                            columnNumber: 13
-                        }, this) : groupedProducts.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "text-center py-28 space-y-5 bg-white rounded-3xl border border-gray-100 shadow-sm p-8 max-w-xl mx-auto",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "text-6xl animate-bounce inline-block drop-shadow-md",
-                                    children: "🎆"
-                                }, void 0, false, {
-                                    fileName: "[project]/app/products/page.tsx",
-                                    lineNumber: 212,
-                                    columnNumber: 15
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                    className: "text-base font-black uppercase tracking-widest text-slate-400",
-                                    children: "No matching crackers found"
-                                }, void 0, false, {
-                                    fileName: "[project]/app/products/page.tsx",
-                                    lineNumber: 213,
-                                    columnNumber: 15
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                    onClick: ()=>setSearchQuery(""),
-                                    className: "px-6 py-3 rounded-full bg-gradient-to-r from-festive-gold to-yellow-400 text-festive-purple text-sm font-black uppercase tracking-widest hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-[0_8px_20px_rgba(255,215,0,0.4)]",
-                                    children: "Show All Products"
-                                }, void 0, false, {
-                                    fileName: "[project]/app/products/page.tsx",
-                                    lineNumber: 216,
-                                    columnNumber: 15
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/app/products/page.tsx",
-                            lineNumber: 211,
-                            columnNumber: 13
-                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "space-y-10",
-                            children: groupedProducts.map((group)=>{
-                                const discountPct = group.products[0]?.discount || (group.products[0] ? Math.round((group.products[0].originalPrice - group.products[0].price) / group.products[0].originalPrice * 100) : 0);
-                                return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    id: `category-sec-${group.id}`,
-                                    className: "scroll-mt-48 md:scroll-mt-40",
-                                    children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "relative overflow-hidden rounded-t-2xl bg-gradient-to-r from-festive-purple via-[#3d1166] to-festive-purple px-5 md:px-8 py-4 md:py-5 flex items-center justify-between shadow-lg",
+                        children: [
+                            uniqueCategories.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "mb-12 md:mb-16",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "md:hidden px-2",
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "relative",
                                             children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                    className: "absolute inset-0 opacity-10",
-                                                    style: {
-                                                        backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'20\' height=\'20\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Ccircle cx=\'10\' cy=\'10\' r=\'1.5\' fill=\'white\'/%3E%3C/svg%3E")',
-                                                        backgroundSize: '20px 20px'
-                                                    }
-                                                }, void 0, false, {
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
+                                                    value: activeFilter,
+                                                    onChange: (e)=>setActiveFilter(e.target.value),
+                                                    className: "w-full appearance-none bg-white border-2 border-festive-purple/20 text-festive-purple font-black uppercase tracking-widest text-sm rounded-2xl px-6 py-4 shadow-lg shadow-festive-purple/5 focus:outline-none focus:border-festive-purple focus:ring-4 focus:ring-festive-purple/10 transition-all",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                            value: "All",
+                                                            children: "All Categories"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/app/products/page.tsx",
+                                                            lineNumber: 224,
+                                                            columnNumber: 24
+                                                        }, this),
+                                                        uniqueCategories.map((cat)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                                value: cat.name,
+                                                                children: cat.name
+                                                            }, cat.id, false, {
+                                                                fileName: "[project]/app/products/page.tsx",
+                                                                lineNumber: 226,
+                                                                columnNumber: 26
+                                                            }, this))
+                                                    ]
+                                                }, void 0, true, {
                                                     fileName: "[project]/app/products/page.tsx",
-                                                    lineNumber: 238,
+                                                    lineNumber: 219,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                    className: "relative z-10 flex items-center gap-3",
-                                                    children: [
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                            className: "text-2xl",
-                                                            children: "🎇"
+                                                    className: "absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-festive-purple",
+                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                                                        xmlns: "http://www.w3.org/2000/svg",
+                                                        fill: "none",
+                                                        viewBox: "0 0 24 24",
+                                                        strokeWidth: 3,
+                                                        stroke: "currentColor",
+                                                        className: "w-5 h-5",
+                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
+                                                            strokeLinecap: "round",
+                                                            strokeLinejoin: "round",
+                                                            d: "m19.5 8.25-7.5 7.5-7.5-7.5"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/products/page.tsx",
-                                                            lineNumber: 240,
-                                                            columnNumber: 23
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                                            className: "text-lg md:text-2xl font-black uppercase tracking-wider text-white drop-shadow-sm",
-                                                            children: group.name
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/app/products/page.tsx",
-                                                            lineNumber: 241,
-                                                            columnNumber: 23
+                                                            lineNumber: 231,
+                                                            columnNumber: 25
                                                         }, this)
-                                                    ]
-                                                }, void 0, true, {
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/app/products/page.tsx",
+                                                        lineNumber: 230,
+                                                        columnNumber: 23
+                                                    }, this)
+                                                }, void 0, false, {
                                                     fileName: "[project]/app/products/page.tsx",
-                                                    lineNumber: 239,
-                                                    columnNumber: 21
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                    className: "relative z-10 bg-festive-gold/20 backdrop-blur-sm text-festive-gold text-[10px] md:text-xs font-black px-3 md:px-4 py-1.5 rounded-full uppercase tracking-widest border border-festive-gold/40",
-                                                    children: [
-                                                        group.products.length,
-                                                        " Items"
-                                                    ]
-                                                }, void 0, true, {
-                                                    fileName: "[project]/app/products/page.tsx",
-                                                    lineNumber: 245,
+                                                    lineNumber: 229,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/products/page.tsx",
-                                            lineNumber: 236,
-                                            columnNumber: 19
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "grid grid-cols-[55px_1fr_45px_55px_85px] sm:grid-cols-[70px_1fr_80px_80px_110px] md:grid-cols-[80px_1fr_140px_120px_130px] lg:grid-cols-[90px_1fr_150px_130px_150px] items-center gap-1 sm:gap-2 md:gap-4 px-2 sm:px-4 md:px-6 lg:px-8 py-2 md:py-3 bg-gray-50 border-x border-gray-200 text-[8px] sm:text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-widest md:tracking-[0.2em]",
-                                            children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                    className: "text-center",
-                                                    children: "Image"
-                                                }, void 0, false, {
+                                            lineNumber: 218,
+                                            columnNumber: 18
+                                        }, this)
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/products/page.tsx",
+                                        lineNumber: 217,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "hidden md:flex flex-wrap justify-center gap-4 px-4",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                onClick: ()=>setActiveFilter("All"),
+                                                className: `px-8 py-3 rounded-xl text-sm font-black uppercase tracking-widest transition-all duration-300 border-2 cursor-pointer ${activeFilter === "All" ? "bg-festive-purple text-white border-festive-purple shadow-[0_10px_20px_-10px_rgba(45,13,84,0.6)] scale-105" : "bg-white text-festive-purple border-festive-purple/10 hover:border-festive-gold hover:shadow-md"}`,
+                                                children: "ALL"
+                                            }, void 0, false, {
+                                                fileName: "[project]/app/products/page.tsx",
+                                                lineNumber: 239,
+                                                columnNumber: 17
+                                            }, this),
+                                            uniqueCategories.map((cat)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                    onClick: ()=>setActiveFilter(cat.name),
+                                                    className: `px-8 py-3 rounded-xl text-sm font-black uppercase tracking-widest transition-all duration-300 border-2 cursor-pointer ${activeFilter === cat.name ? "bg-festive-purple text-white border-festive-purple shadow-[0_10px_20px_-10px_rgba(45,13,84,0.6)] scale-105" : "bg-white text-festive-purple border-festive-purple/10 hover:border-festive-gold hover:shadow-md"}`,
+                                                    children: cat.name
+                                                }, cat.id, false, {
                                                     fileName: "[project]/app/products/page.tsx",
-                                                    lineNumber: 252,
-                                                    columnNumber: 21
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                    children: "Product Name"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/app/products/page.tsx",
-                                                    lineNumber: 253,
-                                                    columnNumber: 21
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                    className: "text-right",
-                                                    children: "MRP"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/app/products/page.tsx",
-                                                    lineNumber: 254,
-                                                    columnNumber: 21
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                    className: "text-right",
-                                                    children: "Offer Price"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/app/products/page.tsx",
-                                                    lineNumber: 255,
-                                                    columnNumber: 21
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                    className: "text-center",
-                                                    children: "Action"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/app/products/page.tsx",
-                                                    lineNumber: 256,
-                                                    columnNumber: 21
-                                                }, this)
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/app/products/page.tsx",
-                                            lineNumber: 251,
-                                            columnNumber: 19
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "border border-gray-200 border-t-0 rounded-b-2xl overflow-hidden bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)]",
-                                            children: group.products.map((prod, idx)=>{
-                                                const qty = getCartQty(prod.id);
-                                                const prodDiscount = prod.discount || Math.round((prod.originalPrice - prod.price) / prod.originalPrice * 100);
-                                                const isLast = idx === group.products.length - 1;
-                                                return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                    className: `group relative grid grid-cols-[55px_1fr_45px_55px_85px] sm:grid-cols-[70px_1fr_80px_80px_110px] md:grid-cols-[80px_1fr_140px_120px_130px] lg:grid-cols-[90px_1fr_150px_130px_150px] items-center gap-1 sm:gap-2 md:gap-4 px-2 sm:px-4 md:px-6 lg:px-8 py-3 md:py-3.5 transition-all duration-300 hover:bg-amber-50/50 ${!isLast ? 'border-b border-gray-100' : ''}`,
-                                                    children: [
-                                                        prod.originalPrice > prod.price && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                            className: "absolute top-1 left-1 md:hidden z-10 scale-[0.65] sm:scale-75 origin-top-left",
-                                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                className: "bg-gradient-to-r from-festive-red to-red-500 text-white font-black px-2 py-0.5 rounded-md text-[9px] tracking-wider shadow-sm",
-                                                                children: [
-                                                                    prodDiscount,
-                                                                    "% OFF"
-                                                                ]
-                                                            }, void 0, true, {
-                                                                fileName: "[project]/app/products/page.tsx",
-                                                                lineNumber: 274,
-                                                                columnNumber: 31
-                                                            }, this)
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/app/products/page.tsx",
-                                                            lineNumber: 273,
-                                                            columnNumber: 29
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                            className: "w-[45px] h-[45px] sm:w-[60px] sm:h-[60px] md:w-[80px] lg:w-[90px] md:h-[70px] lg:h-[75px] rounded-md md:rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center p-1 md:p-1.5 overflow-hidden flex-shrink-0 group-hover:border-festive-gold/30 transition-all mx-auto",
-                                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                                                                src: prod.image || "/assets/images/placeholder.png",
-                                                                alt: prod.name,
-                                                                loading: "lazy",
-                                                                decoding: "async",
-                                                                className: "w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
+                                                    lineNumber: 250,
+                                                    columnNumber: 19
+                                                }, this))
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/app/products/page.tsx",
+                                        lineNumber: 238,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/app/products/page.tsx",
+                                lineNumber: 215,
+                                columnNumber: 13
+                            }, this),
+                            loading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex flex-col items-center justify-center py-28 gap-4",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "w-9 h-9 border-4 border-festive-gold border-t-transparent rounded-full animate-spin"
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/products/page.tsx",
+                                        lineNumber: 268,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                        className: "text-sm font-black uppercase tracking-widest text-festive-gold animate-pulse",
+                                        children: "Loading products database..."
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/products/page.tsx",
+                                        lineNumber: 269,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/app/products/page.tsx",
+                                lineNumber: 267,
+                                columnNumber: 13
+                            }, this) : groupedProducts.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "text-center py-28 space-y-5 bg-white rounded-3xl border border-gray-100 shadow-sm p-8 max-w-xl mx-auto",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                        className: "text-6xl animate-bounce inline-block drop-shadow-md",
+                                        children: "🎆"
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/products/page.tsx",
+                                        lineNumber: 275,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-base font-black uppercase tracking-widest text-slate-400",
+                                        children: "No matching crackers found"
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/products/page.tsx",
+                                        lineNumber: 276,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                        onClick: ()=>setSearchQuery(""),
+                                        className: "px-6 py-3 rounded-full bg-gradient-to-r from-festive-gold to-yellow-400 text-festive-purple text-sm font-black uppercase tracking-widest hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-[0_8px_20px_rgba(255,215,0,0.4)]",
+                                        children: "Show All Products"
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/products/page.tsx",
+                                        lineNumber: 279,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/app/products/page.tsx",
+                                lineNumber: 274,
+                                columnNumber: 13
+                            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "space-y-10",
+                                children: groupedProducts.map((group)=>{
+                                    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        id: `category-sec-${group.id}`,
+                                        className: "scroll-mt-48 md:scroll-mt-40",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "relative overflow-hidden bg-gradient-to-r from-[#1a0826] via-[#3d1166] to-[#1a0826] py-4 px-6 rounded-t-xl border-b-[3px] border-festive-gold shadow-[0_4px_20px_-5px_rgba(61,17,102,0.5)] flex items-center justify-center group",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "absolute inset-0 opacity-20 bg-[url('/assets/images/pattern.png')] bg-repeat mix-blend-overlay pointer-events-none"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/app/products/page.tsx",
+                                                        lineNumber: 297,
+                                                        columnNumber: 21
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "relative z-10 flex items-center gap-3",
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                className: "text-lg md:text-xl opacity-80 group-hover:animate-ping",
+                                                                children: "✨"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/products/page.tsx",
-                                                                lineNumber: 282,
-                                                                columnNumber: 29
-                                                            }, this)
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/app/products/page.tsx",
-                                                            lineNumber: 281,
-                                                            columnNumber: 27
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                            className: "flex flex-col items-start justify-center gap-0.5",
-                                                            children: [
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
-                                                                    className: "font-black text-slate-800 text-[10px] sm:text-[12px] md:text-[15px] leading-tight group-hover:text-festive-purple transition-colors line-clamp-2",
-                                                                    children: prod.name
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/app/products/page.tsx",
-                                                                    lineNumber: 293,
-                                                                    columnNumber: 29
-                                                                }, this),
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                    className: "md:hidden text-[8px] font-bold text-slate-400 uppercase tracking-widest mt-0.5 block truncate max-w-full",
-                                                                    children: group.name
-                                                                }, void 0, false, {
-                                                                    fileName: "[project]/app/products/page.tsx",
-                                                                    lineNumber: 297,
-                                                                    columnNumber: 29
-                                                                }, this),
-                                                                prod.originalPrice > prod.price && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                    className: "hidden md:inline-flex items-center gap-1 bg-festive-red/10 text-festive-red text-[9px] font-black px-2 py-0.5 rounded-md uppercase tracking-wider mt-0.5",
-                                                                    children: [
-                                                                        "🔥 ",
-                                                                        prodDiscount,
-                                                                        "% OFF"
-                                                                    ]
-                                                                }, void 0, true, {
-                                                                    fileName: "[project]/app/products/page.tsx",
-                                                                    lineNumber: 302,
-                                                                    columnNumber: 31
-                                                                }, this)
-                                                            ]
-                                                        }, void 0, true, {
-                                                            fileName: "[project]/app/products/page.tsx",
-                                                            lineNumber: 292,
-                                                            columnNumber: 27
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                            className: "flex flex-col items-end justify-center",
-                                                            children: prod.originalPrice > prod.price ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                className: "text-[9px] sm:text-[11px] md:text-base text-slate-400 line-through font-bold text-right",
-                                                                children: [
-                                                                    "₹",
-                                                                    prod.originalPrice.toLocaleString('en-IN')
-                                                                ]
-                                                            }, void 0, true, {
-                                                                fileName: "[project]/app/products/page.tsx",
-                                                                lineNumber: 311,
-                                                                columnNumber: 31
-                                                            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                className: "text-[9px] sm:text-[11px] md:text-base text-slate-400 font-bold text-right",
-                                                                children: "—"
+                                                                lineNumber: 300,
+                                                                columnNumber: 23
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                                                                className: "text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-festive-gold to-yellow-400 font-black text-[18px] md:text-[22px] uppercase tracking-[0.2em] drop-shadow-lg text-center",
+                                                                children: group.name
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/products/page.tsx",
-                                                                lineNumber: 315,
-                                                                columnNumber: 31
-                                                            }, this)
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/app/products/page.tsx",
-                                                            lineNumber: 309,
-                                                            columnNumber: 27
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                            className: "flex flex-col items-end justify-center",
-                                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                className: "text-[11px] sm:text-[13px] md:text-xl font-black text-festive-purple text-right",
-                                                                children: [
-                                                                    "₹",
-                                                                    prod.price.toLocaleString('en-IN')
-                                                                ]
-                                                            }, void 0, true, {
+                                                                lineNumber: 301,
+                                                                columnNumber: 23
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                className: "text-lg md:text-xl opacity-80 group-hover:animate-ping",
+                                                                children: "✨"
+                                                            }, void 0, false, {
                                                                 fileName: "[project]/app/products/page.tsx",
-                                                                lineNumber: 321,
-                                                                columnNumber: 29
+                                                                lineNumber: 304,
+                                                                columnNumber: 23
                                                             }, this)
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/app/products/page.tsx",
-                                                            lineNumber: 320,
-                                                            columnNumber: 27
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                            className: "flex justify-end md:justify-center items-center gap-1 md:gap-2",
-                                                            children: qty > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/app/products/page.tsx",
+                                                        lineNumber: 299,
+                                                        columnNumber: 21
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/app/products/page.tsx",
+                                                lineNumber: 296,
+                                                columnNumber: 19
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "hidden md:grid md:grid-cols-[80px_1fr_140px_120px_130px] lg:grid-cols-[90px_1fr_150px_130px_150px] items-center gap-4 px-6 lg:px-8 py-3.5 bg-gradient-to-r from-festive-purple via-[#3d1166] to-festive-purple text-[10.5px] font-black text-festive-gold uppercase tracking-[0.2em] shadow-md border-b-2 border-festive-gold/30",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                        className: "text-center drop-shadow-sm",
+                                                        children: "Image"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/app/products/page.tsx",
+                                                        lineNumber: 310,
+                                                        columnNumber: 21
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                        className: "drop-shadow-sm",
+                                                        children: "Product Name"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/app/products/page.tsx",
+                                                        lineNumber: 311,
+                                                        columnNumber: 21
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                        className: "text-right drop-shadow-sm",
+                                                        children: "MRP"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/app/products/page.tsx",
+                                                        lineNumber: 312,
+                                                        columnNumber: 21
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                        className: "text-right drop-shadow-sm",
+                                                        children: "Offer Price"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/app/products/page.tsx",
+                                                        lineNumber: 313,
+                                                        columnNumber: 21
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                        className: "text-center drop-shadow-sm",
+                                                        children: "Action"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/app/products/page.tsx",
+                                                        lineNumber: 314,
+                                                        columnNumber: 21
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/app/products/page.tsx",
+                                                lineNumber: 309,
+                                                columnNumber: 19
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "border border-gray-200 md:border-t-0 rounded-b-xl overflow-hidden bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)]",
+                                                children: group.products.map((prod, idx)=>{
+                                                    const qty = getCartQty(prod.id);
+                                                    const prodDiscount = prod.discount || Math.round((prod.originalPrice - prod.price) / prod.originalPrice * 100);
+                                                    const isLast = idx === group.products.length - 1;
+                                                    const cleanName = prod.name ? prod.name.replace(/\s*\([^)]*[\u0B80-\u0BFF]+[^)]*\)/g, '').trim() : '';
+                                                    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: `transition-all duration-300 hover:bg-amber-50/50 ${!isLast ? 'border-b border-gray-100' : ''}`,
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                className: "md:hidden flex p-3 gap-3 relative",
                                                                 children: [
+                                                                    prod.originalPrice > prod.price && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                        className: "absolute top-2 left-2 z-10 scale-75 origin-top-left",
+                                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                            className: "bg-gradient-to-r from-festive-red to-red-500 text-white font-black px-2 py-0.5 rounded-md text-[10px] tracking-wider shadow-sm",
+                                                                            children: [
+                                                                                prodDiscount,
+                                                                                "% OFF"
+                                                                            ]
+                                                                        }, void 0, true, {
+                                                                            fileName: "[project]/app/products/page.tsx",
+                                                                            lineNumber: 333,
+                                                                            columnNumber: 36
+                                                                        }, this)
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/app/products/page.tsx",
+                                                                        lineNumber: 332,
+                                                                        columnNumber: 34
+                                                                    }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                        className: "flex items-center border-2 border-festive-purple/20 rounded-md md:rounded-xl overflow-hidden bg-white shadow-sm flex-1 w-[55px] sm:w-[70px] md:w-[110px] lg:w-[120px] h-6 sm:h-7 md:h-9",
+                                                                        className: "w-[85px] h-[85px] rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center p-1.5 overflow-hidden shrink-0 relative",
+                                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                                                            src: prod.image || "/assets/images/placeholder.png",
+                                                                            alt: cleanName,
+                                                                            loading: "lazy",
+                                                                            decoding: "async",
+                                                                            className: "w-full h-full object-contain"
+                                                                        }, void 0, false, {
+                                                                            fileName: "[project]/app/products/page.tsx",
+                                                                            lineNumber: 341,
+                                                                            columnNumber: 34
+                                                                        }, this)
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/app/products/page.tsx",
+                                                                        lineNumber: 340,
+                                                                        columnNumber: 32
+                                                                    }, this),
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                        className: "flex-1 flex flex-col justify-between py-0.5",
                                                                         children: [
-                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                                                                onClick: ()=>updateQuantity(prod.id, qty - 1),
-                                                                                className: "flex-1 w-5 sm:w-6 md:w-8 h-full text-slate-600 hover:bg-red-50 hover:text-festive-red active:scale-95 transition-all cursor-pointer font-black text-xs sm:text-sm md:text-lg flex items-center justify-center",
-                                                                                children: "−"
-                                                                            }, void 0, false, {
-                                                                                fileName: "[project]/app/products/page.tsx",
-                                                                                lineNumber: 331,
-                                                                                columnNumber: 35
-                                                                            }, this),
-                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                                                                type: "number",
-                                                                                value: qty,
-                                                                                onChange: (e)=>{
-                                                                                    const val = e.target.value === '' ? 0 : parseInt(e.target.value);
-                                                                                    if (!isNaN(val) && val >= 0) updateQuantity(prod.id, val);
-                                                                                },
-                                                                                className: "w-8 sm:w-10 md:w-12 h-full font-black text-slate-900 text-[10px] sm:text-xs md:text-base bg-gray-50 text-center border-x border-gray-200 outline-none focus:bg-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                                                                            }, void 0, false, {
-                                                                                fileName: "[project]/app/products/page.tsx",
-                                                                                lineNumber: 337,
-                                                                                columnNumber: 35
-                                                                            }, this),
-                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                                                                onClick: ()=>updateQuantity(prod.id, qty + 1),
-                                                                                className: "flex-1 w-5 sm:w-6 md:w-8 h-full text-slate-600 hover:bg-purple-50 hover:text-festive-purple active:scale-95 transition-all cursor-pointer font-black text-xs sm:text-sm md:text-lg flex items-center justify-center",
-                                                                                children: "+"
-                                                                            }, void 0, false, {
+                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                                children: [
+                                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                                        className: "flex items-start gap-1",
+                                                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                                                                            className: "font-black text-slate-800 text-[14px] leading-tight line-clamp-2",
+                                                                                            children: cleanName
+                                                                                        }, void 0, false, {
+                                                                                            fileName: "[project]/app/products/page.tsx",
+                                                                                            lineNumber: 348,
+                                                                                            columnNumber: 38
+                                                                                        }, this)
+                                                                                    }, void 0, false, {
+                                                                                        fileName: "[project]/app/products/page.tsx",
+                                                                                        lineNumber: 347,
+                                                                                        columnNumber: 38
+                                                                                    }, this),
+                                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                                        className: "text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1 block truncate max-w-full",
+                                                                                        children: group.name
+                                                                                    }, void 0, false, {
+                                                                                        fileName: "[project]/app/products/page.tsx",
+                                                                                        lineNumber: 350,
+                                                                                        columnNumber: 38
+                                                                                    }, this)
+                                                                                ]
+                                                                            }, void 0, true, {
                                                                                 fileName: "[project]/app/products/page.tsx",
                                                                                 lineNumber: 346,
+                                                                                columnNumber: 35
+                                                                            }, this),
+                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                                className: "flex items-end justify-between mt-2",
+                                                                                children: [
+                                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                                        className: "flex flex-col",
+                                                                                        children: [
+                                                                                            prod.originalPrice > prod.price && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                                                className: "text-[10px] text-slate-400 line-through font-bold",
+                                                                                                children: [
+                                                                                                    "₹",
+                                                                                                    prod.originalPrice.toLocaleString('en-IN')
+                                                                                                ]
+                                                                                            }, void 0, true, {
+                                                                                                fileName: "[project]/app/products/page.tsx",
+                                                                                                lineNumber: 355,
+                                                                                                columnNumber: 43
+                                                                                            }, this),
+                                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                                                className: "text-[14px] font-black text-festive-purple",
+                                                                                                children: [
+                                                                                                    "₹",
+                                                                                                    prod.price.toLocaleString('en-IN')
+                                                                                                ]
+                                                                                            }, void 0, true, {
+                                                                                                fileName: "[project]/app/products/page.tsx",
+                                                                                                lineNumber: 357,
+                                                                                                columnNumber: 41
+                                                                                            }, this)
+                                                                                        ]
+                                                                                    }, void 0, true, {
+                                                                                        fileName: "[project]/app/products/page.tsx",
+                                                                                        lineNumber: 353,
+                                                                                        columnNumber: 38
+                                                                                    }, this),
+                                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                                        className: "shrink-0 mr-1",
+                                                                                        children: qty > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                                            className: "flex items-center border-2 border-festive-purple/20 rounded-md overflow-hidden bg-white h-8 w-[85px]",
+                                                                                            children: [
+                                                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                                                                    onClick: ()=>updateQuantity(prod.id, qty - 1),
+                                                                                                    className: "flex-1 h-full text-slate-600 active:scale-95 font-black text-sm flex items-center justify-center",
+                                                                                                    children: "−"
+                                                                                                }, void 0, false, {
+                                                                                                    fileName: "[project]/app/products/page.tsx",
+                                                                                                    lineNumber: 362,
+                                                                                                    columnNumber: 45
+                                                                                                }, this),
+                                                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                                                                    type: "number",
+                                                                                                    value: qty,
+                                                                                                    onChange: (e)=>{
+                                                                                                        const val = e.target.value === '' ? 0 : parseInt(e.target.value);
+                                                                                                        if (!isNaN(val) && val >= 0) updateQuantity(prod.id, val);
+                                                                                                    },
+                                                                                                    className: "w-9 h-full font-black text-slate-900 text-[12px] bg-gray-50 text-center border-x border-gray-200 outline-none focus:bg-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                                                                                }, void 0, false, {
+                                                                                                    fileName: "[project]/app/products/page.tsx",
+                                                                                                    lineNumber: 363,
+                                                                                                    columnNumber: 45
+                                                                                                }, this),
+                                                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                                                                    onClick: ()=>updateQuantity(prod.id, qty + 1),
+                                                                                                    className: "flex-1 h-full text-slate-600 active:scale-95 font-black text-sm flex items-center justify-center",
+                                                                                                    children: "+"
+                                                                                                }, void 0, false, {
+                                                                                                    fileName: "[project]/app/products/page.tsx",
+                                                                                                    lineNumber: 372,
+                                                                                                    columnNumber: 45
+                                                                                                }, this)
+                                                                                            ]
+                                                                                        }, void 0, true, {
+                                                                                            fileName: "[project]/app/products/page.tsx",
+                                                                                            lineNumber: 361,
+                                                                                            columnNumber: 43
+                                                                                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                                                            onClick: ()=>addToCart({
+                                                                                                    id: prod.id,
+                                                                                                    name: cleanName,
+                                                                                                    price: prod.price,
+                                                                                                    originalPrice: prod.originalPrice,
+                                                                                                    image: prod.image,
+                                                                                                    category: group.name
+                                                                                                }),
+                                                                                            className: "h-8 px-5 rounded-md bg-gradient-to-r from-festive-purple to-[#3d1166] text-white font-black uppercase text-[11px] tracking-wider active:scale-95 shadow-md flex items-center justify-center gap-1.5",
+                                                                                            children: [
+                                                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                                                    className: "text-[15px] leading-none mb-[1px]",
+                                                                                                    children: "+"
+                                                                                                }, void 0, false, {
+                                                                                                    fileName: "[project]/app/products/page.tsx",
+                                                                                                    lineNumber: 376,
+                                                                                                    columnNumber: 45
+                                                                                                }, this),
+                                                                                                " Add"
+                                                                                            ]
+                                                                                        }, void 0, true, {
+                                                                                            fileName: "[project]/app/products/page.tsx",
+                                                                                            lineNumber: 375,
+                                                                                            columnNumber: 43
+                                                                                        }, this)
+                                                                                    }, void 0, false, {
+                                                                                        fileName: "[project]/app/products/page.tsx",
+                                                                                        lineNumber: 359,
+                                                                                        columnNumber: 38
+                                                                                    }, this)
+                                                                                ]
+                                                                            }, void 0, true, {
+                                                                                fileName: "[project]/app/products/page.tsx",
+                                                                                lineNumber: 352,
                                                                                 columnNumber: 35
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/products/page.tsx",
-                                                                        lineNumber: 330,
-                                                                        columnNumber: 33
-                                                                    }, this),
-                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                                                        onClick: ()=>removeFromCart(prod.id),
-                                                                        title: "Remove from cart",
-                                                                        className: "w-6 h-6 sm:w-7 sm:h-7 md:w-9 md:h-9 rounded-md md:rounded-xl bg-festive-red border border-festive-red text-white flex items-center justify-center transition-all duration-300 cursor-pointer hover:scale-105 active:scale-95 flex-shrink-0 shadow-sm",
-                                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
-                                                                            xmlns: "http://www.w3.org/2000/svg",
-                                                                            fill: "none",
-                                                                            viewBox: "0 0 24 24",
-                                                                            strokeWidth: 2.5,
-                                                                            stroke: "currentColor",
-                                                                            className: "w-3 h-3 md:w-4 md:h-4",
-                                                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
-                                                                                strokeLinecap: "round",
-                                                                                strokeLinejoin: "round",
-                                                                                d: "m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
-                                                                            }, void 0, false, {
-                                                                                fileName: "[project]/app/products/page.tsx",
-                                                                                lineNumber: 359,
-                                                                                columnNumber: 37
-                                                                            }, this)
-                                                                        }, void 0, false, {
-                                                                            fileName: "[project]/app/products/page.tsx",
-                                                                            lineNumber: 358,
-                                                                            columnNumber: 35
-                                                                        }, this)
-                                                                    }, void 0, false, {
-                                                                        fileName: "[project]/app/products/page.tsx",
-                                                                        lineNumber: 353,
-                                                                        columnNumber: 33
-                                                                    }, this)
-                                                                ]
-                                                            }, void 0, true) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                                                onClick: ()=>addToCart({
-                                                                        id: prod.id,
-                                                                        name: prod.name,
-                                                                        price: prod.price,
-                                                                        originalPrice: prod.originalPrice,
-                                                                        image: prod.image,
-                                                                        category: group.name
-                                                                    }),
-                                                                className: "w-full md:w-[130px] lg:w-[140px] h-6 sm:h-7 md:h-9 rounded-md md:rounded-xl bg-gradient-to-r from-festive-purple to-[#3d1166] hover:from-festive-gold hover:to-yellow-500 text-white hover:text-festive-purple font-black uppercase text-[8px] sm:text-[9px] md:text-[11px] tracking-wider hover:scale-[1.03] active:scale-95 transition-all cursor-pointer shadow-[0_4px_15px_rgba(48,13,79,0.3)] hover:shadow-[0_4px_15px_rgba(255,215,0,0.4)] flex items-center justify-center gap-1 border border-transparent",
-                                                                children: [
-                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
-                                                                        xmlns: "http://www.w3.org/2000/svg",
-                                                                        fill: "none",
-                                                                        viewBox: "0 0 24 24",
-                                                                        strokeWidth: 2.5,
-                                                                        stroke: "currentColor",
-                                                                        className: "w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-3.5 md:h-3.5",
-                                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
-                                                                            strokeLinecap: "round",
-                                                                            strokeLinejoin: "round",
-                                                                            d: "M12 4.5v15m7.5-7.5h-15"
-                                                                        }, void 0, false, {
-                                                                            fileName: "[project]/app/products/page.tsx",
-                                                                            lineNumber: 378,
-                                                                            columnNumber: 35
-                                                                        }, this)
-                                                                    }, void 0, false, {
-                                                                        fileName: "[project]/app/products/page.tsx",
-                                                                        lineNumber: 377,
-                                                                        columnNumber: 33
-                                                                    }, this),
-                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                        className: "hidden sm:inline",
-                                                                        children: "Add"
-                                                                    }, void 0, false, {
-                                                                        fileName: "[project]/app/products/page.tsx",
-                                                                        lineNumber: 380,
-                                                                        columnNumber: 33
-                                                                    }, this),
-                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                        className: "sm:hidden",
-                                                                        children: "Add"
-                                                                    }, void 0, false, {
-                                                                        fileName: "[project]/app/products/page.tsx",
-                                                                        lineNumber: 381,
-                                                                        columnNumber: 33
+                                                                        lineNumber: 345,
+                                                                        columnNumber: 32
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/products/page.tsx",
-                                                                lineNumber: 364,
-                                                                columnNumber: 31
+                                                                lineNumber: 329,
+                                                                columnNumber: 29
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                className: "hidden md:grid group relative grid-cols-[80px_1fr_140px_120px_130px] lg:grid-cols-[90px_1fr_150px_130px_150px] items-center gap-4 px-6 lg:px-8 py-3.5",
+                                                                children: [
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                        className: "w-[80px] lg:w-[90px] h-[70px] lg:h-[75px] rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center p-1.5 overflow-hidden flex-shrink-0 group-hover:border-festive-gold/30 transition-all mx-auto",
+                                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                                                            src: prod.image || "/assets/images/placeholder.png",
+                                                                            alt: cleanName,
+                                                                            loading: "lazy",
+                                                                            decoding: "async",
+                                                                            className: "w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
+                                                                        }, void 0, false, {
+                                                                            fileName: "[project]/app/products/page.tsx",
+                                                                            lineNumber: 388,
+                                                                            columnNumber: 33
+                                                                        }, this)
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/app/products/page.tsx",
+                                                                        lineNumber: 387,
+                                                                        columnNumber: 31
+                                                                    }, this),
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                        className: "flex flex-col items-start justify-center gap-0.5",
+                                                                        children: [
+                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                                                                className: "font-black text-slate-800 text-[15px] leading-tight group-hover:text-festive-purple transition-colors line-clamp-2",
+                                                                                children: cleanName
+                                                                            }, void 0, false, {
+                                                                                fileName: "[project]/app/products/page.tsx",
+                                                                                lineNumber: 393,
+                                                                                columnNumber: 33
+                                                                            }, this),
+                                                                            prod.originalPrice > prod.price && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                                className: "inline-flex items-center gap-1 bg-festive-red/10 text-festive-red text-[9px] font-black px-2 py-0.5 rounded-md uppercase tracking-wider mt-0.5",
+                                                                                children: [
+                                                                                    "🔥 ",
+                                                                                    prodDiscount,
+                                                                                    "% OFF"
+                                                                                ]
+                                                                            }, void 0, true, {
+                                                                                fileName: "[project]/app/products/page.tsx",
+                                                                                lineNumber: 395,
+                                                                                columnNumber: 35
+                                                                            }, this)
+                                                                        ]
+                                                                    }, void 0, true, {
+                                                                        fileName: "[project]/app/products/page.tsx",
+                                                                        lineNumber: 392,
+                                                                        columnNumber: 31
+                                                                    }, this),
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                        className: "flex flex-col items-end justify-center",
+                                                                        children: prod.originalPrice > prod.price ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                            className: "text-base text-slate-400 line-through font-bold text-right",
+                                                                            children: [
+                                                                                "₹",
+                                                                                prod.originalPrice.toLocaleString('en-IN')
+                                                                            ]
+                                                                        }, void 0, true, {
+                                                                            fileName: "[project]/app/products/page.tsx",
+                                                                            lineNumber: 404,
+                                                                            columnNumber: 35
+                                                                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                            className: "text-base text-slate-400 font-bold text-right",
+                                                                            children: "—"
+                                                                        }, void 0, false, {
+                                                                            fileName: "[project]/app/products/page.tsx",
+                                                                            lineNumber: 406,
+                                                                            columnNumber: 35
+                                                                        }, this)
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/app/products/page.tsx",
+                                                                        lineNumber: 402,
+                                                                        columnNumber: 31
+                                                                    }, this),
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                        className: "flex flex-col items-end justify-center",
+                                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                            className: "text-xl font-black text-festive-purple text-right",
+                                                                            children: [
+                                                                                "₹",
+                                                                                prod.price.toLocaleString('en-IN')
+                                                                            ]
+                                                                        }, void 0, true, {
+                                                                            fileName: "[project]/app/products/page.tsx",
+                                                                            lineNumber: 412,
+                                                                            columnNumber: 33
+                                                                        }, this)
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/app/products/page.tsx",
+                                                                        lineNumber: 411,
+                                                                        columnNumber: 31
+                                                                    }, this),
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                        className: "flex justify-center items-center gap-2",
+                                                                        children: qty > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+                                                                            children: [
+                                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                                    className: "flex items-center border-2 border-festive-purple/20 rounded-xl overflow-hidden bg-white shadow-sm flex-1 w-[110px] lg:w-[120px] h-9",
+                                                                                    children: [
+                                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                                                            onClick: ()=>updateQuantity(prod.id, qty - 1),
+                                                                                            className: "flex-1 w-8 h-full text-slate-600 hover:bg-red-50 hover:text-festive-red transition-all cursor-pointer font-black text-lg flex items-center justify-center",
+                                                                                            children: "−"
+                                                                                        }, void 0, false, {
+                                                                                            fileName: "[project]/app/products/page.tsx",
+                                                                                            lineNumber: 420,
+                                                                                            columnNumber: 39
+                                                                                        }, this),
+                                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                                                            type: "number",
+                                                                                            value: qty,
+                                                                                            onChange: (e)=>{
+                                                                                                const val = e.target.value === '' ? 0 : parseInt(e.target.value);
+                                                                                                if (!isNaN(val) && val >= 0) updateQuantity(prod.id, val);
+                                                                                            },
+                                                                                            className: "w-10 h-full font-black text-slate-900 text-base bg-gray-50 text-center border-x border-gray-200 outline-none focus:bg-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                                                                        }, void 0, false, {
+                                                                                            fileName: "[project]/app/products/page.tsx",
+                                                                                            lineNumber: 421,
+                                                                                            columnNumber: 39
+                                                                                        }, this),
+                                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                                                            onClick: ()=>updateQuantity(prod.id, qty + 1),
+                                                                                            className: "flex-1 w-8 h-full text-slate-600 hover:bg-purple-50 hover:text-festive-purple transition-all cursor-pointer font-black text-lg flex items-center justify-center",
+                                                                                            children: "+"
+                                                                                        }, void 0, false, {
+                                                                                            fileName: "[project]/app/products/page.tsx",
+                                                                                            lineNumber: 430,
+                                                                                            columnNumber: 39
+                                                                                        }, this)
+                                                                                    ]
+                                                                                }, void 0, true, {
+                                                                                    fileName: "[project]/app/products/page.tsx",
+                                                                                    lineNumber: 419,
+                                                                                    columnNumber: 37
+                                                                                }, this),
+                                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                                                    onClick: ()=>removeFromCart(prod.id),
+                                                                                    title: "Remove from cart",
+                                                                                    className: "w-9 h-9 rounded-xl bg-festive-red border border-festive-red text-white flex items-center justify-center transition-all duration-300 cursor-pointer hover:scale-105 active:scale-95 flex-shrink-0 shadow-sm",
+                                                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                                                                                        xmlns: "http://www.w3.org/2000/svg",
+                                                                                        fill: "none",
+                                                                                        viewBox: "0 0 24 24",
+                                                                                        strokeWidth: 2.5,
+                                                                                        stroke: "currentColor",
+                                                                                        className: "w-4 h-4",
+                                                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
+                                                                                            strokeLinecap: "round",
+                                                                                            strokeLinejoin: "round",
+                                                                                            d: "m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+                                                                                        }, void 0, false, {
+                                                                                            fileName: "[project]/app/products/page.tsx",
+                                                                                            lineNumber: 433,
+                                                                                            columnNumber: 171
+                                                                                        }, this)
+                                                                                    }, void 0, false, {
+                                                                                        fileName: "[project]/app/products/page.tsx",
+                                                                                        lineNumber: 433,
+                                                                                        columnNumber: 39
+                                                                                    }, this)
+                                                                                }, void 0, false, {
+                                                                                    fileName: "[project]/app/products/page.tsx",
+                                                                                    lineNumber: 432,
+                                                                                    columnNumber: 37
+                                                                                }, this)
+                                                                            ]
+                                                                        }, void 0, true) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                                            onClick: ()=>addToCart({
+                                                                                    id: prod.id,
+                                                                                    name: cleanName,
+                                                                                    price: prod.price,
+                                                                                    originalPrice: prod.originalPrice,
+                                                                                    image: prod.image,
+                                                                                    category: group.name
+                                                                                }),
+                                                                            className: "w-[130px] lg:w-[140px] h-9 rounded-xl bg-gradient-to-r from-festive-purple to-[#3d1166] hover:from-festive-gold hover:to-yellow-500 text-white hover:text-festive-purple font-black uppercase text-[11px] tracking-wider hover:scale-[1.03] transition-all cursor-pointer shadow-[0_4px_15px_rgba(48,13,79,0.3)] hover:shadow-[0_4px_15px_rgba(255,215,0,0.4)] flex items-center justify-center gap-1 border border-transparent",
+                                                                            children: [
+                                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                                                                                    xmlns: "http://www.w3.org/2000/svg",
+                                                                                    fill: "none",
+                                                                                    viewBox: "0 0 24 24",
+                                                                                    strokeWidth: 2.5,
+                                                                                    stroke: "currentColor",
+                                                                                    className: "w-3.5 h-3.5",
+                                                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
+                                                                                        strokeLinecap: "round",
+                                                                                        strokeLinejoin: "round",
+                                                                                        d: "M12 4.5v15m7.5-7.5h-15"
+                                                                                    }, void 0, false, {
+                                                                                        fileName: "[project]/app/products/page.tsx",
+                                                                                        lineNumber: 438,
+                                                                                        columnNumber: 173
+                                                                                    }, this)
+                                                                                }, void 0, false, {
+                                                                                    fileName: "[project]/app/products/page.tsx",
+                                                                                    lineNumber: 438,
+                                                                                    columnNumber: 37
+                                                                                }, this),
+                                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                                    children: "Add"
+                                                                                }, void 0, false, {
+                                                                                    fileName: "[project]/app/products/page.tsx",
+                                                                                    lineNumber: 439,
+                                                                                    columnNumber: 37
+                                                                                }, this)
+                                                                            ]
+                                                                        }, void 0, true, {
+                                                                            fileName: "[project]/app/products/page.tsx",
+                                                                            lineNumber: 437,
+                                                                            columnNumber: 35
+                                                                        }, this)
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/app/products/page.tsx",
+                                                                        lineNumber: 416,
+                                                                        columnNumber: 31
+                                                                    }, this)
+                                                                ]
+                                                            }, void 0, true, {
+                                                                fileName: "[project]/app/products/page.tsx",
+                                                                lineNumber: 385,
+                                                                columnNumber: 29
                                                             }, this)
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/app/products/page.tsx",
-                                                            lineNumber: 327,
-                                                            columnNumber: 27
-                                                        }, this)
-                                                    ]
-                                                }, prod.id, true, {
-                                                    fileName: "[project]/app/products/page.tsx",
-                                                    lineNumber: 267,
-                                                    columnNumber: 25
-                                                }, this);
-                                            })
-                                        }, void 0, false, {
-                                            fileName: "[project]/app/products/page.tsx",
-                                            lineNumber: 260,
-                                            columnNumber: 19
-                                        }, this)
-                                    ]
-                                }, group.id, true, {
-                                    fileName: "[project]/app/products/page.tsx",
-                                    lineNumber: 230,
-                                    columnNumber: 17
-                                }, this);
-                            })
-                        }, void 0, false, {
-                            fileName: "[project]/app/products/page.tsx",
-                            lineNumber: 224,
-                            columnNumber: 13
-                        }, this)
-                    }, void 0, false, {
+                                                        ]
+                                                    }, prod.id, true, {
+                                                        fileName: "[project]/app/products/page.tsx",
+                                                        lineNumber: 326,
+                                                        columnNumber: 25
+                                                    }, this);
+                                                })
+                                            }, void 0, false, {
+                                                fileName: "[project]/app/products/page.tsx",
+                                                lineNumber: 318,
+                                                columnNumber: 19
+                                            }, this)
+                                        ]
+                                    }, group.id, true, {
+                                        fileName: "[project]/app/products/page.tsx",
+                                        lineNumber: 290,
+                                        columnNumber: 17
+                                    }, this);
+                                })
+                            }, void 0, false, {
+                                fileName: "[project]/app/products/page.tsx",
+                                lineNumber: 287,
+                                columnNumber: 13
+                            }, this)
+                        ]
+                    }, void 0, true, {
                         fileName: "[project]/app/products/page.tsx",
-                        lineNumber: 202,
+                        lineNumber: 212,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/products/page.tsx",
-                lineNumber: 128,
+                lineNumber: 158,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$Footer$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/app/products/page.tsx",
-                lineNumber: 398,
+                lineNumber: 457,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ContactFloatingButtons$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/app/products/page.tsx",
-                lineNumber: 401,
+                lineNumber: 460,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/products/page.tsx",
-        lineNumber: 124,
+        lineNumber: 154,
         columnNumber: 5
     }, this);
 }
-_s(ProductsPageInner, "GR/tlM9st/C6JLcFXQGHJ9OLOfY=", false, function() {
+_s(ProductsPageInner, "Yaohwo9L0Cq/Ey7OcGOADbnIBog=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$context$2f$CartContext$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCart"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSearchParams"]
@@ -2577,17 +2867,17 @@ function ProductsPage() {
             className: "min-h-screen bg-[#fdfbf7]"
         }, void 0, false, {
             fileName: "[project]/app/products/page.tsx",
-            lineNumber: 407,
+            lineNumber: 466,
             columnNumber: 25
         }, void 0),
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ProductsPageInner, {}, void 0, false, {
             fileName: "[project]/app/products/page.tsx",
-            lineNumber: 408,
+            lineNumber: 467,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/products/page.tsx",
-        lineNumber: 407,
+        lineNumber: 466,
         columnNumber: 5
     }, this);
 }
