@@ -59,15 +59,17 @@ export default function ProductCatalog({ priceListUrl = "" }: ProductCatalogProp
     loadData();
   }, []);
 
-  const filters = ["All", ...categories.map(c => c.name)];
+  const cleanStr = (str: string) => str ? str.replace(/\s*\([^)]*[\u0B80-\u0BFF]+[^)]*\)/g, '').trim() : '';
+  
+  const rawFilters = categories.map(c => c.name);
+  const uniqueCleanFilters = Array.from(new Set(rawFilters.map(cleanStr)));
+  const filters = ["All", ...uniqueCleanFilters];
 
   const activeProducts = products.filter(p => p.is_active === 1 || p.is_active === true || p.is_active === undefined);
 
   const filteredProducts = activeFilter === "All"
     ? activeProducts
-    : activeProducts.filter(p => p.category === activeFilter);
-
-  // Categories array for filter is already available as 'categories'
+    : activeProducts.filter(p => cleanStr(p.category) === activeFilter);
 
   const getCartQty = (productId: number) => {
     const item = cartItems.find((c) => c.id === productId);

@@ -3,6 +3,17 @@ set timeout -1
 set password "MZ5OlAifTqHx7W"
 set ip "104.254.245.96"
 
+puts "Deploying ProductCatalog.tsx to server..."
+spawn scp -o StrictHostKeyChecking=no "app/components/ProductCatalog.tsx" root@$ip:/var/www/Vamsi_Crackers/frontend/app/components/ProductCatalog.tsx
+expect {
+    "password:" {
+        send "$password\r"
+        exp_continue
+    }
+    eof
+}
+
+puts "Building and restarting pm2 on server..."
 spawn ssh -o StrictHostKeyChecking=no root@$ip "source ~/.bashrc; source ~/.nvm/nvm.sh; cd /var/www/Vamsi_Crackers/frontend && npm run build && pm2 restart all"
 expect {
     "password:" {
@@ -11,3 +22,5 @@ expect {
     }
     eof
 }
+
+puts "Deployment complete."
