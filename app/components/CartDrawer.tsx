@@ -142,7 +142,7 @@ export default function CartDrawer() {
         <div className="px-4 sm:px-6 py-4 sm:py-5 border-b border-gray-100 flex items-center justify-between relative z-10 bg-gray-50/50">
           <div className="flex items-center gap-2 sm:gap-3">
             <span className="text-xl sm:text-2xl drop-shadow-sm">🛒</span>
-            <h2 className="text-lg sm:text-xl font-black uppercase tracking-widest text-festive-purple flex items-center flex-wrap gap-2 sm:gap-3">
+            <h2 className="text-lg sm:text-xl font-semibold uppercase tracking-widest text-festive-purple flex items-center flex-wrap gap-2 sm:gap-3">
               <span>Your <span className="bg-clip-text text-transparent bg-gradient-to-r from-festive-red to-orange-500">Cart</span></span>
               <span className="text-[10px] sm:text-xs bg-festive-gold/15 text-festive-purple border border-festive-gold/30 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full shadow-sm leading-none flex items-center mt-0.5 sm:mt-0">
                 {cartCount} {cartCount === 1 ? "ITEM" : "ITEMS"}
@@ -154,7 +154,7 @@ export default function CartDrawer() {
               <button
                 onClick={clearCart}
                 title="Clear all cart items"
-                className="w-8 h-8 sm:w-auto sm:h-auto sm:px-3 sm:py-1.5 rounded-full font-black uppercase tracking-widest text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 transition-colors flex items-center justify-center sm:gap-1.5 cursor-pointer shadow-sm flex-shrink-0"
+                className="w-8 h-8 sm:w-auto sm:h-auto sm:px-3 sm:py-1.5 rounded-full font-semibold uppercase tracking-widest text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 transition-colors flex items-center justify-center sm:gap-1.5 cursor-pointer shadow-sm flex-shrink-0"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
@@ -179,7 +179,7 @@ export default function CartDrawer() {
                 <span className="text-6xl animate-pulse drop-shadow-sm">✨</span>
               </div>
               <div>
-                <h3 className="text-slate-800 font-black uppercase tracking-widest text-lg mb-2">
+                <h3 className="text-slate-800 font-semibold uppercase tracking-widest text-lg mb-2">
                   Your cart is empty
                 </h3>
                 <p className="text-base text-slate-500 max-w-sm mx-auto leading-relaxed font-medium">
@@ -188,7 +188,7 @@ export default function CartDrawer() {
               </div>
               <button
                 onClick={() => setCartOpen(false)}
-                className="px-10 py-3.5 rounded-full bg-gradient-to-r from-festive-gold to-yellow-400 text-festive-purple font-black text-base uppercase tracking-widest hover:scale-105 transition-all shadow-[0_8px_20px_rgba(255,215,0,0.4)] mt-4"
+                className="px-10 py-3.5 rounded-full bg-gradient-to-r from-festive-gold to-yellow-400 text-festive-purple font-semibold text-base uppercase tracking-widest hover:scale-105 transition-all shadow-[0_8px_20px_rgba(255,215,0,0.4)] mt-4"
               >
                 Start Shopping
               </button>
@@ -219,12 +219,12 @@ export default function CartDrawer() {
                           <span className="text-[9px] uppercase font-bold text-slate-500 bg-gray-50 px-2 py-0.5 rounded border border-gray-200 inline-block mb-1.5">
                             {item.category}
                           </span>
-                          <h4 className="text-base sm:text-base font-black text-slate-800 tracking-wide leading-tight group-hover:text-festive-purple transition-colors line-clamp-2">
+                          <h4 className="text-base sm:text-base font-semibold text-slate-800 tracking-wide leading-tight group-hover:text-festive-purple transition-colors line-clamp-2">
                             {item.name}
                           </h4>
                           
                           <div className="flex items-center gap-3 mt-2">
-                            <span className="text-base font-black text-festive-purple drop-shadow-sm">
+                            <span className="text-base font-semibold text-festive-purple drop-shadow-sm">
                               ₹{item.price}
                             </span>
                             <span className="text-xs text-slate-400 line-through font-bold">
@@ -238,7 +238,7 @@ export default function CartDrawer() {
                           <div className="flex items-center bg-gray-50 border border-gray-200 rounded-lg overflow-hidden group-hover:border-festive-gold/40 transition-colors shadow-sm">
                             <button
                               onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                              className="px-3.5 py-2 text-base font-black text-slate-500 hover:bg-gray-100 hover:text-festive-red transition-colors cursor-pointer"
+                              className="px-3.5 py-2 text-base font-semibold text-slate-500 hover:bg-gray-100 hover:text-festive-red transition-colors cursor-pointer"
                             >
                               −
                             </button>
@@ -249,18 +249,18 @@ export default function CartDrawer() {
                                 const val = e.target.value === '' ? 0 : parseInt(e.target.value);
                                 if (!isNaN(val) && val >= 0) updateQuantity(item.id, val);
                               }}
-                              className="px-2 py-2 w-12 text-base font-black text-center bg-white border-x border-gray-200 text-slate-900 shadow-inner outline-none focus:bg-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                              className="px-2 py-2 w-12 text-base font-semibold text-center bg-white border-x border-gray-200 text-slate-900 shadow-inner outline-none focus:bg-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                             />
                             <button
                               onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                              className="px-3.5 py-2 text-base font-black text-slate-500 hover:bg-gray-100 hover:text-festive-purple transition-colors cursor-pointer"
+                              className="px-3.5 py-2 text-base font-semibold text-slate-500 hover:bg-gray-100 hover:text-festive-purple transition-colors cursor-pointer"
                             >
                               +
                             </button>
                           </div>
 
                           <div className="flex items-center gap-3">
-                            <div className="text-base font-black text-slate-900 hidden sm:block drop-shadow-sm">
+                            <div className="text-base font-semibold text-slate-900 hidden sm:block drop-shadow-sm">
                               ₹{item.price * item.quantity}
                             </div>
                             <button
@@ -281,7 +281,7 @@ export default function CartDrawer() {
               <div className="pt-4 pb-2">
                 <button
                   onClick={() => setShowCheckoutForm(!showCheckoutForm)}
-                  className={`w-full flex items-center justify-between text-sm sm:text-sm font-black uppercase tracking-wider p-4 rounded-xl transition-all border cursor-pointer ${showCheckoutForm ? 'bg-festive-gold/10 border-festive-gold/30 text-festive-purple shadow-sm' : 'bg-gray-50 border-gray-200 text-slate-600 hover:bg-gray-100 hover:border-gray-300'}`}
+                  className={`w-full flex items-center justify-between text-sm sm:text-sm font-semibold uppercase tracking-wider p-4 rounded-xl transition-all border cursor-pointer ${showCheckoutForm ? 'bg-festive-gold/10 border-festive-gold/30 text-festive-purple shadow-sm' : 'bg-gray-50 border-gray-200 text-slate-600 hover:bg-gray-100 hover:border-gray-300'}`}
                 >
                   <span className="flex items-center gap-2">
                     <span className="text-lg">📋</span> Customer & Delivery Details
@@ -292,7 +292,7 @@ export default function CartDrawer() {
                 {showCheckoutForm && (
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 bg-gray-50 p-5 sm:p-6 rounded-xl border border-gray-200 animate-fadeIn shadow-inner">
                     <div className="space-y-1.5">
-                      <label className="block text-xs font-black uppercase tracking-widest text-slate-500">
+                      <label className="block text-xs font-semibold uppercase tracking-widest text-slate-500">
                         Full Name
                       </label>
                       <input
@@ -305,7 +305,7 @@ export default function CartDrawer() {
                       {errors.name && <span className="text-red-500 text-sm font-bold mt-1 block animate-fadeIn">* Full Name is required</span>}
                     </div>
                     <div className="space-y-1.5">
-                      <label className="block text-xs font-black uppercase tracking-widest text-slate-500">
+                      <label className="block text-xs font-semibold uppercase tracking-widest text-slate-500">
                         Contact Number
                       </label>
                       <input
@@ -318,7 +318,7 @@ export default function CartDrawer() {
                       {errors.phone && <span className="text-red-500 text-sm font-bold mt-1 block animate-fadeIn">* Contact Number is required</span>}
                     </div>
                     <div className="space-y-1.5 sm:col-span-2">
-                      <label className="block text-xs font-black uppercase tracking-widest text-slate-500">
+                      <label className="block text-xs font-semibold uppercase tracking-widest text-slate-500">
                         Email Address
                       </label>
                       <input
@@ -331,7 +331,7 @@ export default function CartDrawer() {
                       {errors.email && <span className="text-red-500 text-sm font-bold mt-1 block animate-fadeIn">* Please enter a valid email address</span>}
                     </div>
                     <div className="space-y-1.5 sm:col-span-2">
-                      <label className="block text-xs font-black uppercase tracking-widest text-slate-500">
+                      <label className="block text-xs font-semibold uppercase tracking-widest text-slate-500">
                         Full Delivery Address
                       </label>
                       <textarea
@@ -344,7 +344,7 @@ export default function CartDrawer() {
                       {errors.address && <span className="text-red-500 text-sm font-bold mt-1 block animate-fadeIn">* Address is required</span>}
                     </div>
                     <div className="space-y-1.5 sm:col-span-2">
-                      <label className="block text-xs font-black uppercase tracking-widest text-slate-500">
+                      <label className="block text-xs font-semibold uppercase tracking-widest text-slate-500">
                         Delivery City/Town
                       </label>
                       <input
@@ -368,14 +368,14 @@ export default function CartDrawer() {
           <div className="px-6 py-6 bg-gray-50/90 border-t border-gray-200 backdrop-blur-xl relative z-10 flex flex-col sm:flex-row gap-5 items-center justify-between">
             <div className="w-full sm:w-auto flex-1">
               <div className="flex items-end gap-4 mb-2">
-                <span className="text-base font-black text-slate-500 uppercase tracking-wider pb-1">Total:</span>
-                <span className="text-3xl font-black text-festive-purple drop-shadow-sm leading-none">
+                <span className="text-base font-semibold text-slate-500 uppercase tracking-wider pb-1">Total:</span>
+                <span className="text-3xl font-semibold text-festive-purple drop-shadow-sm leading-none">
                   ₹{cartTotal}
                 </span>
               </div>
               <div className="flex items-center gap-3 text-sm font-bold text-emerald-600">
                 <span>Savings: ₹{cartSavings}</span>
-                <span className="bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 font-black shadow-sm">
+                <span className="bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 font-semibold shadow-sm">
                   {cartDiscountableOriginalTotal > 0 ? Math.round((cartSavings / cartDiscountableOriginalTotal) * 100) : 0}% OFF
                 </span>
               </div>
@@ -384,7 +384,7 @@ export default function CartDrawer() {
             <div className="w-full sm:w-auto flex flex-col sm:flex-row gap-2.5 sm:gap-3">
               <button
                 onClick={() => setCartOpen(false)}
-                className="w-full sm:flex-1 h-12 sm:h-14 rounded-xl bg-white text-[#3d1166] font-black text-sm sm:text-base uppercase tracking-[0.1em] transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 shadow-[0_4px_12px_rgba(61,17,102,0.1)] hover:shadow-[0_8px_25px_rgba(61,17,102,0.25)] active:scale-95 group overflow-hidden border-[2.5px] border-[#3d1166] relative"
+                className="w-full sm:flex-1 h-12 sm:h-14 rounded-xl bg-white text-[#3d1166] font-semibold text-sm sm:text-base uppercase tracking-[0.1em] transition-all duration-300 cursor-pointer flex items-center justify-center gap-2 shadow-[0_4px_12px_rgba(61,17,102,0.1)] hover:shadow-[0_8px_25px_rgba(61,17,102,0.25)] active:scale-95 group overflow-hidden border-[2.5px] border-[#3d1166] relative"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-[#2d0a4c] to-[#3d1166] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <span className="text-xl relative z-10 text-[#3d1166] group-hover:text-festive-gold transition-colors duration-300 group-hover:rotate-90">➕</span>
@@ -399,7 +399,7 @@ export default function CartDrawer() {
               ) : (
                 <button
                   onClick={handleConfirmOrder}
-                  className="flex-1 sm:px-8 h-14 rounded-xl bg-festive-red hover:bg-festive-gold text-white hover:text-festive-purple font-black text-base uppercase tracking-widest hover:scale-[1.03] active:scale-95 transition-all shadow-[0_8px_20px_rgba(220,38,38,0.25)] hover:shadow-[0_10px_25px_rgba(255,215,0,0.4)] border border-transparent hover:border-festive-gold cursor-pointer flex items-center justify-center gap-2"
+                  className="flex-1 sm:px-8 h-14 rounded-xl bg-festive-red hover:bg-festive-gold text-white hover:text-festive-purple font-semibold text-base uppercase tracking-widest hover:scale-[1.03] active:scale-95 transition-all shadow-[0_8px_20px_rgba(220,38,38,0.25)] hover:shadow-[0_10px_25px_rgba(255,215,0,0.4)] border border-transparent hover:border-festive-gold cursor-pointer flex items-center justify-center gap-2"
                 >
                   <span className="text-xl">✨</span> Confirm Order
                 </button>
@@ -416,7 +416,7 @@ export default function CartDrawer() {
               <div className="w-24 h-24 bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6 border border-emerald-200 shadow-sm">
                 <span className="text-5xl">✅</span>
               </div>
-              <h3 className="text-2xl font-black text-slate-900 uppercase tracking-widest mb-3">Order Confirmed</h3>
+              <h3 className="text-2xl font-semibold text-slate-900 uppercase tracking-widest mb-3">Order Confirmed</h3>
               <p className="text-slate-600 leading-relaxed font-medium mb-8 text-base sm:text-base">
                 Your order no is <span className="font-bold text-festive-purple">{confirmedOrderId ? String(confirmedOrderId).padStart(4, '0') : ''}</span>. Thank you for placing your order! Our team will contact you shortly to confirm the details.
               </p>
@@ -426,7 +426,7 @@ export default function CartDrawer() {
                   clearCart();
                   setCartOpen(false);
                 }}
-                className="w-full py-4 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-black text-base uppercase tracking-widest hover:scale-[1.02] active:scale-95 transition-all shadow-[0_8px_20px_rgba(16,185,129,0.25)]"
+                className="w-full py-4 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-base uppercase tracking-widest hover:scale-[1.02] active:scale-95 transition-all shadow-[0_8px_20px_rgba(16,185,129,0.25)]"
               >
                 Done
               </button>

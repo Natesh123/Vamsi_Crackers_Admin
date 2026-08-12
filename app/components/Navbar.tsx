@@ -57,7 +57,7 @@ export default function Navbar({ priceListUrl = "" }: NavbarProps) {
                             </div>
                         </div>
                         <div className="flex flex-col">
-                            <h1 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-black text-white tracking-tight uppercase leading-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                            <h1 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-white tracking-tight uppercase leading-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                                 VAMSI <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-orange-500">CRACKERS</span>
                             </h1>
                             <p className="hidden sm:block text-[8px] lg:text-[9px] xl:text-[11px] font-bold text-indigo-200 tracking-[0.2em] uppercase mt-1 drop-shadow-md">
@@ -80,7 +80,7 @@ export default function Navbar({ priceListUrl = "" }: NavbarProps) {
                                     href={item.name === "Pricelist" && priceListUrl ? priceListUrl : item.link}
                                     target={item.name === "Pricelist" && priceListUrl ? "_blank" : undefined}
                                     rel={item.name === "Pricelist" && priceListUrl ? "noreferrer" : undefined}
-                                    className="whitespace-nowrap text-[11px] xl:text-[13px] 2xl:text-[15px] font-black uppercase tracking-[0.05em] lg:tracking-[0.1em] transition-all duration-300 text-white hover:text-festive-gold drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] hover:drop-shadow-[0_0_12px_rgba(255,215,0,0.6)]"
+                                    className="whitespace-nowrap text-[11px] xl:text-[13px] 2xl:text-[15px] font-semibold uppercase tracking-[0.05em] lg:tracking-[0.1em] transition-all duration-300 text-white hover:text-festive-gold drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] hover:drop-shadow-[0_0_12px_rgba(255,215,0,0.6)]"
                                 >
                                     {item.name}
                                 </a>
@@ -98,9 +98,9 @@ export default function Navbar({ priceListUrl = "" }: NavbarProps) {
                             className="whitespace-nowrap relative flex items-center gap-1.5 px-3 py-1.5 xl:px-4 xl:py-2 rounded-full border border-festive-gold/50 bg-festive-gold/10 hover:bg-festive-gold/20 text-festive-gold transition-all duration-500 backdrop-blur-md shadow-[0_0_20px_rgba(255,215,0,0.15)] hover:shadow-[0_0_30px_rgba(255,215,0,0.3)] group cursor-pointer hover:scale-105"
                         >
                             <span className="text-sm xl:text-lg group-hover:scale-110 group-hover:-rotate-12 transition-transform duration-300">🛒</span>
-                            <span className="font-black text-[10px] xl:text-xs uppercase tracking-widest text-white group-hover:text-festive-gold transition-colors">Cart</span>
+                            <span className="font-semibold text-[10px] xl:text-xs uppercase tracking-widest text-white group-hover:text-festive-gold transition-colors">Cart</span>
                             {cartCount > 0 && (
-                                <span className="absolute -top-1.5 -right-1.5 bg-gradient-to-br from-red-500 to-red-700 text-white text-[9px] xl:text-[10px] font-black w-4.5 h-4.5 xl:w-5 xl:h-5 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(220,38,38,0.8)] border border-[#16052b] animate-bounce">
+                                <span className="absolute -top-1.5 -right-1.5 bg-gradient-to-br from-red-500 to-red-700 text-white text-[9px] xl:text-[10px] font-semibold w-4.5 h-4.5 xl:w-5 xl:h-5 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(220,38,38,0.8)] border border-[#16052b] animate-bounce">
                                     {cartCount}
                                 </span>
                             )}
@@ -113,7 +113,7 @@ export default function Navbar({ priceListUrl = "" }: NavbarProps) {
                             </div>
                             <div className="flex flex-col">
                                 <span className="whitespace-nowrap text-[9px] font-bold uppercase text-yellow-500/90 tracking-widest mb-0.5 drop-shadow-sm">Enquiry & Bulk</span>
-                                <span className="whitespace-nowrap text-[11px] font-black leading-tight text-white tracking-wider drop-shadow-md">+91 90800 19031</span>
+                                <span className="whitespace-nowrap text-[11px] font-bold leading-tight text-white tracking-wider drop-shadow-md">+91 90800 19031</span>
 
                             </div>
                         </div>
@@ -123,7 +123,7 @@ export default function Navbar({ priceListUrl = "" }: NavbarProps) {
                             href={priceListUrl || "#"}
                             target={priceListUrl ? "_blank" : undefined}
                             rel={priceListUrl ? "noreferrer" : undefined}
-                            className="whitespace-nowrap relative overflow-hidden group px-3 py-1.5 xl:px-5 xl:py-2 2xl:px-6 2xl:py-2.5 rounded-full font-black text-[9px] xl:text-[10px] 2xl:text-xs uppercase tracking-[0.1em] xl:tracking-[0.15em] text-festive-purple bg-gradient-to-r from-festive-gold via-yellow-200 to-festive-gold bg-[length:200%_auto] hover:bg-[position:right_center] transition-all duration-500 shadow-[0_0_25px_rgba(255,215,0,0.5)] hover:shadow-[0_0_40px_rgba(255,215,0,0.8)] flex items-center gap-1 xl:gap-1.5 hover:scale-105"
+                            className="whitespace-nowrap relative overflow-hidden group px-3 py-1.5 xl:px-5 xl:py-2 2xl:px-6 2xl:py-2.5 rounded-full font-semibold text-[9px] xl:text-[10px] 2xl:text-xs uppercase tracking-[0.1em] xl:tracking-[0.15em] text-festive-purple bg-gradient-to-r from-festive-gold via-yellow-200 to-festive-gold bg-[length:200%_auto] hover:bg-[position:right_center] transition-all duration-500 shadow-[0_0_25px_rgba(255,215,0,0.5)] hover:shadow-[0_0_40px_rgba(255,215,0,0.8)] flex items-center gap-1 xl:gap-1.5 hover:scale-105"
                         >
                             <span className="relative z-10 flex items-center gap-1 xl:gap-2">
                                 <span className="text-sm xl:text-lg group-hover:-translate-y-1 transition-transform duration-300 drop-shadow-sm">📥</span>
@@ -141,7 +141,7 @@ export default function Navbar({ priceListUrl = "" }: NavbarProps) {
                         >
                             <span className="text-base">🛒</span>
                             {cartCount > 0 && (
-                                <span className="absolute -top-1 -right-1 bg-gradient-to-r from-festive-red to-red-500 text-white text-[9px] font-black w-4.5 h-4.5 rounded-full flex items-center justify-center shadow-[0_0_10px_rgba(220,38,38,0.5)]">
+                                <span className="absolute -top-1 -right-1 bg-gradient-to-r from-festive-red to-red-500 text-white text-[9px] font-semibold w-4.5 h-4.5 rounded-full flex items-center justify-center shadow-[0_0_10px_rgba(220,38,38,0.5)]">
                                     {cartCount}
                                 </span>
                             )}
@@ -186,7 +186,7 @@ export default function Navbar({ priceListUrl = "" }: NavbarProps) {
                             target={item.name === "Pricelist" && priceListUrl ? "_blank" : undefined}
                             rel={item.name === "Pricelist" && priceListUrl ? "noreferrer" : undefined}
                             onClick={() => setIsOpen(false)}
-                            className="text-2xl sm:text-3xl font-black text-white/70 uppercase tracking-widest hover:text-festive-gold hover:scale-110 transition-all duration-300"
+                            className="text-2xl sm:text-3xl font-semibold text-white/90 uppercase tracking-widest hover:text-festive-gold hover:scale-110 transition-all duration-300"
                         >
                             {item.name}
                         </a>
@@ -194,7 +194,7 @@ export default function Navbar({ priceListUrl = "" }: NavbarProps) {
                     <div className="mt-12 flex flex-col items-center gap-6 text-center w-full max-w-xs">
                          <div className="flex flex-col items-center gap-1 bg-white/5 border border-white/10 p-5 rounded-3xl w-full">
                              <span className="text-gray-400 font-bold uppercase tracking-widest text-xs mb-2">Direct Support</span>
-                             <span className="text-white font-black text-xl tracking-wide">+91 90800 19031</span>
+                             <span className="text-white font-semibold text-xl tracking-wide">+91 90800 19031</span>
 
                          </div>
                          <a 
@@ -202,7 +202,7 @@ export default function Navbar({ priceListUrl = "" }: NavbarProps) {
                             target={priceListUrl ? "_blank" : undefined}
                             rel={priceListUrl ? "noreferrer" : undefined}
                             onClick={() => setIsOpen(false)}
-                            className="w-full py-4 rounded-full font-black text-sm uppercase tracking-widest bg-gradient-to-r from-festive-gold to-yellow-400 text-festive-purple flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(255,215,0,0.3)] hover:scale-105 transition-transform duration-300"
+                            className="w-full py-4 rounded-full font-semibold text-sm uppercase tracking-widest bg-gradient-to-r from-festive-gold to-yellow-400 text-festive-purple flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(255,215,0,0.3)] hover:scale-105 transition-transform duration-300"
                          >
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5"><path fillRule="evenodd" d="M12 2.25a.75.75 0 01.75.75v11.69l3.22-3.22a.75.75 0 111.06 1.06l-4.5 4.5a.75.75 0 01-1.06 0l-4.5-4.5a.75.75 0 111.06-1.06l3.22 3.22V3a.75.75 0 01.75-.75zm-9 13.5a.75.75 0 01.75.75v2.25a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5V16.5a.75.75 0 011.5 0v2.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V16.5a.75.75 0 01.75-.75z" clipRule="evenodd" /></svg>
                             Download Price List

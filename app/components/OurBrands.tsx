@@ -31,7 +31,7 @@ export default function OurBrands() {
 
       <div className="container mx-auto px-4 md:px-12 mb-12 relative z-10">
         <div className="flex flex-col items-center justify-center text-center w-full">
-            <h2 className="text-4xl md:text-5xl font-black text-festive-purple tracking-tighter mb-4 uppercase">
+            <h2 className="text-4xl md:text-5xl font-semibold text-festive-purple tracking-tighter mb-4 uppercase">
                 Our Top <span className="text-festive-red">Brands</span>
             </h2>
             <p className="text-gray-500 text-lg md:text-xl font-medium max-w-2xl">

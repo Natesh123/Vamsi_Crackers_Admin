@@ -41,8 +41,8 @@ export default function VideoGallery() {
             <div className="container mx-auto px-4">
                 {/* Header */}
                 <div className="text-center mb-16">
-                    <span className="text-festive-red text-base font-black tracking-[0.3em] uppercase mb-3 block">Live Demonstration</span>
-                    <h2 className="text-4xl md:text-6xl font-black text-festive-purple mb-4">
+                    <span className="text-festive-red text-base font-semibold tracking-[0.3em] uppercase mb-3 block">Live Demonstration</span>
+                    <h2 className="text-4xl md:text-6xl font-semibold text-festive-purple mb-4">
                         SEE THE <span className="text-festive-red">MAGIC</span> IN ACTION
                     </h2>
                     <p className="text-gray-500 max-w-2xl mx-auto font-medium">
@@ -73,7 +73,7 @@ export default function VideoGallery() {
                                 {/* Overlay Content */}
                                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
                                 <div className="absolute bottom-0 left-0 w-full p-6 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform">
-                                    <h3 className="text-xl font-black uppercase tracking-tight mb-1">{video.title}</h3>
+                                    <h3 className="text-xl font-semibold uppercase tracking-tight mb-1">{video.title}</h3>
                                     <div className="flex items-center gap-2">
                                         <span className="w-2 h-2 rounded-full bg-festive-gold animate-pulse"></span>
                                         <span className="text-xs font-bold uppercase tracking-widest text-festive-gold">Watch Demo</span>

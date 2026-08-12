@@ -98,7 +98,7 @@ export default function Home() {
       {/* NAVIGATION */}
       <Navbar priceListUrl={priceListUrl} />
 
-      <main className="flex-grow">
+      <main className="flex-grow pt-[110px] sm:pt-[120px] md:pt-[130px] xl:pt-[140px]">
         {/* HERO SECTION */}
         <Banner priceListUrl={priceListUrl} />
         
@@ -111,7 +111,7 @@ export default function Home() {
             
             <div className="container mx-auto px-1 flex flex-row items-center justify-center gap-1 sm:gap-4 relative z-10 text-center flex-wrap">
               <span className="text-lg sm:text-3xl animate-bounce shadow-festive-gold drop-shadow-lg">🎉</span>
-              <h3 className="text-white font-black text-[12px] sm:text-xl md:text-2xl tracking-wide uppercase drop-shadow-md">
+              <h3 className="text-white font-semibold text-[12px] sm:text-xl md:text-2xl tracking-wide uppercase drop-shadow-md">
                 <span className="hidden sm:inline">Minimum Order Value:</span>
                 <span className="sm:hidden">Minimum Order:</span>
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-festive-gold to-yellow-500 font-extrabold ml-1 text-[14px] sm:text-xl md:text-2xl">
@@ -160,7 +160,7 @@ export default function Home() {
                           <div className="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
                           {item.icon}
                       </div>
-                      <span className="text-white font-black uppercase text-xs md:text-sm tracking-[0.2em] group-hover:text-festive-gold transition-colors duration-300 leading-snug">{item.label}</span>
+                      <span className="text-white font-semibold uppercase text-xs md:text-sm tracking-[0.2em] group-hover:text-festive-gold transition-colors duration-300 leading-snug">{item.label}</span>
                   </div>
                 ))}
             </div>
@@ -186,11 +186,11 @@ export default function Home() {
                 </div>
                 
                 <div className="w-full md:w-1/2 text-center md:text-left">
-                    <div className="inline-flex items-center justify-center md:justify-start gap-2 px-4 py-2 rounded-full bg-festive-purple/5 border border-festive-purple/10 text-festive-purple font-black uppercase tracking-[0.2em] text-[10px] md:text-xs mb-5 md:mb-6 shadow-sm">
+                    <div className="inline-flex items-center justify-center md:justify-start gap-2 px-4 py-2 rounded-full bg-festive-purple/5 border border-festive-purple/10 text-festive-purple font-semibold uppercase tracking-[0.2em] text-[10px] md:text-xs mb-5 md:mb-6 shadow-sm">
                         <span className="w-1.5 h-1.5 bg-festive-red rounded-full"></span>
                         About Vamsi Crackers
                     </div>
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-slate-800 mb-5 md:mb-8 leading-[1.15] uppercase tracking-tighter">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-slate-800 mb-5 md:mb-8 leading-[1.15] uppercase tracking-tighter">
                         Bringing The <span className="text-transparent bg-clip-text bg-gradient-to-r from-festive-red to-orange-500 drop-shadow-sm">Spark</span> <br />
                         To Your Celebrations
                     </h2>
@@ -216,7 +216,7 @@ export default function Home() {
                                     {stat.icon}
                                 </div>
                                 <div>
-                                    <h4 className="text-slate-800 font-black text-[11px] sm:text-xs md:text-sm uppercase tracking-tight mb-0.5">{stat.title}</h4>
+                                    <h4 className="text-slate-800 font-semibold text-[11px] sm:text-xs md:text-sm uppercase tracking-tight mb-0.5">{stat.title}</h4>
                                     <p className="text-gray-400 text-[9px] md:text-[10px] font-bold uppercase tracking-widest">{stat.sub}</p>
                                 </div>
                             </div>

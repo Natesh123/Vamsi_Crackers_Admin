@@ -48,7 +48,7 @@ export default function Loader() {
         />
 
         {!showButton && (
-          <div className="flex gap-1 items-center text-amber-400 font-black tracking-[0.3em] uppercase text-sm mt-4 animate-pulse">
+          <div className="flex gap-1 items-center text-amber-400 font-semibold tracking-[0.3em] uppercase text-sm mt-4 animate-pulse">
             LOADING PLEASE WAIT...
           </div>
         )}
@@ -57,7 +57,7 @@ export default function Loader() {
       {showButton && (
         <button
           onClick={handleEnterSite}
-          className="mt-6 bg-gradient-to-r from-amber-400 to-yellow-500 text-slate-900 px-10 py-4 rounded-full font-black text-lg uppercase tracking-widest shadow-[0_0_25px_rgba(255,215,0,0.5)] hover:scale-110 active:scale-95 transition-transform"
+          className="mt-6 bg-gradient-to-r from-amber-400 to-yellow-500 text-slate-900 px-10 py-4 rounded-full font-semibold text-lg uppercase tracking-widest shadow-[0_0_25px_rgba(255,215,0,0.5)] hover:scale-110 active:scale-95 transition-transform"
         >
           🚀 ENTER WEBSITE
         </button>

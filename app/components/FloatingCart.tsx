@@ -21,7 +21,7 @@ export default function FloatingCart() {
             {cartCount} {cartCount === 1 ? "Item" : "Items"} in cart
           </span>
           <div className="flex items-end gap-1">
-             <span className="text-xl font-black tracking-wider leading-none text-festive-gold">
+             <span className="text-xl font-semibold tracking-wider leading-none text-festive-gold">
                ₹{cartTotal}
              </span>
              <span className="text-[9px] font-bold text-white/50 mb-0.5 ml-1">PLUS TAXES</span>
@@ -30,7 +30,7 @@ export default function FloatingCart() {
         
         <button
           onClick={() => setCartOpen(true)}
-          className="bg-white text-[#3d1166] px-5 py-2.5 rounded-xl font-black text-sm uppercase tracking-[0.1em] shadow-[0_4px_15px_rgba(255,255,255,0.2)] flex items-center gap-1.5 active:scale-95 transition-all"
+          className="bg-white text-[#3d1166] px-5 py-2.5 rounded-xl font-semibold text-sm uppercase tracking-[0.1em] shadow-[0_4px_15px_rgba(255,255,255,0.2)] flex items-center gap-1.5 active:scale-95 transition-all"
         >
           View Cart 
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-[#3d1166]">

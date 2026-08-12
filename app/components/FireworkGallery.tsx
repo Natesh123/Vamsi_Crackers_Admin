@@ -23,8 +23,8 @@ export default function FireworkGallery() {
             <div className="container mx-auto px-4 relative z-10">
                 {/* Header */}
                 <div className="text-center mb-16">
-                    <span className="text-festive-gold text-base font-black tracking-[0.4em] uppercase mb-3 block">Visual Experience</span>
-                    <h2 className="text-4xl md:text-6xl font-black text-white mb-6 uppercase tracking-tighter">
+                    <span className="text-festive-gold text-base font-semibold tracking-[0.4em] uppercase mb-3 block">Visual Experience</span>
+                    <h2 className="text-4xl md:text-6xl font-semibold text-white mb-6 uppercase tracking-tighter">
                         The <span className="text-festive-gold">Art</span> of Fire
                     </h2>
                     <p className="text-gray-400 max-w-2xl mx-auto font-medium">
@@ -54,10 +54,10 @@ export default function FireworkGallery() {
 
                             {/* Content */}
                             <div className="absolute bottom-0 left-0 w-full p-8 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                <span className="inline-block px-3 py-1 rounded-full bg-festive-red text-white text-xs font-black uppercase tracking-widest mb-3">
+                                <span className="inline-block px-3 py-1 rounded-full bg-festive-red text-white text-xs font-semibold uppercase tracking-widest mb-3">
                                     {img.tag}
                                 </span>
-                                <h3 className="text-2xl font-black text-white uppercase tracking-tight leading-none group-hover:text-festive-gold transition-colors">
+                                <h3 className="text-2xl font-semibold text-white uppercase tracking-tight leading-none group-hover:text-festive-gold transition-colors">
                                     {img.title}
                                 </h3>
                                 <div className="w-0 group-hover:w-12 h-1 bg-festive-gold mt-4 transition-all duration-500"></div>
@@ -74,7 +74,7 @@ export default function FireworkGallery() {
                 {/* Experience Banner */}
                 <div className="mt-20 p-1 bg-gradient-to-r from-transparent via-festive-gold/30 to-transparent rounded-full">
                      <div className="bg-black py-4 px-10 text-center rounded-full">
-                        <p className="text-festive-gold text-sm md:text-sm font-black uppercase tracking-[0.5em] animate-pulse">
+                        <p className="text-festive-gold text-sm md:text-sm font-semibold uppercase tracking-[0.5em] animate-pulse">
                             Captured live at Sivakasi manufacturing yards
                         </p>
                      </div>

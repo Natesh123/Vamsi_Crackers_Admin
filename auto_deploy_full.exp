@@ -1,0 +1,36 @@
+#!/usr/bin/expect -f
+set timeout -1
+set password "MZ5OlAifTqHx7W"
+set ip "104.254.245.96"
+
+puts "Deploying frontend zip to server..."
+spawn scp -o StrictHostKeyChecking=no "vamsi_frontend_deploy.zip" root@$ip:/var/www/Vamsi_Crackers/frontend/vamsi_frontend_deploy.zip
+expect {
+    "password:" {
+        send "$password\r"
+        exp_continue
+    }
+    eof
+}
+
+puts "Deploying backend zip to server..."
+spawn scp -o StrictHostKeyChecking=no "../Vamsi_Crackers_Backend/vamsi_backend_deploy.zip" root@$ip:/var/www/Vamsi_Crackers/backend/vamsi_backend_deploy.zip
+expect {
+    "password:" {
+        send "$password\r"
+        exp_continue
+    }
+    eof
+}
+
+puts "Extracting and restarting services on server..."
+spawn ssh -o StrictHostKeyChecking=no root@$ip "source ~/.bashrc; source ~/.nvm/nvm.sh; cd /var/www/Vamsi_Crackers/frontend && unzip -o vamsi_frontend_deploy.zip && npm install && pm2 restart frontend && cd /var/www/Vamsi_Crackers/backend && unzip -o vamsi_backend_deploy.zip && npm install && pm2 restart backend"
+expect {
+    "password:" {
+        send "$password\r"
+        exp_continue
+    }
+    eof
+}
+
+puts "Deployment complete."

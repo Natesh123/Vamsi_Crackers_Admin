@@ -115,7 +115,7 @@ export default function Footer() {
                                     <span className="w-2 h-2 bg-festive-gold rounded-full animate-pulse" />
                                     <span className="text-[11px] font-bold text-festive-gold uppercase tracking-[0.2em]">Diwali Season Open</span>
                                 </div>
-                                <h3 className="text-2xl lg:text-3xl font-black leading-tight">
+                                <h3 className="text-2xl lg:text-3xl font-semibold leading-tight">
                                     Ready to Light Up Your{' '}
                                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-festive-gold via-yellow-200 to-festive-gold">
                                         Celebrations?
@@ -173,7 +173,7 @@ export default function Footer() {
                             />
                         </div>
                         <div className="flex flex-col text-left">
-                            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-wide drop-shadow-md uppercase">
+                            <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white tracking-wide drop-shadow-md uppercase">
                                 VAMSI <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-orange-500">CRACKERS</span>
                             </h2>
                             <span className="text-xs sm:text-sm md:text-base text-gray-300 font-medium tracking-[0.2em] uppercase mt-1">
@@ -241,7 +241,7 @@ export default function Footer() {
 
                     {/* Column 1: About */}
                     <div className="lg:col-span-5 space-y-6">
-                        <h3 className="text-sm font-black text-white uppercase tracking-[0.3em] flex items-center gap-3">
+                        <h3 className="text-sm font-semibold text-white uppercase tracking-[0.3em] flex items-center gap-3">
                             <span className="w-8 h-[2px] bg-gradient-to-r from-festive-gold to-transparent rounded-full" />
                             <span className="w-1.5 h-1.5 bg-festive-gold rounded-full" />
                             About Us
@@ -274,7 +274,7 @@ export default function Footer() {
 
                     {/* Column 2: Quick Links */}
                     <div className="lg:col-span-3 lg:pl-8">
-                        <h3 className="text-sm font-black text-white uppercase tracking-[0.3em] flex items-center gap-3 mb-7">
+                        <h3 className="text-sm font-semibold text-white uppercase tracking-[0.3em] flex items-center gap-3 mb-7">
                             <span className="w-8 h-[2px] bg-gradient-to-r from-festive-gold to-transparent rounded-full" />
                             <span className="w-1.5 h-1.5 bg-festive-gold rounded-full" />
                             Quick Links
@@ -310,7 +310,7 @@ export default function Footer() {
 
                     {/* Column 3: Showroom - Premium Card */}
                     <div className="lg:col-span-4">
-                        <h3 className="text-sm font-black text-white uppercase tracking-[0.3em] flex items-center gap-3 mb-7">
+                        <h3 className="text-sm font-semibold text-white uppercase tracking-[0.3em] flex items-center gap-3 mb-7">
                             <span className="w-8 h-[2px] bg-gradient-to-r from-festive-gold to-transparent rounded-full" />
                             <span className="w-1.5 h-1.5 bg-festive-gold rounded-full" />
                             Showroom
@@ -344,7 +344,7 @@ export default function Footer() {
                                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
                                         <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.6)]" />
                                     </span>
-                                    <span className="text-xs font-black text-green-400 uppercase tracking-[0.15em]">
+                                    <span className="text-xs font-semibold text-green-400 uppercase tracking-[0.15em]">
                                         Open for Diwali Season
                                     </span>
                                 </div>

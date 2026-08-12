@@ -65,7 +65,7 @@ export default function ContactSection() {
                 
                 {/* Section Header */}
                 <div className="text-center max-w-3xl mx-auto mb-16 relative z-10">
-                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 tracking-tight mb-4 md:mb-6">
+                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-gray-900 tracking-tight mb-4 md:mb-6">
                         Contact <span className="text-transparent bg-clip-text bg-gradient-to-r from-festive-purple to-festive-red">Us</span>
                     </h2>
                     <p className="text-gray-500 font-medium text-lg lg:text-xl">
@@ -84,7 +84,7 @@ export default function ContactSection() {
                             <span className="w-1.5 h-1.5 rounded-full bg-festive-red animate-pulse"></span>
                             Get in touch
                         </div>
-                        <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 tracking-tight mb-4 md:mb-5 leading-[1.15]">
+                        <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-gray-900 tracking-tight mb-4 md:mb-5 leading-[1.15]">
                             Let's start a <br/>
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-festive-purple via-festive-red to-orange-500">conversation.</span>
                         </h2>
@@ -99,12 +99,12 @@ export default function ContactSection() {
                         
                         {/* Premium Header Profile */}
                         <div className="flex items-center gap-3 md:gap-4 mb-6 md:mb-8 relative z-10 bg-gradient-to-r from-gray-50 to-white p-2.5 md:p-3 pr-5 md:pr-6 rounded-2xl border border-gray-100 shadow-sm w-max group-hover:shadow-md transition-shadow">
-                            <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-gradient-to-br from-festive-purple to-festive-red flex items-center justify-center text-white font-black text-lg md:text-xl shadow-inner">
+                            <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-gradient-to-br from-festive-purple to-festive-red flex items-center justify-center text-white font-semibold text-lg md:text-xl shadow-inner">
                                 S
                             </div>
                             <div>
                                 <span className="text-[9px] font-bold text-festive-purple uppercase tracking-[0.2em] block mb-0.5">Proprietor</span>
-                                <p className="text-lg font-black text-gray-900 leading-none">Swetha</p>
+                                <p className="text-lg font-semibold text-gray-900 leading-none">Swetha</p>
                             </div>
                         </div>
 
@@ -114,7 +114,7 @@ export default function ContactSection() {
                                 Available Now
                              </span>
                              <div className="flex flex-col items-center gap-2">
-                                 <a href="tel:+919080019031" className="block text-2xl sm:text-3xl lg:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-700 hover:from-festive-purple hover:to-festive-red hover:scale-105 transition-all duration-300 drop-shadow-sm tracking-tight">
+                                 <a href="tel:+919080019031" className="block text-2xl sm:text-3xl lg:text-4xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-700 hover:from-festive-purple hover:to-festive-red hover:scale-105 transition-all duration-300 drop-shadow-sm tracking-tight">
                                     +91 90800 19031
                                  </a>
                                  <a href="mailto:vamsidharuncrackers@gmail.com" className="text-[13px] sm:text-sm font-bold text-gray-500 hover:text-festive-purple transition-colors flex items-center gap-1.5 mt-1">
@@ -125,15 +125,15 @@ export default function ContactSection() {
                         </div>
                         
                         <div className="w-full grid grid-cols-2 gap-3 mt-6 relative z-10">
-                            <a href="tel:+919080019031" className="col-span-1 py-3.5 rounded-xl bg-gray-900 text-white font-black text-center text-[10px] sm:text-xs uppercase tracking-[0.2em] hover:bg-festive-purple hover:shadow-[0_10px_20px_rgba(88,28,135,0.25)] transition-all duration-300 shadow-md flex items-center justify-center gap-2">
+                            <a href="tel:+919080019031" className="col-span-1 py-3.5 rounded-xl bg-gray-900 text-white font-semibold text-center text-[10px] sm:text-xs uppercase tracking-[0.2em] hover:bg-festive-purple hover:shadow-[0_10px_20px_rgba(88,28,135,0.25)] transition-all duration-300 shadow-md flex items-center justify-center gap-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M1.5 4.5a3 3 0 013-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 01-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 006.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 011.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 01-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5z" clipRule="evenodd" /></svg>
                                 Call
                             </a>
-                            <a href="https://wa.me/919080019031" target="_blank" rel="noreferrer" className="col-span-1 py-3.5 rounded-xl bg-[#25D366] text-white font-black text-center text-[10px] sm:text-xs uppercase tracking-[0.2em] hover:bg-[#1DA851] hover:shadow-[0_10px_20px_rgba(37,211,102,0.3)] transition-all duration-300 shadow-md flex items-center justify-center gap-2">
+                            <a href="https://wa.me/919080019031" target="_blank" rel="noreferrer" className="col-span-1 py-3.5 rounded-xl bg-[#25D366] text-white font-semibold text-center text-[10px] sm:text-xs uppercase tracking-[0.2em] hover:bg-[#1DA851] hover:shadow-[0_10px_20px_rgba(37,211,102,0.3)] transition-all duration-300 shadow-md flex items-center justify-center gap-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M11.99 2.01c-5.52 0-9.99 4.47-9.99 9.99 0 1.98.58 3.82 1.58 5.37l-1.57 4.6 4.77-1.22c1.51.91 3.28 1.44 5.17 1.44 5.52 0 9.99-4.47 9.99-9.99s-4.47-9.99-9.99-9.99zm0 18.27c-1.63 0-3.17-.42-4.51-1.16l-.32-.18-3.04.78 1.01-2.92-.2-.33c-.78-1.29-1.24-2.82-1.24-4.45 0-4.58 3.73-8.31 8.31-8.31s8.31 3.73 8.31 8.31-3.73 8.31-8.31 8.31zm4.56-6.19c-.25-.13-1.48-.73-1.71-.81-.23-.08-.4-.13-.57.13-.17.25-.65.81-.8.98-.15.17-.3.19-.55.06-1.5-.78-2.67-1.5-3.69-2.93-.11-.16.02-.24.14-.36.11-.11.25-.29.37-.44.08-.1.13-.17.21-.33.1-.21.05-.39-.02-.52-.16-.27-.57-1.38-.78-1.89-.21-.5-.42-.43-.57-.44H7.2c-.2 0-.52.08-.79.37s-1.04 1.02-1.04 2.48 1.07 2.89 1.22 3.09c.15.2 2.1 3.2 5.09 4.49 2.21.96 2.92 1.04 3.96.88.94-.15 2.53-1.04 2.89-2.04.36-1.01.36-1.87.25-2.04-.11-.18-.4-.28-.65-.4z"/></svg>
                                 WhatsApp
                             </a>
-                            <a href="mailto:vamsidharuncrackers@gmail.com" className="col-span-2 py-3.5 rounded-xl bg-blue-600 text-white font-black text-center text-[10px] sm:text-xs uppercase tracking-[0.2em] hover:bg-blue-700 hover:shadow-[0_10px_20px_rgba(37,99,235,0.3)] transition-all duration-300 shadow-md flex items-center justify-center gap-2">
+                            <a href="mailto:vamsidharuncrackers@gmail.com" className="col-span-2 py-3.5 rounded-xl bg-blue-600 text-white font-semibold text-center text-[10px] sm:text-xs uppercase tracking-[0.2em] hover:bg-blue-700 hover:shadow-[0_10px_20px_rgba(37,99,235,0.3)] transition-all duration-300 shadow-md flex items-center justify-center gap-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z" /><path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z" /></svg>
                                 Send Email
                             </a>
@@ -152,12 +152,12 @@ export default function ContactSection() {
                         </div>
                         <h3 className="text-gray-400 font-bold uppercase tracking-widest text-[10px] md:text-xs mb-3 md:mb-4 relative z-10">Official Showroom</h3>
                         <div className="mt-auto w-full relative z-10">
-                            <p className="text-xl md:text-2xl font-black text-gray-900 leading-tight mb-1">D.NO. 177/5/18, Pernaickenpatti,</p>
-                            <p className="text-xl md:text-2xl font-black text-gray-900 leading-tight mb-3 md:mb-4">Sithurajapuram, Virudhunagar</p>
+                            <p className="text-xl md:text-2xl font-semibold text-gray-900 leading-tight mb-1">D.NO. 177/5/18, Pernaickenpatti,</p>
+                            <p className="text-xl md:text-2xl font-semibold text-gray-900 leading-tight mb-3 md:mb-4">Sithurajapuram, Virudhunagar</p>
                             <p className="text-gray-500 font-medium text-sm md:text-base">Tamil Nadu, 626 189</p>
                         </div>
                         <div className="w-full mt-6 md:mt-8 relative z-10">
-                             <a href="#map" className="block w-full py-3 rounded-xl bg-festive-red text-white font-black text-center text-[10px] md:text-xs uppercase tracking-[0.2em] hover:bg-red-800 hover:shadow-lg transition-all duration-300 shadow-md">View Map Below</a>
+                             <a href="#map" className="block w-full py-3 rounded-xl bg-festive-red text-white font-semibold text-center text-[10px] md:text-xs uppercase tracking-[0.2em] hover:bg-red-800 hover:shadow-lg transition-all duration-300 shadow-md">View Map Below</a>
                         </div>
                     </div>
 
@@ -165,7 +165,7 @@ export default function ContactSection() {
                     <div className="xl:col-span-5 md:col-span-2 p-6 md:p-8 lg:p-10 rounded-3xl md:rounded-[2rem] bg-white/80 backdrop-blur-2xl border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:-translate-y-1 hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-all duration-500 h-full flex flex-col">
                         <div className="flex items-center gap-3 mb-8">
                             <div className="w-10 h-10 rounded-full bg-festive-gold/10 flex items-center justify-center text-xl border border-festive-gold/20">✉️</div>
-                            <h3 className="text-2xl font-black text-gray-900">Send a Message</h3>
+                            <h3 className="text-2xl font-semibold text-gray-900">Send a Message</h3>
                         </div>
                         
                         <form onSubmit={handleSubmit} className="space-y-5 flex-grow flex flex-col justify-between">
@@ -194,7 +194,7 @@ export default function ContactSection() {
                                 </div>
                             )}
 
-                            <button type="submit" disabled={submitting} className={`w-full py-4 md:py-5 rounded-2xl text-white font-black uppercase tracking-[0.2em] text-[10px] md:text-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 mt-6 md:mt-8 ${
+                            <button type="submit" disabled={submitting} className={`w-full py-4 md:py-5 rounded-2xl text-white font-semibold uppercase tracking-[0.2em] text-[10px] md:text-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 mt-6 md:mt-8 ${
                                 submitting ? 'bg-slate-400 cursor-not-allowed' : 'bg-festive-purple hover:bg-festive-red hover:shadow-[0_15px_30px_rgba(185,28,28,0.25)]'
                             }`}>
                                 {submitting ? 'Sending...' : 'Submit Message'}

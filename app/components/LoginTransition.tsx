@@ -219,7 +219,7 @@ export default function LoginTransition() {
           <span className="text-5xl animate-pulse">🔑</span>
         </div>
         
-        <h2 className="text-3xl md:text-5xl font-black uppercase tracking-[0.2em] bg-gradient-to-r from-festive-gold via-pink-500 to-festive-gold bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(253,185,49,0.4)] animate-pulse">
+        <h2 className="text-3xl md:text-5xl font-semibold uppercase tracking-[0.2em] bg-gradient-to-r from-festive-gold via-pink-500 to-festive-gold bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(253,185,49,0.4)] animate-pulse">
           Access Granted
         </h2>
         
