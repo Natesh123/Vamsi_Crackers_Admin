@@ -1722,7 +1722,7 @@ const authFetch = async (url: string, options: any = {}) => {
       <!DOCTYPE html>
       <html>
         <head>
-          <title>Order Invoice #{String(order.id).padStart(4, '0')}</title>
+          <title>Order Invoice #${String(order.id).padStart(4, '0')}</title>
           <style>
             @page { margin: 0; }
             body { font-family: 'Helvetica', 'Arial', sans-serif; color: #333; line-height: 1.4; max-width: 210mm; margin: 0 auto; font-size: 12px; padding: 10mm; }
@@ -3630,7 +3630,7 @@ const authFetch = async (url: string, options: any = {}) => {
                                       total_savings: finalSavings,
                                       source: "POS",
                                       status: "Completed",
-                                      payment_status: "Paid",
+                                      payment_status: "Unpaid",
                                       items: billingCart.map(item => ({
                                         id: item.id,
                                         name: item.name,

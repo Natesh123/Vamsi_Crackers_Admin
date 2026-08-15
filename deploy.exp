@@ -1,26 +1,64 @@
 #!/usr/bin/expect -f
+
 set timeout -1
-set password "MZ5OlAifTqHx7W"
-set ip "104.254.245.96"
+set password "Prasath@1990"
+set host "103.191.208.98"
+set user "root"
+set dir "/var/www/vamsicrackers/frontend"
+set zip "vamsi_crackers_admin_build.zip"
 
-puts "Deploying ProductCatalog.tsx to server..."
-spawn scp -o StrictHostKeyChecking=no "app/components/ProductCatalog.tsx" root@$ip:/var/www/Vamsi_Crackers/frontend/app/components/ProductCatalog.tsx
+# Create directory if it doesn't exist just in case
+spawn ssh $user@$host "mkdir -p $dir"
 expect {
-    "password:" {
-        send "$password\r"
+    "yes/no" {
+        send "yes\r"
         exp_continue
     }
-    eof
-}
-
-puts "Building and restarting pm2 on server..."
-spawn ssh -o StrictHostKeyChecking=no root@$ip "source ~/.bashrc; source ~/.nvm/nvm.sh; cd /var/www/Vamsi_Crackers/frontend && npm run build && pm2 restart all"
-expect {
     "password:" {
         send "$password\r"
+    }
+}
+expect eof
+
+# SCP the file
+spawn scp $zip $user@$host:$dir/
+expect {
+    "yes/no" {
+        send "yes\r"
         exp_continue
     }
-    eof
+    "password:" {
+        send "$password\r"
+    }
+}
+expect eof
+
+# SSH and run commands
+spawn ssh $user@$host
+expect {
+    "yes/no" {
+        send "yes\r"
+        exp_continue
+    }
+    "password:" {
+        send "$password\r"
+    }
 }
 
-puts "Deployment complete."
+expect "#"
+send "cd $dir\r"
+expect "#"
+send "unzip -o $zip\r"
+expect "#"
+send "source ~/.nvm/nvm.sh || true\r"
+expect "#"
+send "npm install --production\r"
+expect "#"
+send "pm2 delete vamsi-frontend || true\r"
+expect "#"
+send "pm2 start npm --name \"vamsi-frontend\" -- start\r"
+expect "#"
+send "pm2 save\r"
+expect "#"
+send "exit\r"
+expect eof
