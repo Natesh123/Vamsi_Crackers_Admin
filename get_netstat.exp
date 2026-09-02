@@ -1,0 +1,11 @@
+#!/usr/bin/expect -f
+set timeout -1
+set password "Prasath@1990"
+set host "103.191.208.98"
+set user "root"
+
+spawn ssh -o StrictHostKeyChecking=no $user@$host "netstat -tulpn > /tmp/netstat.out; cat /tmp/netstat.out | grep 3005"
+expect {
+    "password:" { send "$password\r"; exp_continue }
+    eof
+}

@@ -362,6 +362,21 @@ export default function Footer() {
                 </div>
 
                 {/* ═══════════════════════════════════════════════════════════════ */}
+                {/* Legal Disclaimer */}
+                {/* ═══════════════════════════════════════════════════════════════ */}
+                <div className={`relative pt-8 pb-6 transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                    <div className="absolute top-0 left-0 right-0">
+                        <div className="h-[1px] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
+                    </div>
+                    <div className="max-w-7xl mx-auto mt-6 text-center space-y-4 px-4 bg-black/10 rounded-xl p-6 border border-white/5">
+                        <h4 className="text-festive-gold font-bold text-sm tracking-widest uppercase">Important Legal Notice</h4>
+                        <p className="text-gray-300 text-xs md:text-sm leading-relaxed text-justify md:text-center font-medium">
+                            As per 2018 supreme court order, online sale of firecrackers are not permitted! We value our customers and at the same time, respect jurisdiction. We request you to add your products to the cart and submit the required crackers through the enquiry button. We will contact you within 24 hrs and confirm the order through WhatsApp or phone call. Please add and submit your enquiries and enjoy your Diwali with Vamsi Crackers. Our License No.----. Vamsi Crackers as a company following 100% legal & statutory compliances and all our shops, go-downs are maintained as per the explosive acts. We send the parcels through registered and legal transport service providers as like every other major companies in Sivakasi is doing so.
+                        </p>
+                    </div>
+                </div>
+
+                {/* ═══════════════════════════════════════════════════════════════ */}
                 {/* Bottom Bar */}
                 {/* ═══════════════════════════════════════════════════════════════ */}
                 <div className={`relative pt-8 transition-all duration-1000 delay-600 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>

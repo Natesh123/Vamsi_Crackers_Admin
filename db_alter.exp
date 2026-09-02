@@ -1,0 +1,11 @@
+#!/usr/bin/expect -f
+set timeout -1
+set password "Prasath@1990"
+set host "103.191.208.98"
+set user "root"
+
+spawn ssh -o StrictHostKeyChecking=no $user@$host "mysql -u dbadmin -p'Prasath@1990' -e 'ALTER TABLE vamsi_crackers.orders AUTO_INCREMENT = 1001;'"
+expect {
+    "password:" { send "$password\r"; exp_continue }
+    eof
+}

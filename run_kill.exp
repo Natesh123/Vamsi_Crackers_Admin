@@ -1,0 +1,17 @@
+#!/usr/bin/expect -f
+set timeout -1
+set password "Prasath@1990"
+set host "103.191.208.98"
+set user "root"
+
+spawn scp -o StrictHostKeyChecking=no kill_3005.py $user@$host:/tmp/kill_3005.py
+expect {
+    "password:" { send "$password\r"; exp_continue }
+    eof
+}
+
+spawn ssh -o StrictHostKeyChecking=no $user@$host "python3 /tmp/kill_3005.py && pm2 restart vamsi-frontend && sleep 5 && pm2 logs vamsi-frontend --lines 20"
+expect {
+    "password:" { send "$password\r"; exp_continue }
+    eof
+}

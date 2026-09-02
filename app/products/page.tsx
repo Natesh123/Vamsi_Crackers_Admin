@@ -49,8 +49,11 @@ function ProductsPageInner() {
         if (catsRes.ok && prodsRes.ok) {
           const catsData = await catsRes.json();
           const prodsData = await prodsRes.json();
-          setCategories(catsData);
-          setProducts(prodsData);
+          
+          const removeTamil = (name: string) => name ? name.replace(/\s*\([^)]*[\u0b80-\u0bff]+[^)]*\)/g, "").trim() : name;
+          
+          setCategories(catsData.map((c: any) => ({ ...c, name: removeTamil(c.name) })));
+          setProducts(prodsData.map((p: any) => ({ ...p, name: removeTamil(p.name) })));
         }
 
         if (plRes && plRes.ok) {

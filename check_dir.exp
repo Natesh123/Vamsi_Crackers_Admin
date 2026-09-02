@@ -1,13 +1,11 @@
 #!/usr/bin/expect -f
 set timeout -1
-set password "MZ5OlAifTqHx7W"
-set ip "104.254.245.96"
+set password "Prasath@1990"
+set host "103.191.208.98"
+set user "root"
 
-spawn ssh -o StrictHostKeyChecking=no root@$ip "ls -la /var/www/Vamsi_Crackers/"
+spawn ssh -o StrictHostKeyChecking=no $user@$host "ls -la /var/www/"
 expect {
-    "password:" {
-        send "$password\r"
-        exp_continue
-    }
+    "password:" { send "$password\r"; exp_continue }
     eof
 }

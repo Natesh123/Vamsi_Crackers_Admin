@@ -479,7 +479,7 @@ function LoginTransition() {
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                        className: "text-3xl md:text-5xl font-black uppercase tracking-[0.2em] bg-gradient-to-r from-festive-gold via-pink-500 to-festive-gold bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(253,185,49,0.4)] animate-pulse",
+                        className: "text-3xl md:text-5xl font-semibold uppercase tracking-[0.2em] bg-gradient-to-r from-festive-gold via-pink-500 to-festive-gold bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(253,185,49,0.4)] animate-pulse",
                         children: "Access Granted"
                     }, void 0, false, {
                         fileName: "[project]/app/components/LoginTransition.tsx",
@@ -517,7 +517,7 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 }),
 "[project]/app/admin/page.tsx [app-client] (ecmascript)", ((__turbopack_context__, module, exports) => {
 
-const e = new Error("Could not parse module '[project]/app/admin/page.tsx'\n\nExpected unicode escape");
+const e = new Error("Could not parse module '[project]/app/admin/page.tsx'\n\nExpected ',', got ':'");
 e.code = 'MODULE_UNPARSABLE';
 throw e;
 }),

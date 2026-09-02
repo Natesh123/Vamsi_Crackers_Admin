@@ -181,14 +181,30 @@ const authFetch = async (url: string, options: any = {}) => {
     }
   }, []);
 
-  // Initialize root font size scale and socket
+  // Responsive root font size for Admin Panel
   useEffect(() => {
-    document.documentElement.style.fontSize = "17.2px";
+    const adjustFontSize = () => {
+      const width = window.innerWidth;
+      if (width < 768) {
+        document.documentElement.style.fontSize = "14px"; // Mobile
+      } else if (width <= 1366) {
+        document.documentElement.style.fontSize = "12px"; // Small laptops or scaled displays
+      } else if (width <= 1600) {
+        document.documentElement.style.fontSize = "14px"; // Medium laptops
+      } else {
+        document.documentElement.style.fontSize = "16px"; // Large desktops
+      }
+    };
+    
+    adjustFontSize();
+    window.addEventListener("resize", adjustFontSize);
     return () => {
+      window.removeEventListener("resize", adjustFontSize);
       document.documentElement.style.fontSize = "";
     };
   }, []);
 
+  // Socket initialization
   useEffect(() => {
     const socket = io(apiUrl || "http://localhost:5001");
     
@@ -602,12 +618,6 @@ const authFetch = async (url: string, options: any = {}) => {
   const [uploadingPdf, setUploadingPdf] = useState(false);
 
   // Translation helpers and states
-  const [productTamilTranslation, setProductTamilTranslation] = useState("");
-  const [isTranslatingProduct, setIsTranslatingProduct] = useState(false);
-  const [newCatTamilTranslation, setNewCatTamilTranslation] = useState("");
-  const [isTranslatingNewCat, setIsTranslatingNewCat] = useState(false);
-  const [editCatTamilTranslation, setEditCatTamilTranslation] = useState("");
-  const [isTranslatingEditCat, setIsTranslatingEditCat] = useState(false);
 
   const filteredCustomers = useMemo(() => {
     if (!customerSearchTerm) return uniqueCustomers;
@@ -640,88 +650,6 @@ const authFetch = async (url: string, options: any = {}) => {
     link.click();
     document.body.removeChild(link);
   };
-
-  const translateText = async (text: string): Promise<string> => {
-    if (!text || !text.trim()) return "";
-    // If it already has Tamil characters, skip
-    if (/[\u0b80-\u0bff]/.test(text)) return "";
-    
-    // Strip existing parentheses if any
-    const cleanText = text.replace(/\s*\(.*\)\s*/g, "").trim();
-    if (!cleanText) return "";
-
-    try {
-      const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ta&dt=t&q=${encodeURIComponent(cleanText)}`);
-      if (!res.ok) return "";
-      const data = await res.json();
-      if (data && data[0] && data[0][0] && data[0][0][0]) {
-        return data[0][0][0];
-      }
-    } catch (e) {
-      console.error(e);
-    }
-    return "";
-  };
-
-  const appendTamilTranslation = (currentVal: string, translated: string, setter: (val: string) => void) => {
-    if (!translated) return;
-    const cleanBase = currentVal.replace(/\s*\(.*\)\s*/g, "").trim();
-    setter(`${cleanBase} (${translated})`);
-  };
-
-  // Product Name Translation Effect
-  useEffect(() => {
-    if (!productName.trim()) {
-      setProductTamilTranslation("");
-      return;
-    }
-    if (productName.includes("(") && /[\u0b80-\u0bff]/.test(productName)) return;
-
-    const delayDebounce = setTimeout(async () => {
-      setIsTranslatingProduct(true);
-      const translated = await translateText(productName);
-      setProductTamilTranslation(translated);
-      setIsTranslatingProduct(false);
-    }, 600);
-
-    return () => clearTimeout(delayDebounce);
-  }, [productName]);
-
-  // New Category Translation Effect
-  useEffect(() => {
-    if (!newCategoryName.trim()) {
-      setNewCatTamilTranslation("");
-      return;
-    }
-    if (newCategoryName.includes("(") && /[\u0b80-\u0bff]/.test(newCategoryName)) return;
-
-    const delayDebounce = setTimeout(async () => {
-      setIsTranslatingNewCat(true);
-      const translated = await translateText(newCategoryName);
-      setNewCatTamilTranslation(translated);
-      setIsTranslatingNewCat(false);
-    }, 600);
-
-    return () => clearTimeout(delayDebounce);
-  }, [newCategoryName]);
-
-  // Edit Category Translation Effect
-  useEffect(() => {
-    if (!editCategoryName.trim()) {
-      setEditCatTamilTranslation("");
-      return;
-    }
-    if (editCategoryName.includes("(") && /[\u0b80-\u0bff]/.test(editCategoryName)) return;
-
-    const delayDebounce = setTimeout(async () => {
-      setIsTranslatingEditCat(true);
-      const translated = await translateText(editCategoryName);
-      setEditCatTamilTranslation(translated);
-      setIsTranslatingEditCat(false);
-    }, 600);
-
-    return () => clearTimeout(delayDebounce);
-  }, [editCategoryName]);
 
   // Preset images helper
   const presetImages = [
@@ -768,8 +696,10 @@ const authFetch = async (url: string, options: any = {}) => {
       const catsData = await catsRes.json();
       const prodsData = await prodsRes.json();
 
-      setCategories(catsData);
-      setProducts(prodsData);
+      const removeTamil = (name: string) => name ? name.replace(/\s*\([^)]*[\u0b80-\u0bff]+[^)]*\)/g, "").trim() : name;
+
+      setCategories(catsData.map((c: any) => ({ ...c, name: removeTamil(c.name) })));
+      setProducts(prodsData.map((p: any) => ({ ...p, name: removeTamil(p.name) })));
 
       if (diagRes && diagRes.ok) {
         const diagData = await diagRes.json();
@@ -783,8 +713,15 @@ const authFetch = async (url: string, options: any = {}) => {
 
       if (ordersRes && ordersRes.ok) {
         const ordersData = await ordersRes.json();
-        setOrders(ordersData);
-        setUnreadOrders(ordersData.filter((o: any) => o.is_read === 0 && o.source === 'Website'));
+        const sanitizedOrdersData = ordersData.map((order: any) => ({
+          ...order,
+          items: Array.isArray(order.items) ? order.items.map((item: any) => ({
+            ...item,
+            name: removeTamil(item.name)
+          })) : order.items
+        }));
+        setOrders(sanitizedOrdersData);
+        setUnreadOrders(sanitizedOrdersData.filter((o: any) => o.is_read === 0 && o.source === 'Website'));
       }
 
       if (contactsRes && contactsRes.ok) {
@@ -1138,8 +1075,7 @@ const authFetch = async (url: string, options: any = {}) => {
   // Category Actions
   const handleAddCategory = async (e: React.FormEvent) => {
     e.preventDefault();
-    const cleanBase = newCategoryName.replace(/\s*\(.*\)\s*/g, "").trim();
-    const finalName = newCatTamilTranslation ? `${cleanBase} (${newCatTamilTranslation})` : cleanBase;
+    const finalName = newCategoryName.trim();
     if (!finalName) return;
 
     try {
@@ -1154,8 +1090,7 @@ const authFetch = async (url: string, options: any = {}) => {
 
       setCategories((prev) => [...prev, data].sort((a, b) => a.name.localeCompare(b.name)));
       setNewCategoryName("");
-      setNewCatTamilTranslation("");
-      document.getElementById("add-category-modal")?.classList.add("hidden");
+            document.getElementById("add-category-modal")?.classList.add("hidden");
       showToast("Category added successfully!", "success");
     } catch (err: any) {
       showToast(err.message, "error");
@@ -1165,8 +1100,7 @@ const authFetch = async (url: string, options: any = {}) => {
   const handleUpdateCategory = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingCategory) return;
-    const cleanBase = editCategoryName.replace(/\s*\(.*\)\s*/g, "").trim();
-    const finalName = editCatTamilTranslation ? `${cleanBase} (${editCatTamilTranslation})` : cleanBase;
+    const finalName = editCategoryName.trim();
     if (!finalName) return;
 
     try {
@@ -1186,8 +1120,7 @@ const authFetch = async (url: string, options: any = {}) => {
       );
       setEditingCategory(null);
       setEditCategoryName("");
-      setEditCatTamilTranslation("");
-      document.getElementById("add-category-modal")?.classList.add("hidden");
+            document.getElementById("add-category-modal")?.classList.add("hidden");
       showToast("Category updated successfully!", "success");
       fetchData(); // Refresh products to update category names
     } catch (err: any) {
@@ -1223,21 +1156,14 @@ const authFetch = async (url: string, options: any = {}) => {
     setProductApplyDiscount(true);
     setProductIsActive(true);
     setProductSortOrder("");
-    setProductTamilTranslation("");
-    setProductCategoryId(categories[0]?.id.toString() || "");
+        setProductCategoryId(categories[0]?.id.toString() || "");
     setProductImage(presetImages[0].path);
     setIsProductModalOpen(true);
   };
 
   const openEditProductModal = (product: Product) => {
     setEditingProduct(product);
-    // If product name already contains translation suffix, extract translated text
-    const match = product.name.match(/\(([\u0b80-\u0bff\s]+)\)/);
-    if (match) {
-      setProductTamilTranslation(match[1].trim());
-    } else {
-      setProductTamilTranslation("");
-    }
+
     setProductName(product.name);
     setProductPrice(product.price.toString());
     setProductOriginalPrice(product.originalPrice.toString());
@@ -1365,8 +1291,7 @@ const authFetch = async (url: string, options: any = {}) => {
       return;
     }
 
-    const cleanBase = productName.replace(/\s*\(.*\)\s*/g, "").trim();
-    const finalProductName = productTamilTranslation ? `${cleanBase} (${productTamilTranslation})` : cleanBase;
+    const finalProductName = productName.trim();
 
     const finalDiscount = parseFloat(productDiscount) || 0;
 
@@ -1725,10 +1650,12 @@ const authFetch = async (url: string, options: any = {}) => {
           <title>Order Invoice #${String(order.id).padStart(4, '0')}</title>
           <style>
             @page { margin: 0; }
-            body { font-family: 'Helvetica', 'Arial', sans-serif; color: #333; line-height: 1.4; max-width: 210mm; margin: 0 auto; font-size: 12px; padding: 10mm; }
+            body, .invoice-wrapper { font-family: 'Helvetica', 'Arial', sans-serif; color: #333; line-height: 1.4; max-width: 210mm; margin: 0 auto; font-size: 12px; padding: 10mm; background-color: white; box-sizing: border-box; }
             table { width: 100%; border-collapse: collapse; margin-top: -1px; }
             th, td { border: 1px solid #94a3b8; padding: 4px 6px; }
             th { text-align: center; }
+            tr { page-break-inside: avoid; }
+            .avoid-break { page-break-inside: avoid; }
             .text-center { text-align: center; }
             .text-right { text-align: right; }
             .text-left { text-align: left; }
@@ -1736,6 +1663,7 @@ const authFetch = async (url: string, options: any = {}) => {
           </style>
         </head>
         <body>
+          <div class="invoice-wrapper">
           <div style="display: flex; border: 1px solid #94a3b8; font-size: 12px;">
             <div style="width: 33.33%; padding: 5px; border-right: 1px solid #94a3b8;">GSTIN : </div>
             <div style="width: 33.33%; padding: 5px; border-right: 1px solid #94a3b8; text-align: center; font-weight: bold; background-color: #f8fafc; -webkit-print-color-adjust: exact; print-color-adjust: exact;">TAX INVOICE</div>
@@ -1745,7 +1673,12 @@ const authFetch = async (url: string, options: any = {}) => {
           <div style="display: flex; border: 1px solid #94a3b8; border-top: none;">
             <div style="width: 65%; border-right: 1px solid #94a3b8; padding: 10px; display: flex; align-items: center;">
               <div style="margin-right: 15px;">
-                <img src="${window.location.origin}/assets/images/vamsi_crackers_logo_v2.png" alt="Logo" style="width: 80px; height: 80px; object-fit: contain; background: #2a0845; border-radius: 50%; padding: 5px;" />
+                <div style="width: 80px; height: 80px; position: relative;">
+                  <svg width="80" height="80" style="position: absolute; top: 0; left: 0; z-index: 1;">
+                    <circle cx="40" cy="40" r="40" fill="#2a0845" />
+                  </svg>
+                  <img src="${window.location.origin}/assets/images/vamsi_crackers_logo_v2.png" alt="Logo" style="position: absolute; top: 5px; left: 5px; width: 70px; height: 70px; object-fit: cover; border-radius: 50%; z-index: 2;" />
+                </div>
               </div>
               <div>
                 <h1 style="margin: 0 0 5px 0; font-size: 18px; color: #1e3a8a;">Vamsi Crackers</h1>
@@ -1763,11 +1696,11 @@ const authFetch = async (url: string, options: any = {}) => {
           <div style="display: flex; border: 1px solid #94a3b8; border-top: none; text-align: center;">
             <div style="width: 33.33%; padding: 5px; border-right: 1px solid #94a3b8;">
               <div style="color: #4b5563; margin-bottom: 3px;">Order No</div>
-              <div class="bold">{String(order.id).padStart(4, '0')}</div>
+              <div class="bold">${String(order.id).padStart(4, '0')}</div>
             </div>
             <div style="width: 33.33%; padding: 5px; border-right: 1px solid #94a3b8;">
               <div style="color: #4b5563; margin-bottom: 3px;">Receipt No</div>
-              <div class="bold">INV-{String(order.id).padStart(4, '0')}</div>
+              <div class="bold">INV-${String(order.id).padStart(4, '0')}</div>
             </div>
             <div style="width: 33.34%; padding: 5px;">
               <div style="color: #4b5563; margin-bottom: 3px;">Date</div>
@@ -1821,31 +1754,34 @@ const authFetch = async (url: string, options: any = {}) => {
             </tbody>
           </table>
           
-          <div style="display: flex; border: 1px solid #94a3b8; border-top: none;">
-            <div style="width: 65%; padding: 5px; border-right: 1px solid #94a3b8;">
-              <div class="bold" style="margin-bottom: 5px; color: #1e3a8a;">Bank Details</div>
-              <table style="width: 100%; font-size: 11px; border: none; margin-top: 0;">
-                <tr><td style="border: none; padding: 2px;">Acc Holder</td><td style="border: none; padding: 2px;" class="bold">SWETHA S .</td></tr>
-                <tr><td style="border: none; padding: 2px;">Acc No</td><td style="border: none; padding: 2px;" class="bold">403100050600180</td></tr>
-                <tr><td style="border: none; padding: 2px;">Acc Type</td><td style="border: none; padding: 2px;">Savings Account</td></tr>
-                <tr><td style="border: none; padding: 2px;">Bank</td><td style="border: none; padding: 2px;">TMBL SITHURAJAPURAM</td></tr>
-                <tr><td style="border: none; padding: 2px;">IFSC</td><td style="border: none; padding: 2px;">TMBL0000403</td></tr>
-              </table>
+          <div class="avoid-break">
+            <div style="display: flex; border: 1px solid #94a3b8; border-top: none;">
+              <div style="width: 65%; padding: 5px; border-right: 1px solid #94a3b8;">
+                <div class="bold" style="margin-bottom: 5px; color: #1e3a8a;">Bank Details</div>
+                <table style="width: 100%; font-size: 11px; border: none; margin-top: 0;">
+                  <tr><td style="border: none; padding: 2px;">Acc Holder</td><td style="border: none; padding: 2px;" class="bold">SWETHA S .</td></tr>
+                  <tr><td style="border: none; padding: 2px;">Acc No</td><td style="border: none; padding: 2px;" class="bold">403100050600180</td></tr>
+                  <tr><td style="border: none; padding: 2px;">Acc Type</td><td style="border: none; padding: 2px;">Savings Account</td></tr>
+                  <tr><td style="border: none; padding: 2px;">Bank</td><td style="border: none; padding: 2px;">TMBL SITHURAJAPURAM</td></tr>
+                  <tr><td style="border: none; padding: 2px;">IFSC</td><td style="border: none; padding: 2px;">TMBL0000403</td></tr>
+                </table>
+              </div>
+              <div style="width: 35%; padding: 5px; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-end; font-weight: bold;">
+                Authorized Signatory
+              </div>
             </div>
-            <div style="width: 35%; padding: 5px; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-end; font-weight: bold;">
-              Authorized Signatory
+            
+            <div style="border: 1px solid #94a3b8; border-top: none; padding: 5px; font-size: 11px; color: #4b5563;">
+              <div style="margin-bottom: 3px;">Terms & Conditions</div>
+              <div>* Invoice was created on a computer and is invalid without the signature and seal.</div>
+              <div>* Goods once sold cannot be taken back or exchanged.</div>
+            </div>
+            
+            <div style="border: 1px solid #94a3b8; border-top: none; padding: 8px; text-align: center; background-color: #fef08a; color: #854d0e; font-weight: bold; -webkit-print-color-adjust: exact; print-color-adjust: exact;">
+              <div style="margin-bottom: 2px;">Thank You for your business with Vamsi Crackers</div>
+              <div style="font-weight: normal;">For any queries, please contact +91 90800 19031</div>
             </div>
           </div>
-          
-          <div style="border: 1px solid #94a3b8; border-top: none; padding: 5px; font-size: 11px; color: #4b5563;">
-            <div style="margin-bottom: 3px;">Terms & Conditions</div>
-            <div>* Invoice was created on a computer and is invalid without the signature and seal.</div>
-            <div>* Goods once sold cannot be taken back or exchanged.</div>
-          </div>
-          
-          <div style="border: 1px solid #94a3b8; border-top: none; padding: 8px; text-align: center; background-color: #fef08a; color: #854d0e; font-weight: bold; -webkit-print-color-adjust: exact; print-color-adjust: exact;">
-            <div style="margin-bottom: 2px;">Thank You for your business with Vamsi Crackers</div>
-            <div style="font-weight: normal;">For any queries, please contact +91 90800 19031</div>
           </div>
         </body>
       </html>
@@ -1876,6 +1812,52 @@ const authFetch = async (url: string, options: any = {}) => {
     }, 250);
   };
 
+  const handleDownloadPDF = async (order: any, extraDiscType?: "amount"|"percentage", extraDiscValue?: string, packingChargeStr?: string) => {
+    if (!order) return;
+    const html = getInvoiceHTML(order, extraDiscType, extraDiscValue, packingChargeStr);
+    if (!html) return;
+    
+    try {
+      showToast("Generating PDF...", "success");
+      // @ts-ignore
+      const html2pdfModule = await import('html2pdf.js');
+      const html2pdf = html2pdfModule.default;
+      
+      const container = document.createElement('div');
+      container.innerHTML = html;
+      container.style.width = '800px';
+      
+      // Wait for images to load
+      const images = container.getElementsByTagName('img');
+      const imageLoadPromises = Array.from(images).map(img => {
+        if (img.complete) return Promise.resolve();
+        return new Promise(resolve => {
+          img.onload = resolve;
+          img.onerror = resolve;
+        });
+      });
+      await Promise.all(imageLoadPromises);
+      
+      const orderNo = String(order.id).padStart(4, '0');
+      const fileName = `Invoice_${orderNo}.pdf`;
+      
+      const opt = {
+        margin:       0.2,
+        filename:     fileName,
+        image:        { type: 'jpeg' as const, quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true, windowWidth: 800 },
+        jsPDF:        { unit: 'in' as const, format: 'a4' as const, orientation: 'portrait' as const },
+        pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+      };
+
+      await html2pdf().set(opt).from(container).save();
+      
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+      showToast("Failed to generate PDF", "error");
+    }
+  };
+
   const handleWhatsAppShare = async (order: any, extraDiscType?: "amount"|"percentage", extraDiscValue?: string, packingChargeStr?: string) => {
     if (!order) return;
     const html = getInvoiceHTML(order, extraDiscType, extraDiscValue, packingChargeStr);
@@ -1889,25 +1871,39 @@ const authFetch = async (url: string, options: any = {}) => {
       
       const container = document.createElement('div');
       container.innerHTML = html;
+      container.style.width = '800px';
       
+      // Wait for images to load
+      const images = container.getElementsByTagName('img');
+      const imageLoadPromises = Array.from(images).map(img => {
+        if (img.complete) return Promise.resolve();
+        return new Promise(resolve => {
+          img.onload = resolve;
+          img.onerror = resolve;
+        });
+      });
+      await Promise.all(imageLoadPromises);
+      
+      const orderNo = String(order.id).padStart(4, '0');
       const opt = {
-        margin:       0,
-        filename:     `Estimate_${order.id}.pdf`,
+        margin:       0.2,
+        filename:     `Invoice_${orderNo}.pdf`,
         image:        { type: 'jpeg' as const, quality: 0.98 },
-        html2canvas:  { scale: 2 },
-        jsPDF:        { unit: 'in' as const, format: 'a4' as const, orientation: 'portrait' as const }
+        html2canvas:  { scale: 2, useCORS: true, windowWidth: 800 },
+        jsPDF:        { unit: 'in' as const, format: 'a4' as const, orientation: 'portrait' as const },
+        pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
       };
 
       const pdfBlob = await html2pdf().set(opt).from(container).output('blob');
-      const file = new File([pdfBlob], `Estimate_${order.id}.pdf`, { type: 'application/pdf' });
+      const file = new File([pdfBlob], `Invoice_${orderNo}.pdf`, { type: 'application/pdf' });
       let shared = false;
       
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
         try {
           await navigator.share({
             files: [file],
-            title: `Estimate ${order.id}`,
-            text: `Hi ${order.customer_name}, here is your estimate quotation from Vamsi Crackers.`
+            title: `Invoice ${orderNo}`,
+            text: `Hi ${order.customer_name}, here is your invoice from Vamsi Crackers.`
           });
           shared = true;
         } catch (err) {
@@ -1920,7 +1916,7 @@ const authFetch = async (url: string, options: any = {}) => {
         const url = URL.createObjectURL(pdfBlob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `Estimate_${order.id}.pdf`;
+        a.download = `Invoice_${orderNo}.pdf`;
         a.click();
         URL.revokeObjectURL(url);
         
@@ -2431,7 +2427,7 @@ const authFetch = async (url: string, options: any = {}) => {
 
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
                         <button
-                          onClick={() => { setEditingProduct(null); setProductName(""); setProductPrice(""); setProductOriginalPrice(""); setProductDiscount(""); setProductCategoryId(""); setProductImage(""); setProductTamilTranslation(""); setProductSortOrder(""); setIsProductModalOpen(true); }}
+                          onClick={() => { setEditingProduct(null); setProductName(""); setProductPrice(""); setProductOriginalPrice(""); setProductDiscount(""); setProductCategoryId(""); setProductImage(""); setProductSortOrder(""); setIsProductModalOpen(true); }}
                           className="flex flex-col items-center justify-center p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:border-indigo-200 hover:bg-indigo-50/50 hover:-translate-y-1 transition-all group cursor-pointer"
                         >
                           <div className="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
@@ -2442,7 +2438,7 @@ const authFetch = async (url: string, options: any = {}) => {
                         </button>
                         
                         <button
-                          onClick={() => { setEditingCategory(null); setNewCategoryName(""); setNewCatTamilTranslation(""); document.getElementById("add-category-modal")?.classList.remove("hidden"); }}
+                          onClick={() => { setEditingCategory(null); setNewCategoryName(""); document.getElementById("add-category-modal")?.classList.remove("hidden"); }}
                           className="flex flex-col items-center justify-center p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:border-emerald-200 hover:bg-slate-900/5 hover:-translate-y-1 transition-all group cursor-pointer"
                         >
                           <div className="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
@@ -2535,7 +2531,7 @@ const authFetch = async (url: string, options: any = {}) => {
                       <p className="text-indigo-200 text-base mt-2 font-medium">Organize and manage your product groupings</p>
                     </div>
                     <button
-                      onClick={() => { setEditingCategory(null); setNewCategoryName(""); setNewCatTamilTranslation(""); document.getElementById("add-category-modal")?.classList.remove("hidden"); }}
+                      onClick={() => { setEditingCategory(null); setNewCategoryName(""); document.getElementById("add-category-modal")?.classList.remove("hidden"); }}
                       className="mt-4 sm:mt-0 px-8 py-4 rounded-2xl bg-white text-slate-900 font-bold text-base hover:-translate-y-1 hover:shadow-xl transition-all flex items-center gap-3 relative z-10 shadow-[0_0_20px_rgba(255,255,255,0.2)]"
                     >
                       <span className="text-emerald-500 font-semibold text-xl leading-none">➕</span> Add New Category
@@ -2557,7 +2553,7 @@ const authFetch = async (url: string, options: any = {}) => {
                               🏷️
                             </div>
                             <div className="flex gap-1 bg-slate-50 p-1 rounded-xl border border-slate-100">
-                               <button onClick={() => { setEditingCategory(cat); setEditCategoryName(cat.name.replace(/\s*\(.*\)\s*/g, "").trim()); const m = cat.name.match(/\((.*?)\)/); setEditCatTamilTranslation(m ? m[1] : ""); document.getElementById("add-category-modal")?.classList.remove("hidden"); }} className="w-8 h-8 rounded-lg flex items-center justify-center text-blue-500 hover:text-blue-700 hover:bg-blue-100 transition-colors" title="Edit">
+                               <button onClick={() => { setEditingCategory(cat); setEditCategoryName(cat.name.replace(/\s*\(.*\)\s*/g, "").trim()); document.getElementById("add-category-modal")?.classList.remove("hidden"); }} className="w-8 h-8 rounded-lg flex items-center justify-center text-blue-500 hover:text-blue-700 hover:bg-blue-100 transition-colors" title="Edit">
                                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4"><path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" /></svg>
                                </button>
                                <button onClick={() => setCategoryToDelete({id: cat.id, name: cat.name})} className="w-8 h-8 rounded-lg flex items-center justify-center text-red-500 hover:text-red-700 hover:bg-red-100 transition-colors" title="Delete">
@@ -2644,7 +2640,7 @@ const authFetch = async (url: string, options: any = {}) => {
                         </button>
                       )}
                       <button
-                        onClick={() => { setEditingProduct(null); setProductName(""); setProductPrice(""); setProductOriginalPrice(""); setProductDiscount(""); setProductCategoryId(""); setProductImage(""); setProductTamilTranslation(""); setProductSortOrder(""); setIsProductModalOpen(true); }}
+                        onClick={() => { setEditingProduct(null); setProductName(""); setProductPrice(""); setProductOriginalPrice(""); setProductDiscount(""); setProductCategoryId(""); setProductImage(""); setProductSortOrder(""); setIsProductModalOpen(true); }}
                         className="flex-1 lg:flex-none px-8 py-4 rounded-2xl bg-white text-slate-900 font-bold text-base hover:-translate-y-1 hover:shadow-xl transition-all flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(255,255,255,0.2)]"
                       >
                         <span className="text-blue-600">➕</span> Add Product
@@ -3402,9 +3398,9 @@ const authFetch = async (url: string, options: any = {}) => {
 
               {/* TAB: BILLING */}
               {activeTab === "billing" && (
-                <div className="flex flex-col lg:flex-row gap-6 animate-slideDown h-[calc(100vh-140px)]">
+                <div className="flex flex-col lg:flex-row gap-6 animate-slideDown h-auto lg:h-[calc(100vh-140px)]">
                   {/* Left: Product Selection */}
-                  <div className="flex-1 flex flex-col bg-white border border-slate-200 rounded-[2rem] p-6 shadow-sm min-h-0 overflow-hidden">
+                  <div className="flex-1 flex flex-col bg-white border border-slate-200 rounded-[2rem] p-6 shadow-sm min-h-0 overflow-hidden h-[60vh] lg:h-full">
                     <h2 className="text-2xl font-semibold text-slate-900 tracking-tight mb-4 flex-shrink-0">POS Terminal</h2>
                     <div className="flex flex-col sm:flex-row gap-3 mb-6 flex-shrink-0">
                       <div className="relative flex-1 group">
@@ -3462,7 +3458,7 @@ const authFetch = async (url: string, options: any = {}) => {
                   </div>
                   
                   {/* Right: Cart & Billing */}
-                    <div className="w-full lg:w-[450px] flex flex-col bg-slate-900 border border-slate-700 rounded-[2rem] p-6 shadow-2xl relative overflow-hidden min-h-0 shrink-0">
+                    <div className="w-full lg:w-[450px] flex flex-col bg-slate-900 border border-slate-700 rounded-[2rem] p-6 shadow-2xl relative overflow-hidden min-h-0 shrink-0 h-auto lg:h-full">
                       <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-[80px] pointer-events-none"></div>
                       <div className="absolute bottom-0 left-0 w-64 h-64 bg-amber-500/10 rounded-full blur-[80px] pointer-events-none"></div>
 
@@ -3981,28 +3977,9 @@ const authFetch = async (url: string, options: any = {}) => {
                   className="w-full bg-slate-700/50 border border-slate-600 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 rounded-xl px-5 py-3.5 text-base text-white font-semibold outline-none transition-all placeholder-slate-400 shadow-inner"
                   placeholder="e.g. Flower Pots"
                 />
-                <p className="text-xs text-blue-300/60 mt-2 font-medium">✨ Tamil translation will be automatically generated</p>
               </div>
               
-              <div className="space-y-2">
-                <label className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-blue-300">
-                  Tamil Translation (Auto)
-                </label>
-                <div className="relative">
-                  <input
-                    type="text"
-                    value={editingCategory ? editCatTamilTranslation : newCatTamilTranslation}
-                    onChange={(e) => editingCategory ? setEditCatTamilTranslation(e.target.value) : setNewCatTamilTranslation(e.target.value)}
-                    className="w-full bg-slate-700/50 border border-slate-600 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 rounded-xl px-5 py-3.5 text-base text-white font-semibold outline-none transition-all placeholder-slate-400 shadow-inner"
-                    placeholder="e.g. மலர் பானைகள்"
-                  />
-                  {(isTranslatingNewCat || isTranslatingEditCat) && (
-                    <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2 text-blue-400">
-                      <span className="animate-spin text-lg">↻</span>
-                    </div>
-                  )}
-                </div>
-              </div>
+
 
               <div className="pt-6 border-t border-slate-700 flex gap-3">
                 <button
@@ -4076,20 +4053,10 @@ const authFetch = async (url: string, options: any = {}) => {
                     required
                     value={productName}
                     onChange={(e) => setProductName(e.target.value)}
-                    onBlur={() => appendTamilTranslation(productName, productTamilTranslation, setProductName)}
                     placeholder="e.g. 1000 Wala Giant"
                     className="w-full bg-slate-700/50 border border-slate-600 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 rounded-xl py-3.5 px-5 text-base font-semibold outline-none transition-all text-white placeholder-slate-400 shadow-inner"
                   />
-                  {productTamilTranslation && (
-                    <p className="mt-2 text-sm font-semibold text-blue-300 bg-blue-500/10 px-3 py-1.5 rounded-lg inline-block border border-blue-500/20 animate-pulse">
-                      ✨ Tamil: {productTamilTranslation}
-                    </p>
-                  )}
-                  {isTranslatingProduct && (
-                    <p className="mt-2 text-sm italic text-blue-400/60 font-medium">
-                      ⌛ Translating...
-                    </p>
-                  )}
+
                 </div>
 
                 <div className="space-y-2">
@@ -4662,7 +4629,16 @@ const authFetch = async (url: string, options: any = {}) => {
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0v-2.94a2.25 2.25 0 0 1 2.25-2.25h6a2.25 2.25 0 0 1 2.25 2.25v2.94ZM15 10.125a1.125 1.125 0 1 1-2.25 0 1.125 1.125 0 0 1 2.25 0Z" />
                 </svg>
-                Print / Download PDF
+                Print
+              </button>
+              <button
+                onClick={() => handleDownloadPDF(viewingOrder, additionalDiscountType, additionalDiscountValue, packingCharge)}
+                className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white text-base font-semibold tracking-tight transition-all shadow-lg shadow-purple-500/20 flex items-center gap-2 border border-purple-400/20"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+                Download
               </button>
               <button
                 onClick={() => { setViewingOrder(null); setAdditionalDiscountValue(""); setPackingCharge(""); setStagedProducts([{productId: "", qty: "1"}]); }}

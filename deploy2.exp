@@ -1,0 +1,25 @@
+#!/usr/bin/expect -f
+set timeout -1
+set password "Prasath@1990"
+set host "103.191.208.98"
+set user "root"
+set dir "/var/www/vamsicrackers/frontend"
+set zip "vamsi_crackers_admin_build.zip"
+
+spawn ssh -o StrictHostKeyChecking=no $user@$host "mkdir -p $dir"
+expect {
+    "password:" { send "$password\r"; exp_continue }
+    eof
+}
+
+spawn scp -o StrictHostKeyChecking=no $zip $user@$host:$dir/
+expect {
+    "password:" { send "$password\r"; exp_continue }
+    eof
+}
+
+spawn ssh -o StrictHostKeyChecking=no $user@$host "cd $dir && unzip -o $zip && source ~/.bashrc && source ~/.nvm/nvm.sh || true && npm install --production && pm2 delete vamsi-frontend || true && pm2 start npm --name \"vamsi-frontend\" -- start && pm2 save"
+expect {
+    "password:" { send "$password\r"; exp_continue }
+    eof
+}

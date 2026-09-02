@@ -1,0 +1,11 @@
+#!/usr/bin/expect -f
+set timeout -1
+set password "Prasath@1990"
+set host "103.191.208.98"
+set user "root"
+
+spawn ssh -o StrictHostKeyChecking=no $user@$host "for pid in \$(netstat -tulpn | grep :3005 | awk '{print \$7}' | cut -d/ -f1); do kill -9 \$pid; done; pm2 restart vamsi-frontend"
+expect {
+    "password:" { send "$password\r"; exp_continue }
+    eof
+}
