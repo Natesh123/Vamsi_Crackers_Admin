@@ -1,0 +1,7 @@
+#!/usr/bin/expect -f
+set timeout -1
+
+spawn ssh -o StrictHostKeyChecking=no root@103.191.208.98 "ls -la /var/www/"
+expect "*assword:*"
+send "Prasath@1990\r"
+expect eof

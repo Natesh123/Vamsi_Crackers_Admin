@@ -1,64 +1,12 @@
 #!/usr/bin/expect -f
-
 set timeout -1
-set password "Prasath@1990"
-set host "103.191.208.98"
-set user "root"
-set dir "/var/www/vamsicrackers/frontend"
-set zip "vamsi_crackers_admin_build.zip"
 
-# Create directory if it doesn't exist just in case
-spawn ssh $user@$host "mkdir -p $dir"
-expect {
-    "yes/no" {
-        send "yes\r"
-        exp_continue
-    }
-    "password:" {
-        send "$password\r"
-    }
-}
+spawn scp -o StrictHostKeyChecking=no vamsi_crackers_admin_build.zip root@103.191.208.98:/var/www/vamsictackers/frontend/
+expect "*assword:*"
+send "Prasath@1990\r"
 expect eof
 
-# SCP the file
-spawn scp $zip $user@$host:$dir/
-expect {
-    "yes/no" {
-        send "yes\r"
-        exp_continue
-    }
-    "password:" {
-        send "$password\r"
-    }
-}
-expect eof
-
-# SSH and run commands
-spawn ssh $user@$host
-expect {
-    "yes/no" {
-        send "yes\r"
-        exp_continue
-    }
-    "password:" {
-        send "$password\r"
-    }
-}
-
-expect "#"
-send "cd $dir\r"
-expect "#"
-send "unzip -o $zip\r"
-expect "#"
-send "source ~/.nvm/nvm.sh || true\r"
-expect "#"
-send "npm install --production\r"
-expect "#"
-send "pm2 delete vamsi-frontend || true\r"
-expect "#"
-send "pm2 start npm --name \"vamsi-frontend\" -- start\r"
-expect "#"
-send "pm2 save\r"
-expect "#"
-send "exit\r"
+spawn ssh -o StrictHostKeyChecking=no root@103.191.208.98 "cd /var/www/vamsictackers/frontend/ && unzip -o vamsi_crackers_admin_build.zip && npm install && npm run build && pm2 restart all"
+expect "*assword:*"
+send "Prasath@1990\r"
 expect eof
