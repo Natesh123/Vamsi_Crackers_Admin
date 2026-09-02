@@ -536,7 +536,8 @@ const authFetch = async (url: string, options: any = {}) => {
   const [viewingOrder, setViewingOrder] = useState<any | null>(null);
   const [additionalDiscountType, setAdditionalDiscountType] = useState<"amount" | "percentage">("amount");
   const [additionalDiscountValue, setAdditionalDiscountValue] = useState<string>("");
-  const [packingCharge, setPackingCharge] = useState<string>("");
+  const [packingChargeType, setPackingChargeType] = useState<"amount" | "percentage">("percentage");
+  const [packingCharge, setPackingCharge] = useState<string>("5");
   const [selectedProductId, setSelectedProductId] = useState<number | "">("");
   const [addQty, setAddQty] = useState<string>("1");
   const [stagedProducts, setStagedProducts] = useState<{productId: string, qty: string}[]>([{productId: "", qty: "1"}]);
@@ -1599,7 +1600,7 @@ const authFetch = async (url: string, options: any = {}) => {
   };
 
 
-  const getInvoiceHTML = (order: any, extraDiscType?: "amount"|"percentage", extraDiscValue?: string, packingChargeStr?: string) => {
+  const getInvoiceHTML = (order: any, extraDiscType?: "amount"|"percentage", extraDiscValue?: string, packingChargeType?: "amount"|"percentage", packingChargeStr?: string) => {
     if (!order) return null;
     const numberToWords = (num: number): string => {
       const integerNum = Math.round(num);
@@ -1638,9 +1639,17 @@ const authFetch = async (url: string, options: any = {}) => {
         extraDiscountAmt = extraDiscVal;
       }
     }
-    const packingChargeVal = Number(packingChargeStr || 0);
+    const packingChargeBase = Number(packingChargeStr || 0);
+    let packingChargeAmt = 0;
+    if (packingChargeBase > 0) {
+      if (packingChargeType === "percentage") {
+        packingChargeAmt = (totalAmountBase * packingChargeBase) / 100;
+      } else {
+        packingChargeAmt = packingChargeBase;
+      }
+    }
     const previousTotal = totalAmountBase;
-    const totalAmount = previousTotal - extraDiscountAmt + packingChargeVal;
+    const totalAmount = previousTotal - extraDiscountAmt + packingChargeAmt;
     const totalQty = allItems.reduce((sum, item) => sum + Number(item.quantity), 0);
 
     const html = `
@@ -1748,7 +1757,7 @@ const authFetch = async (url: string, options: any = {}) => {
               </tr>
               <tr>
                 <td colspan="3" class="text-left bold" style="vertical-align: middle;">${numberToWords(totalAmount)}</td>
-                <td colspan="2" class="text-right bold" style="white-space: nowrap; vertical-align: middle;">Total Tax : ₹ ${(packingChargeVal - extraDiscountAmt).toFixed(0)}</td>
+                <td colspan="2" class="text-right bold" style="white-space: nowrap; vertical-align: middle;">Total Tax : ₹ ${(packingChargeAmt - extraDiscountAmt).toFixed(0)}</td>
                 <td colspan="2" class="text-right bold" style="background-color: #65a30d; color: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; white-space: nowrap; font-size: 13px; vertical-align: middle;">Total Due : ₹ ${Math.max(0, totalAmount).toFixed(0)}</td>
               </tr>
             </tbody>
@@ -1790,7 +1799,7 @@ const authFetch = async (url: string, options: any = {}) => {
     return html;
   };
 
-  const handlePrintOrder = (order: any, extraDiscType?: "amount"|"percentage", extraDiscValue?: string, packingChargeStr?: string) => {
+  const handlePrintOrder = (order: any, extraDiscType?: "amount"|"percentage", extraDiscValue?: string, packingChargeType?: "amount"|"percentage", packingChargeStr?: string) => {
     if (!order) return;
     
     const printWindow = window.open('', '_blank');
@@ -1799,7 +1808,7 @@ const authFetch = async (url: string, options: any = {}) => {
       return;
     }
     
-    const html = getInvoiceHTML(order, extraDiscType, extraDiscValue, packingChargeStr);
+    const html = getInvoiceHTML(order, extraDiscType, extraDiscValue, packingChargeType, packingChargeStr);
     if (!html) return;
     
     printWindow.document.open();
@@ -1812,9 +1821,9 @@ const authFetch = async (url: string, options: any = {}) => {
     }, 250);
   };
 
-  const handleDownloadPDF = async (order: any, extraDiscType?: "amount"|"percentage", extraDiscValue?: string, packingChargeStr?: string) => {
+  const handleDownloadPDF = async (order: any, extraDiscType?: "amount"|"percentage", extraDiscValue?: string, packingChargeType?: "amount"|"percentage", packingChargeStr?: string) => {
     if (!order) return;
-    const html = getInvoiceHTML(order, extraDiscType, extraDiscValue, packingChargeStr);
+    const html = getInvoiceHTML(order, extraDiscType, extraDiscValue, packingChargeType, packingChargeStr);
     if (!html) return;
     
     try {
@@ -1858,9 +1867,9 @@ const authFetch = async (url: string, options: any = {}) => {
     }
   };
 
-  const handleWhatsAppShare = async (order: any, extraDiscType?: "amount"|"percentage", extraDiscValue?: string, packingChargeStr?: string) => {
+  const handleWhatsAppShare = async (order: any, extraDiscType?: "amount"|"percentage", extraDiscValue?: string, packingChargeType?: "amount"|"percentage", packingChargeStr?: string) => {
     if (!order) return;
-    const html = getInvoiceHTML(order, extraDiscType, extraDiscValue, packingChargeStr);
+    const html = getInvoiceHTML(order, extraDiscType, extraDiscValue, packingChargeType, packingChargeStr);
     if (!html) return;
     
     try {
@@ -3471,7 +3480,8 @@ const authFetch = async (url: string, options: any = {}) => {
                                 setBillingCart([]);
                                 setBillingCustomer({ name: '', phone: '', email: '', city: '', address: '' });
                                 setAdditionalDiscountValue('');
-                                setPackingCharge('');
+                                setPackingCharge('5');
+                                setPackingChargeType('percentage');
                                 setAdditionalDiscountType('amount');
                                 showToast("Bill cleared completely", "success");
                               }}
@@ -3546,7 +3556,8 @@ const authFetch = async (url: string, options: any = {}) => {
                             
                             const extraVal = Number(additionalDiscountValue || 0);
                             const extraAmt = additionalDiscountType === "percentage" ? (total * extraVal) / 100 : extraVal;
-                            const packChg = Number(packingCharge || 0);
+                            const packVal = Number(packingCharge || 0);
+                            const packChg = packingChargeType === "percentage" ? (total * packVal) / 100 : packVal;
                             
                             const finalTotal = Math.max(0, total - extraAmt + packChg);
                             const finalSavings = (subtotal - total) + extraAmt;
@@ -3582,17 +3593,19 @@ const authFetch = async (url: string, options: any = {}) => {
                                   </div>
                                   
                                   {/* Packing Charges */}
-                                  <div className="flex bg-slate-800/80 border border-slate-700 rounded-lg focus-within:ring-1 focus-within:ring-indigo-500/50 transition-all items-center pl-2.5">
+                                  <div className="flex bg-slate-800/80 border border-slate-700 rounded-lg transition-all items-center pl-2.5 opacity-80 cursor-not-allowed">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0"><path fillRule="evenodd" d="M11.986 3H12a2 2 0 0 1 2 2v6a2 2 0 0 1-1.5 1.937V7A2.5 2.5 0 0 0 10 4.5H4.063A2 2 0 0 1 6 3h.014A2.25 2.25 0 0 1 8.25 1h3.5a2.25 2.25 0 0 1 2.236 2ZM10.5 4v-.75a.75.75 0 0 0-.75-.75h-3.5a.75.75 0 0 0-.75.75V4h5Z" clipRule="evenodd" /><path fillRule="evenodd" d="M3 6a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H3Zm6 8.5a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3Z" clipRule="evenodd" /></svg>
-                                    <span className="text-slate-400 font-bold text-xs pl-1.5 pr-1 py-1.5">₹</span>
+                                    <div className="relative flex items-center ml-1">
+                                      <div className="bg-transparent text-slate-300 font-bold text-[11px] rounded pl-2 pr-2 py-1 select-none">
+                                        % Pct
+                                      </div>
+                                    </div>
                                     <div className="w-px h-3.5 bg-slate-700 mx-1"></div>
                                     <input 
                                       type="number" 
-                                      min="0"
-                                      placeholder="Packing"
-                                      value={packingCharge}
-                                      onChange={(e) => setPackingCharge(e.target.value)}
-                                      className="w-full bg-transparent text-white font-bold text-xs px-2 py-1.5 outline-none placeholder:text-slate-600 placeholder:font-medium"
+                                      value="5"
+                                      disabled
+                                      className="w-full bg-transparent text-slate-400 font-bold text-xs px-2 py-1.5 outline-none cursor-not-allowed"
                                     />
                                   </div>
                                 </div>
@@ -3661,7 +3674,10 @@ const authFetch = async (url: string, options: any = {}) => {
                                       setBillingCart([]);
                                       setBillingCustomer({ name: "", phone: "", email: "", city: "", address: "" });
                                       fetchData(); // Refresh orders list
-                                      handlePrintOrder(fullOrder); // Print Invoice
+                                      handlePrintOrder(fullOrder, additionalDiscountType, additionalDiscountValue, packingChargeType, packingCharge); // Print Invoice
+                                      setAdditionalDiscountValue('');
+                                      setPackingCharge('5');
+                                      setPackingChargeType('percentage');
                                     } else {
                                       showToast("Failed to generate bill", "error");
                                     }
@@ -4577,21 +4593,29 @@ const authFetch = async (url: string, options: any = {}) => {
                         <div className="flex items-center gap-3">
                           <span className="text-sm font-semibold text-slate-500 uppercase tracking-widest flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 text-emerald-500"><path fillRule="evenodd" d="M11.986 3H12a2 2 0 0 1 2 2v6a2 2 0 0 1-1.5 1.937V7A2.5 2.5 0 0 0 10 4.5H4.063A2 2 0 0 1 6 3h.014A2.25 2.25 0 0 1 8.25 1h3.5a2.25 2.25 0 0 1 2.236 2ZM10.5 4v-.75a.75.75 0 0 0-.75-.75h-3.5a.75.75 0 0 0-.75.75V4h5Z" clipRule="evenodd" /><path fillRule="evenodd" d="M3 6a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H3Zm6 8.5a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3Z" clipRule="evenodd" /></svg> Packing Charges:</span>
                           <div className="relative">
-                            <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400 font-bold">₹</span>
+                            <div className="bg-slate-100 border border-slate-200 text-slate-500 font-bold text-sm rounded-xl px-4 py-2 select-none cursor-not-allowed">
+                              Percentage (%)
+                            </div>
+                          </div>
+                          <div className="relative">
                             <input 
                               type="number" 
-                              min="0"
-                              placeholder="0.00"
-                              value={packingCharge}
-                              onChange={(e) => setPackingCharge(e.target.value)}
-                              className="w-32 bg-white hover:bg-slate-50 border border-slate-200 text-slate-800 font-bold text-sm rounded-xl pl-8 pr-4 py-2 focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 shadow-sm transition-all placeholder:text-slate-400 placeholder:font-medium"
+                              value="5"
+                              disabled
+                              className="w-28 bg-slate-100 border border-slate-200 text-slate-500 font-bold text-sm rounded-xl px-4 py-2 cursor-not-allowed select-none"
                             />
                           </div>
                         </div>
                       </td>
                       <td className="py-4 px-6 text-right text-base font-bold tracking-tight text-slate-500">Packing Charges:</td>
                       <td className="py-4 px-6 text-right text-lg font-semibold text-slate-900">
-                        +₹{Number(packingCharge || 0).toFixed(2)}
+                        +₹{(() => {
+                           const packVal = Number(packingCharge || 0);
+                           if(packVal === 0) return "0";
+                           return packingChargeType === "percentage" 
+                             ? ((viewingOrder.total_amount * packVal) / 100).toFixed(2) 
+                             : packVal.toFixed(2);
+                        })()}
                       </td>
                     </tr>
                     <tr className="border-t border-indigo-200 bg-indigo-50">
@@ -4602,7 +4626,10 @@ const authFetch = async (url: string, options: any = {}) => {
                            const extraAmt = additionalDiscountType === "percentage" 
                              ? (viewingOrder.total_amount * extraVal) / 100 
                              : extraVal;
-                           const packChg = Number(packingCharge || 0);
+                           const packVal = Number(packingCharge || 0);
+                           const packChg = packingChargeType === "percentage"
+                             ? (viewingOrder.total_amount * packVal) / 100
+                             : packVal;
                            return Math.max(0, viewingOrder.total_amount - extraAmt + packChg).toFixed(2);
                         })()}
                       </td>
@@ -4614,7 +4641,7 @@ const authFetch = async (url: string, options: any = {}) => {
             {/* Modal Footer */}
             <div className="bg-slate-50 border-t border-slate-200 px-8 py-5 flex justify-end gap-4 shrink-0">
               <button
-                onClick={() => handleWhatsAppShare(viewingOrder, additionalDiscountType, additionalDiscountValue, packingCharge)}
+                onClick={() => handleWhatsAppShare(viewingOrder, additionalDiscountType, additionalDiscountValue, packingChargeType, packingCharge)}
                 className="hidden px-8 py-3.5 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-base font-semibold tracking-tight transition-all shadow-lg shadow-green-500/20 flex items-center gap-2 border border-green-400/20"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
@@ -4623,7 +4650,7 @@ const authFetch = async (url: string, options: any = {}) => {
                 Share on WhatsApp
               </button>
               <button
-                onClick={() => handlePrintOrder(viewingOrder, additionalDiscountType, additionalDiscountValue, packingCharge)}
+                onClick={() => handlePrintOrder(viewingOrder, additionalDiscountType, additionalDiscountValue, packingChargeType, packingCharge)}
                 className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-indigo-500 to-blue-600 hover:from-indigo-600 hover:to-blue-700 text-white text-base font-semibold tracking-tight transition-all shadow-lg shadow-indigo-500/20 flex items-center gap-2 border border-indigo-400/20"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
@@ -4632,7 +4659,7 @@ const authFetch = async (url: string, options: any = {}) => {
                 Print
               </button>
               <button
-                onClick={() => handleDownloadPDF(viewingOrder, additionalDiscountType, additionalDiscountValue, packingCharge)}
+                onClick={() => handleDownloadPDF(viewingOrder, additionalDiscountType, additionalDiscountValue, packingChargeType, packingCharge)}
                 className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white text-base font-semibold tracking-tight transition-all shadow-lg shadow-purple-500/20 flex items-center gap-2 border border-purple-400/20"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
@@ -4641,7 +4668,7 @@ const authFetch = async (url: string, options: any = {}) => {
                 Download
               </button>
               <button
-                onClick={() => { setViewingOrder(null); setAdditionalDiscountValue(""); setPackingCharge(""); setStagedProducts([{productId: "", qty: "1"}]); }}
+                onClick={() => { setViewingOrder(null); setAdditionalDiscountValue(""); setPackingCharge("5"); setPackingChargeType("percentage"); setStagedProducts([{productId: "", qty: "1"}]); }}
                 className="px-8 py-3.5 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 hover:border-slate-400 text-base font-semibold tracking-tight text-slate-700 transition-all shadow-sm"
               >
                 Close View

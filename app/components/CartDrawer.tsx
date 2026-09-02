@@ -10,6 +10,8 @@ export default function CartDrawer() {
     removeFromCart,
     clearCart,
     cartCount,
+    cartSubtotal,
+    cartPackingCharge,
     cartTotal,
     cartOriginalTotal,
     cartDiscountableOriginalTotal,
@@ -377,16 +379,28 @@ export default function CartDrawer() {
       {cartItems.length > 0 && (
         <div className="px-6 py-6 bg-gray-50/90 border-t border-gray-200 backdrop-blur-xl relative z-10 flex flex-col sm:flex-row gap-5 items-center justify-between">
           <div className="w-full sm:w-auto flex-1">
-            <div className="flex items-end gap-4 mb-2">
-              <span className="text-base font-semibold text-slate-500 uppercase tracking-wider pb-1">Total:</span>
-              <span className="text-3xl font-semibold text-festive-purple drop-shadow-sm leading-none">
-                ₹{cartTotal}
-              </span>
+            <div className="flex flex-col gap-1.5 mb-3 bg-white/60 p-3 sm:p-4 rounded-xl border border-gray-200 shadow-sm">
+              <div className="flex justify-between items-center text-xs sm:text-sm font-medium text-slate-500">
+                <span>Total MRP</span>
+                <span className="line-through decoration-slate-400">₹{cartOriginalTotal.toLocaleString('en-IN')}</span>
+              </div>
+              <div className="flex justify-between items-center text-xs sm:text-sm font-bold text-emerald-600 border-b border-gray-200/60 pb-2">
+                <span>Discount ({cartDiscountableOriginalTotal > 0 ? Math.round((cartSavings / cartDiscountableOriginalTotal) * 100) : 0}% OFF)</span>
+                <span>-₹{cartSavings.toLocaleString('en-IN')}</span>
+              </div>
+              <div className="flex justify-between items-center text-xs sm:text-sm font-semibold text-slate-700 pt-1">
+                <span>Amount After Discount</span>
+                <span>₹{cartSubtotal.toLocaleString('en-IN')}</span>
+              </div>
+              <div className="flex justify-between items-center text-xs sm:text-sm font-semibold text-amber-600">
+                <span>Packing Charges (5%)</span>
+                <span>+₹{cartPackingCharge.toLocaleString('en-IN')}</span>
+              </div>
             </div>
-            <div className="flex items-center gap-3 text-sm font-bold text-emerald-600">
-              <span>Savings: ₹{cartSavings}</span>
-              <span className="bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 font-semibold shadow-sm">
-                {cartDiscountableOriginalTotal > 0 ? Math.round((cartSavings / cartDiscountableOriginalTotal) * 100) : 0}% OFF
+            <div className="flex items-end justify-between sm:justify-start gap-4 px-1">
+              <span className="text-sm font-bold text-slate-600 uppercase tracking-widest pb-1">Total</span>
+              <span className="text-3xl font-bold text-festive-purple drop-shadow-sm leading-none">
+                ₹{cartTotal.toLocaleString('en-IN')}
               </span>
             </div>
           </div>
