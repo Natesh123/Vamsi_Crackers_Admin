@@ -1600,6 +1600,39 @@ const authFetch = async (url: string, options: any = {}) => {
   };
 
 
+  const handleUpdateProductQuantity = async (indexToUpdate: number, newQuantity: number) => {
+    if (newQuantity <= 0) return;
+    let newItems = [...viewingOrder.items];
+    newItems[indexToUpdate].quantity = newQuantity;
+    
+    // Recalculate totals
+    const newTotalOriginal = newItems.reduce((sum, item) => sum + (Number(item.originalPrice) * Number(item.quantity)), 0);
+    const newTotalOffer = newItems.reduce((sum, item) => sum + (Number(item.price) * Number(item.quantity)), 0);
+    const newTotalSavings = newTotalOriginal > newTotalOffer ? newTotalOriginal - newTotalOffer : 0;
+    
+    try {
+      const res = await authFetch(`${apiUrl}/api/orders/${viewingOrder.id}/items`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          items: newItems,
+          total_amount: newTotalOffer,
+          total_savings: newTotalSavings
+        })
+      });
+      
+      if (!res.ok) throw new Error("Failed to update order item quantity");
+      
+      const updatedOrder = { ...viewingOrder, items: newItems, total_amount: newTotalOffer, total_savings: newTotalSavings };
+      setViewingOrder(updatedOrder);
+      setOrders(orders.map(o => o.id === updatedOrder.id ? updatedOrder : o));
+      
+      showToast("Quantity updated successfully!", "success");
+    } catch (err: any) {
+      showToast(err.message || "Error updating quantity", "error");
+    }
+  };
+
   const getInvoiceHTML = (order: any, extraDiscType?: "amount"|"percentage", extraDiscValue?: string, packingChargeType?: "amount"|"percentage", packingChargeStr?: string) => {
     if (!order) return null;
     const numberToWords = (num: number): string => {
@@ -1629,7 +1662,7 @@ const authFetch = async (url: string, options: any = {}) => {
 
     const grossTotal = discountedTotalOriginal + netRateTotal;
     
-    let totalAmountBase = Number(order.total_amount || 0);
+    let totalAmountBase = discountedTotalOffer + netRateTotal;
     const extraDiscVal = Number(extraDiscValue || 0);
     let extraDiscountAmt = 0;
     if (extraDiscVal > 0) {
@@ -1649,7 +1682,7 @@ const authFetch = async (url: string, options: any = {}) => {
       }
     }
     const previousTotal = totalAmountBase;
-    const totalAmount = previousTotal - extraDiscountAmt + packingChargeAmt;
+    const totalAmount = previousTotal - extraDiscountAmt;
     const totalQty = allItems.reduce((sum, item) => sum + Number(item.quantity), 0);
 
     const html = `
@@ -1659,9 +1692,9 @@ const authFetch = async (url: string, options: any = {}) => {
           <title>Order Invoice #${String(order.id).padStart(4, '0')}</title>
           <style>
             @page { margin: 0; }
-            body, .invoice-wrapper { font-family: 'Helvetica', 'Arial', sans-serif; color: #333; line-height: 1.4; max-width: 210mm; margin: 0 auto; font-size: 12px; padding: 10mm; background-color: white; box-sizing: border-box; }
+            body, .invoice-wrapper { font-family: 'Helvetica', 'Arial', sans-serif; color: #333; line-height: 1.4; width: 100%; max-width: 100%; margin: 0 auto; font-size: 12px; padding: 2mm; background-color: white; box-sizing: border-box; }
             table { width: 100%; border-collapse: collapse; margin-top: -1px; }
-            th, td { border: 1px solid #94a3b8; padding: 4px 6px; }
+            th, td { border: 1px solid #94a3b8; padding: 4px 6px; word-wrap: break-word; }
             th { text-align: center; }
             tr { page-break-inside: avoid; }
             .avoid-break { page-break-inside: avoid; }
@@ -1756,9 +1789,8 @@ const authFetch = async (url: string, options: any = {}) => {
                 <td class="text-right bold">₹ ${previousTotal.toFixed(0)}</td>
               </tr>
               <tr>
-                <td colspan="3" class="text-left bold" style="vertical-align: middle;">${numberToWords(totalAmount)}</td>
-                <td colspan="2" class="text-right bold" style="white-space: nowrap; vertical-align: middle;">Total Tax : ₹ ${(packingChargeAmt - extraDiscountAmt).toFixed(0)}</td>
-                <td colspan="2" class="text-right bold" style="background-color: #65a30d; color: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; white-space: nowrap; font-size: 13px; vertical-align: middle;">Total Due : ₹ ${Math.max(0, totalAmount).toFixed(0)}</td>
+                <td colspan="4" class="text-left bold" style="vertical-align: middle;">${numberToWords(totalAmount)}</td>
+                <td colspan="3" class="text-right bold" style="background-color: #65a30d; color: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; white-space: nowrap; font-size: 13px; vertical-align: middle;">Total Due : ₹ ${Math.max(0, totalAmount).toFixed(0)}</td>
               </tr>
             </tbody>
           </table>
@@ -1834,7 +1866,7 @@ const authFetch = async (url: string, options: any = {}) => {
       
       const container = document.createElement('div');
       container.innerHTML = html;
-      container.style.width = '800px';
+      container.style.width = '750px';
       
       // Wait for images to load
       const images = container.getElementsByTagName('img');
@@ -1854,9 +1886,9 @@ const authFetch = async (url: string, options: any = {}) => {
         margin:       0.2,
         filename:     fileName,
         image:        { type: 'jpeg' as const, quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true, windowWidth: 800 },
+        html2canvas:  { scale: 2, useCORS: true, windowWidth: 750 },
         jsPDF:        { unit: 'in' as const, format: 'a4' as const, orientation: 'portrait' as const },
-        pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+        pagebreak:    { mode: ['css', 'legacy'] }
       };
 
       await html2pdf().set(opt).from(container).save();
@@ -1880,7 +1912,7 @@ const authFetch = async (url: string, options: any = {}) => {
       
       const container = document.createElement('div');
       container.innerHTML = html;
-      container.style.width = '800px';
+      container.style.width = '750px';
       
       // Wait for images to load
       const images = container.getElementsByTagName('img');
@@ -1898,9 +1930,9 @@ const authFetch = async (url: string, options: any = {}) => {
         margin:       0.2,
         filename:     `Invoice_${orderNo}.pdf`,
         image:        { type: 'jpeg' as const, quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true, windowWidth: 800 },
+        html2canvas:  { scale: 2, useCORS: true, windowWidth: 750 },
         jsPDF:        { unit: 'in' as const, format: 'a4' as const, orientation: 'portrait' as const },
-        pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+        pagebreak:    { mode: ['css', 'legacy'] }
       };
 
       const pdfBlob = await html2pdf().set(opt).from(container).output('blob');
@@ -3556,10 +3588,8 @@ const authFetch = async (url: string, options: any = {}) => {
                             
                             const extraVal = Number(additionalDiscountValue || 0);
                             const extraAmt = additionalDiscountType === "percentage" ? (total * extraVal) / 100 : extraVal;
-                            const packVal = Number(packingCharge || 0);
-                            const packChg = packingChargeType === "percentage" ? (total * packVal) / 100 : packVal;
                             
-                            const finalTotal = Math.max(0, total - extraAmt + packChg);
+                            const finalTotal = Math.max(0, total - extraAmt);
                             const finalSavings = (subtotal - total) + extraAmt;
                             
                             return (
@@ -3589,23 +3619,6 @@ const authFetch = async (url: string, options: any = {}) => {
                                       value={additionalDiscountValue}
                                       onChange={(e) => setAdditionalDiscountValue(e.target.value)}
                                       className="w-full bg-transparent text-white font-bold text-xs px-2 py-1.5 outline-none placeholder:text-slate-600 placeholder:font-medium"
-                                    />
-                                  </div>
-                                  
-                                  {/* Packing Charges */}
-                                  <div className="flex bg-slate-800/80 border border-slate-700 rounded-lg transition-all items-center pl-2.5 opacity-80 cursor-not-allowed">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0"><path fillRule="evenodd" d="M11.986 3H12a2 2 0 0 1 2 2v6a2 2 0 0 1-1.5 1.937V7A2.5 2.5 0 0 0 10 4.5H4.063A2 2 0 0 1 6 3h.014A2.25 2.25 0 0 1 8.25 1h3.5a2.25 2.25 0 0 1 2.236 2ZM10.5 4v-.75a.75.75 0 0 0-.75-.75h-3.5a.75.75 0 0 0-.75.75V4h5Z" clipRule="evenodd" /><path fillRule="evenodd" d="M3 6a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H3Zm6 8.5a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3Z" clipRule="evenodd" /></svg>
-                                    <div className="relative flex items-center ml-1">
-                                      <div className="bg-transparent text-slate-300 font-bold text-[11px] rounded pl-2 pr-2 py-1 select-none">
-                                        % Pct
-                                      </div>
-                                    </div>
-                                    <div className="w-px h-3.5 bg-slate-700 mx-1"></div>
-                                    <input 
-                                      type="number" 
-                                      value="5"
-                                      disabled
-                                      className="w-full bg-transparent text-slate-400 font-bold text-xs px-2 py-1.5 outline-none cursor-not-allowed"
                                     />
                                   </div>
                                 </div>
@@ -4514,7 +4527,26 @@ const authFetch = async (url: string, options: any = {}) => {
                       <tr key={idx} className="hover:bg-indigo-50/30 transition-colors group">
                         <td className="py-5 px-6 text-slate-800 font-bold">{item.name}</td>
                         <td className="py-5 px-6 text-center">
-                          <span className="bg-indigo-50 px-4 py-2 rounded-xl text-indigo-700 border border-indigo-100 shadow-sm font-semibold inline-block min-w-[3rem] text-center">{item.quantity}</span>
+                          <input
+                            type="number"
+                            min="1"
+                            className="bg-indigo-50 px-2 py-2 rounded-xl text-indigo-700 border border-indigo-100 shadow-sm font-semibold w-20 text-center outline-none focus:ring-2 focus:ring-indigo-400"
+                            defaultValue={item.quantity}
+                            key={idx + "-" + item.quantity}
+                            onBlur={(e) => {
+                              const val = parseInt(e.target.value);
+                              if (val && val > 0 && val !== item.quantity) {
+                                handleUpdateProductQuantity(idx, val);
+                              } else {
+                                e.target.value = String(item.quantity);
+                              }
+                            }}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter') {
+                                e.currentTarget.blur();
+                              }
+                            }}
+                          />
                         </td>
                         <td className="py-5 px-6 text-right text-slate-500 font-medium">
                           ₹{item.originalPrice}
@@ -4588,36 +4620,6 @@ const authFetch = async (url: string, options: any = {}) => {
                         })()}
                       </td>
                     </tr>
-                    <tr className="border-t border-slate-200 bg-slate-50">
-                      <td colSpan={3} className="py-4 px-6 border-r border-slate-200/60">
-                        <div className="flex items-center gap-3">
-                          <span className="text-sm font-semibold text-slate-500 uppercase tracking-widest flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 text-emerald-500"><path fillRule="evenodd" d="M11.986 3H12a2 2 0 0 1 2 2v6a2 2 0 0 1-1.5 1.937V7A2.5 2.5 0 0 0 10 4.5H4.063A2 2 0 0 1 6 3h.014A2.25 2.25 0 0 1 8.25 1h3.5a2.25 2.25 0 0 1 2.236 2ZM10.5 4v-.75a.75.75 0 0 0-.75-.75h-3.5a.75.75 0 0 0-.75.75V4h5Z" clipRule="evenodd" /><path fillRule="evenodd" d="M3 6a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H3Zm6 8.5a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3Z" clipRule="evenodd" /></svg> Packing Charges:</span>
-                          <div className="relative">
-                            <div className="bg-slate-100 border border-slate-200 text-slate-500 font-bold text-sm rounded-xl px-4 py-2 select-none cursor-not-allowed">
-                              Percentage (%)
-                            </div>
-                          </div>
-                          <div className="relative">
-                            <input 
-                              type="number" 
-                              value="5"
-                              disabled
-                              className="w-28 bg-slate-100 border border-slate-200 text-slate-500 font-bold text-sm rounded-xl px-4 py-2 cursor-not-allowed select-none"
-                            />
-                          </div>
-                        </div>
-                      </td>
-                      <td className="py-4 px-6 text-right text-base font-bold tracking-tight text-slate-500">Packing Charges:</td>
-                      <td className="py-4 px-6 text-right text-lg font-semibold text-slate-900">
-                        +₹{(() => {
-                           const packVal = Number(packingCharge || 0);
-                           if(packVal === 0) return "0";
-                           return packingChargeType === "percentage" 
-                             ? ((viewingOrder.total_amount * packVal) / 100).toFixed(2) 
-                             : packVal.toFixed(2);
-                        })()}
-                      </td>
-                    </tr>
                     <tr className="border-t border-indigo-200 bg-indigo-50">
                       <td colSpan={4} className="py-6 px-6 text-right text-lg font-semibold tracking-tight text-indigo-900">Final Amount To Pay:</td>
                       <td className="py-6 px-6 text-right text-3xl font-semibold text-indigo-700">
@@ -4626,11 +4628,7 @@ const authFetch = async (url: string, options: any = {}) => {
                            const extraAmt = additionalDiscountType === "percentage" 
                              ? (viewingOrder.total_amount * extraVal) / 100 
                              : extraVal;
-                           const packVal = Number(packingCharge || 0);
-                           const packChg = packingChargeType === "percentage"
-                             ? (viewingOrder.total_amount * packVal) / 100
-                             : packVal;
-                           return Math.max(0, viewingOrder.total_amount - extraAmt + packChg).toFixed(2);
+                           return Math.max(0, viewingOrder.total_amount - extraAmt).toFixed(2);
                         })()}
                       </td>
                     </tr>

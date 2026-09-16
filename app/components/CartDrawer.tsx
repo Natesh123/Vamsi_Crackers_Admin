@@ -11,7 +11,6 @@ export default function CartDrawer() {
     clearCart,
     cartCount,
     cartSubtotal,
-    cartPackingCharge,
     cartTotal,
     cartOriginalTotal,
     cartDiscountableOriginalTotal,
@@ -391,10 +390,6 @@ export default function CartDrawer() {
               <div className="flex justify-between items-center text-xs sm:text-sm font-semibold text-slate-700 pt-1">
                 <span>Amount After Discount</span>
                 <span>₹{cartSubtotal.toLocaleString('en-IN')}</span>
-              </div>
-              <div className="flex justify-between items-center text-xs sm:text-sm font-semibold text-amber-600">
-                <span>Packing Charges (5%)</span>
-                <span>+₹{cartPackingCharge.toLocaleString('en-IN')}</span>
               </div>
             </div>
             <div className="flex items-end justify-between sm:justify-start gap-4 px-1">
